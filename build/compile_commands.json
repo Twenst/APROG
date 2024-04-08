@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/titouan/Ingé/APROG/build",
-  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DSRCDIR=/home/titouan/Ingé/APROG -isystem /usr/share/Imagine++/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -std=gnu++11 -fPIC -o CMakeFiles/APROG.dir/main.cpp.o -c /home/titouan/Ingé/APROG/main.cpp",
-  "file": "/home/titouan/Ingé/APROG/main.cpp",
-  "output": "CMakeFiles/APROG.dir/main.cpp.o"
-}
-]
