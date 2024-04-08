@@ -12,7 +12,7 @@ int main()
 {
     openWindow(w,h);
 
-
+    //test
     endGraphics();
     return 0;
 }
