@@ -29,7 +29,11 @@ int main(int argc, char** argv)
 
         noRefreshEnd();
 
-        load_jumping(player, spacebar_timer);
+        if (not player.is_jumping())
+        {
+            load_jumping(player, spacebar_timer);
+        }
+        //player.walk();
         
         milliSleep(25);
     }
@@ -46,19 +50,16 @@ float minf(float a, float b)
 
 void load_jumping(Personnage & player, float & spacebar_timer)
 {
-    if (not player.is_jumping())
-    {
-        Event e;
-        getEvent(-1,e);
+    Event e;
+    getEvent(-1,e);
 
-        if ((e.type == EVT_KEY_ON) and (e.key == KEY_UP))
-        {
-            spacebar_timer += 0.75;
-        }
-        if ((spacebar_timer >= max_jump_force) or ((e.type == EVT_KEY_OFF) and (e.key == KEY_UP)))
-        {
-            player.jump(minf(max_jump_force,spacebar_timer));
-            spacebar_timer = 1.5;
-        }
+    if ((e.type == EVT_KEY_ON) and (e.key == KEY_UP))
+    {
+        spacebar_timer += 0.75;
+    }
+    if ((spacebar_timer >= max_jump_force) or ((e.type == EVT_KEY_OFF) and (e.key == KEY_UP)))
+    {
+        player.jump(minf(max_jump_force,spacebar_timer));
+        spacebar_timer = 1.5;
     }
 }

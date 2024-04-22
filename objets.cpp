@@ -61,3 +61,17 @@ bool Personnage::is_jumping() const
 {
     return jumping;
 }
+
+void Personnage::walk()
+{
+    int k = getKey();
+
+    if (k == KEY_LEFT)
+    {
+        crds.x() -= 5; 
+    }
+    if (k == KEY_RIGHT)
+    {
+        crds.x() += 5;
+    }
+}
