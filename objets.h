@@ -16,6 +16,7 @@ class Personnage
 
     // Gameplay
     int hp;
+    int scrolling_type;
 
     // Saut
     bool jumping;
@@ -29,6 +30,7 @@ class Personnage
         void jump(float force = max_jump_force);
         void update_jump();
         bool is_jumping() const;
+        void walk();
 
 };
 
