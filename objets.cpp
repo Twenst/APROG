@@ -25,12 +25,12 @@ int Personnage::getHp() const
     return hp;
 }
 
-void Personnage::jump(int force)
+void Personnage::jump(float force)
 {
     if (not jumping)
     {
         jumping = true;
-        jump_height = (floor_level - size_y) * float(force/max_jump_force);
+        jump_height = (floor_level - size_y) * (force/max_jump_force);
         t_jump = 0;
     }
 }
@@ -50,8 +50,14 @@ void Personnage::update_jump() //eq saut: y = (t - sqrt(max_height))² - max_hei
         {
             crds.y() = crds_y_init;
             t_jump = 0;
-            jumping = 0;
+            jumping = false;
             jump_height = 0;
+            flushEvents();
         }
     } 
+}
+
+bool Personnage::is_jumping() const
+{
+    return jumping;
 }

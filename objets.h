@@ -1,5 +1,6 @@
 #pragma once
 
+#include "constantes.h"
 #include <Imagine/Graphics.h>
 using namespace Imagine;
 
@@ -25,12 +26,14 @@ class Personnage
         Personnage();
         void draw() const;
         int getHp() const;
-        void jump(int force = 3); // 3 saut max
+        void jump(float force = max_jump_force);
         void update_jump();
+        bool is_jumping() const;
 
 };
 
 class Obstacle
 {
-
+    Coord crds; // coords du coin gauche haut
+    Coord size; // taille de l'obstacle
 };
