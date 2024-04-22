@@ -36,4 +36,16 @@ class Obstacle
 {
     Coord crds; // coords du coin gauche haut
     Coord size; // taille de l'obstacle
+
+    Color clr;
+
+    int type; // Type de l'obstaccle
+
+    public:
+        Obstacle();
+        void draw();
+
+
+
+
 };
