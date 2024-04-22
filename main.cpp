@@ -2,17 +2,34 @@
 using namespace Imagine;
 
 //---Constantes---//
-const int w = 512;
-const int h = 512;
+#include "constantes.h"
 
 //---Prototypes---//
+#include "affichage.h"
+#include "objets.h"
 
 //---Main---//
-int main()
+int main(int argc, char** argv)
 {
     openWindow(w,h);
 
-    //test
+    Personnage player;
+    while(player.getHp() > 0)
+    {
+        noRefreshBegin();
+        
+        clearWindow();
+        draw_background();
+        player.jump();
+        player.update_jump();
+        player.draw();
+
+        noRefreshEnd();
+
+        milliSleep(50);
+    }
+
+
     endGraphics();
     return 0;
 }

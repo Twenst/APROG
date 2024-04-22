@@ -5,5 +5,8 @@ set(CMAKE_CXX_STANDARD 11)
 
 find_package(Imagine REQUIRED COMPONENTS Graphics)
 
-add_executable(APROG main.cpp)
+add_executable(APROG main.cpp
+               affichage.h affichage.cpp
+               objets.h objets.cpp
+               constantes.h)
 target_link_libraries(APROG Imagine::Graphics)
