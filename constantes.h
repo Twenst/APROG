@@ -1,7 +1,7 @@
 #pragma once
 
 // Taille de la fenetre de jeu
-const int w = 1024;
+const int w = 1200;
 const int h = 1024;
 
 // Niveau du sol
