@@ -56,7 +56,7 @@ class Personnage
     Color clr;
 
     //Vitesse
-    int speed = 10;
+    int speed;
 
     // Gameplay
     int hp;
@@ -77,6 +77,7 @@ class Personnage
         void update_jump();
         bool is_jumping() const;
         void walk(Event e);
+        void update_walk();
         void getHit(Obstacle& obstacle);
         void looseHP();
         void addHP();

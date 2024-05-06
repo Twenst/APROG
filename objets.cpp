@@ -58,6 +58,7 @@ Personnage::Personnage()
     jump_height = 0;
     falling = 1;
     max_height = (floor_level - size_y)/2;
+    speed = 0;
 }
 
 void Personnage::draw() const
@@ -149,12 +150,21 @@ void Personnage::walk(Event e)
 {
     if ((e.type == EVT_KEY_ON) and (e.key == KEY_RIGHT))
     {
-        crds.x() = crds.x() + speed;
+        speed = 10;
     }
-    if ((e.type == EVT_KEY_ON) and (e.key == KEY_LEFT))
+    else if ((e.type == EVT_KEY_ON) and (e.key == KEY_LEFT))
     {
-        crds.x() = crds.x() - speed;
+        speed = -10;
     }
+    else if (e.type == EVT_KEY_OFF and (e.key == KEY_LEFT or e.key == KEY_RIGHT))
+    {
+        speed = 0;
+    }
+}
+
+void Personnage::update_walk()
+{
+    crds.x() += speed;
 }
 
 void Personnage::getHit(Obstacle& obstacle)

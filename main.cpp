@@ -33,6 +33,7 @@ int main(int argc, char** argv)
     {
         getEvent(0,e);
         player.update_jump();
+        player.update_walk();
         //player.update_color(spacebar_timer);
         partie.Timer ++;
 
