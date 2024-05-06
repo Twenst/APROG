@@ -15,7 +15,7 @@ class Obstacle
 
     int speed = 12; // Vitesse de l'obstacle
 
-    int type; // Type de l'obstacle
+    int type; // Type de l'obstacle (1 : dangereux , 2 : Bonus)
 
 
 public:
@@ -27,6 +27,8 @@ public:
     bool outOfBounds() const;
     void init(int scrollingType = 0); //Pour relancer l'obstacle depuis le début
     bool alreadyHit = false; // vérifie si l'obstacle à déjà touché le joueur
+    int getType() const;
+    void setType(int new_type);
 
 };
 class Partie
@@ -75,24 +77,12 @@ class Personnage
         void update_jump();
         bool is_jumping() const;
         void walk(Event e);
-        bool getHit(Obstacle& obstacle) const;
+        void getHit(Obstacle& obstacle);
         void looseHP();
         void addHP();
         void setFalling(int f);
         int getFalling() const;
-
-};
-
-class Bonus
-{
-        int type;
-
-    public:
-
-        Bonus();
-        void use_Bonus(Personnage player) const;
-        void draw() const;
-
+        void getBonus(Obstacle& obstacle);
 
 };
 

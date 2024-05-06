@@ -15,7 +15,7 @@ void draw_background()
 
 void draw_floor()
 {
-	Image<AlphaColor> grass_texture; Image<AlphaColor> dirt_texture;
+    Image<AlphaColor> grass_texture; Image<AlphaColor> dirt_texture;
 	load(grass_texture,stringSrcPath(grass)); load(dirt_texture,stringSrcPath(dirt));
 
 	for (int i = 0; 8*i*fac <= w; i++)
@@ -60,6 +60,12 @@ void draw_scrolling(int typescrolling)
         //Les obstacles viennent du haut
       drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"BAS",RED,46);
       drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"BAS",BLUE,45);
+    }
+    if(typescrolling == 4)
+    {
+        //Les obstacles viennent du haut
+      drawString(w/2 - 160 + rand()%2,h/4 + rand()%2,"BONUS",RED,46);
+      drawString(w/2 - 160 + rand()%2,h/4 + rand()%2,"BONUS",BLUE,45);
     }
 }
 

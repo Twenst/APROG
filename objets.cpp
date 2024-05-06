@@ -22,9 +22,14 @@ void Partie::update_scrolling(int type)
     {
         nbr_obstacle = 1;
     }
-    else
+    if(type == 2 or type == 3)
     {
         nbr_obstacle = 6;
+    }
+    if(type == 4)
+    {
+        nbr_obstacle = 1;
+
     }
 }
 
@@ -156,24 +161,36 @@ void Personnage::walk(Event e)
     }
 }
 
-bool Personnage::getHit(Obstacle& obstacle) const
+void Personnage::getHit(Obstacle& obstacle)
 {
     if(obstacle.alreadyHit == false)
     {
         if(crds.x() + size.x() < obstacle.getCoord().x() or crds.y()+size.y() < obstacle.getCoord().y()
             or crds.x() > obstacle.getCoord().x() + obstacle.getSize().x() or crds.y()> obstacle.getCoord().y()+ obstacle.getSize().y())
         {
-            return false;
+
         }
         else
         {
             obstacle.alreadyHit = true;
-            return true;
+            if(obstacle.getType() == 0)
+            {
+                looseHP();
+            }
+            else
+            {
+                getBonus(obstacle);
+            }
+
         }
     }
-    else
+}
+
+void Personnage::getBonus(Obstacle& obstacle)
+{
+    if(obstacle.getType() == 1)
     {
-        return false;
+        addHP();
     }
 }
 
@@ -187,6 +204,7 @@ void Personnage::addHP()
     hp ++;
 }
 
+
 Obstacle::Obstacle()
 {
     srand((unsigned int) time(0));
@@ -194,7 +212,7 @@ Obstacle::Obstacle()
 
     clr = BLACK;
     crds = Coord(w,floor_level - size.y());
-    type = 1;
+    type = 0;
 }
 
 
@@ -205,7 +223,7 @@ void Obstacle::draw() const
 
 void Obstacle::move(int scrollingType)
 {
-    if(scrollingType == 0 or scrollingType == 1)
+    if(scrollingType == 0 or scrollingType == 1 or scrollingType == 4)
     {
       crds.x() = crds.x() - speed;//Gauche ou Droite
     }
@@ -233,7 +251,8 @@ void Obstacle::init(int scrollingType)
 {
 
     alreadyHit = false;
-
+    clr = BLACK;
+    setType(0);
     if(scrollingType == 0)
     {
         //Obstacles viennent de la droite
@@ -262,6 +281,15 @@ void Obstacle::init(int scrollingType)
         size = Coord(35 + rand()%70,35);
         crds = Coord(rand()%w,h);
     }
+    if(scrollingType == 4)
+    {
+        //Bonus
+        speed =  abs(speed)*1;
+        size = Coord(35 + rand()%70,35);
+        crds = Coord(w,h/2);
+        clr = RED;
+        setType(1);
+    }
 }
 
 Coord Obstacle::getSize() const
@@ -273,17 +301,12 @@ Coord Obstacle::getCoord() const
 {
     return crds;
 }
-
-Bonus::Bonus()
+int Obstacle::getType() const
 {
-    type = 1;
+    return type;
 }
 
-void Bonus::use_Bonus(Personnage player) const
+void Obstacle::setType(int new_type)
 {
-    if(type ==1)
-    {
-        //COEUR
-        player.addHP();
-    }
+    type = new_type;
 }

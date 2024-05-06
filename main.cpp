@@ -75,10 +75,7 @@ int main(int argc, char** argv)
         //Le joueur se fait touché
         for (int i = 0; i < nbr_obstacle; ++i)
         {
-            if(player.getHit(obstacle[i]))
-            {
-                player.looseHP();
-            }
+            player.getHit(obstacle[i]);
         }
 
         // Saut
@@ -87,11 +84,11 @@ int main(int argc, char** argv)
         //Changement de scrolling quand le timer atteint 1000
         if(partie.Timer % 100 == 0)
         {
-            partie.update_scrolling(rand()%4) ;
+            partie.update_scrolling(rand()%5) ;
         }
 
         
-        milliSleep(25);
+        milliSleep(15);
     }
 
     endGraphics();

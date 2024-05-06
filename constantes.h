@@ -8,7 +8,7 @@ const int h = 1024;
 const double fac = 10.;
 
 // Niveau du sol
-const int floor_level = (2./3.)*h;
+const int floor_level = (7./12.)*h;
 
 // Carac du personnage
 const int size_x = 30;
