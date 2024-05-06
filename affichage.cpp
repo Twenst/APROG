@@ -3,6 +3,8 @@
 
 #include <Imagine/Graphics.h>
 using namespace Imagine;
+#include <Imagine/Images.h>
+using namespace Imagine;
 
 Color floor_color = ORANGE;
 
@@ -13,8 +15,15 @@ void draw_background()
 
 void draw_floor()
 {
+	Image<AlphaColor> grass_texture; Image<AlphaColor> dirt_texture;
+	load(grass_texture,stringSrcPath(grass)); load(dirt_texture,stringSrcPath(dirt));
+
+	for (int i = 0; 8*i*fac <= w; i++)
+	{
+		display(grass_texture,8*i*fac,floor_level,false,fac);
+	}
     //affiche le sol au niveau défini
-    fillRect(0,floor_level,w,h,floor_color);
+    //fillRect(0,floor_level,w,h,floor_color);
 }
 
 void draw_hp(int num_hp)
