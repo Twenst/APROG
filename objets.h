@@ -60,8 +60,9 @@ class Personnage
     int scrolling_type;
 
     // Saut
+    int max_height;
     bool jumping;
-    int t_jump; // cf eq saut
+    double t_jump; // cf eq saut
     int jump_height;
     int falling; // falling = 1 -> montée, falling = 0 -> début de la chute, falling = -1 -> chute
 
@@ -71,7 +72,6 @@ class Personnage
         int getHp() const;
         void jump();
         void update_jump();
-        void update_color(float power); //Selon la force du saut
         bool is_jumping() const;
         void walk();
         bool getHit(Obstacle& obstacle) const;

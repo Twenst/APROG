@@ -30,6 +30,7 @@ Personnage::Personnage()
     t_jump = 0;
     jump_height = 0;
     falling = 1;
+    max_height = (floor_level - size_y)/2;
 }
 
 void Personnage::draw() const
@@ -53,12 +54,6 @@ void Personnage::jump()
     }
 }
 
-void Personnage::update_color(float power)
-{
-    Color col(255 - (power*255)/max_jump_force,0,255 - (power*255)/max_jump_force);
-    clr =  col;
-}
-
 void Personnage::update_jump() //eq saut: y = (t - sqrt(max_height))² - max_height 
 {
     // falling = 1 -> montée, falling = 0 -> début de la chute, falling = -1 -> chute
@@ -66,8 +61,7 @@ void Personnage::update_jump() //eq saut: y = (t - sqrt(max_height))² - max_hei
     {
         if (falling == 1) // Monte
         {
-            int max_height = floor_level - size_y;
-            int new_y = pow(t_jump - sqrt(max_height),2) - max_height + floor_level - size_y; 
+            int new_y = pow(t_jump/jump_lenght - sqrt(max_height),2) - max_height + floor_level - size_y; 
 
             if (crds.y() >= new_y)
             {
