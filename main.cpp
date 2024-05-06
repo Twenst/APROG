@@ -10,7 +10,7 @@ using namespace Imagine;
 #include "affichage.h"
 #include "objets.h"
 float minf(float a, float b);
-void load_jumping(Personnage & player, float & spacebar_timer);
+void load_jumping(Personnage & player);
 
 //---Main---//
 int main(int argc, char** argv)
@@ -19,13 +19,12 @@ int main(int argc, char** argv)
     Partie partie;
     Personnage player;
     Obstacle obstacle;
-    float spacebar_timer = 1.5;
     int type_scrolling = 0;
 
     while(player.getHp() > 0)
     {
         player.update_jump();
-        player.update_color(spacebar_timer);
+        //player.update_color(spacebar_timer);
         partie.Timer ++;
 
         noRefreshBegin();
@@ -60,7 +59,9 @@ int main(int argc, char** argv)
         {
             player.looseHP();
         }
-        load_jumping(player, spacebar_timer);
+
+        // Saut
+        load_jumping(player);
 
         //Changement de scrolling quand le timer atteint 1000
         if(partie.Timer % 100 == 0)
@@ -82,21 +83,23 @@ float minf(float a, float b)
     return (a < b) ? a : b;
 }
 
-void load_jumping(Personnage & player, float & spacebar_timer)
+void load_jumping(Personnage & player)
 {
-
+    Event e2;
+    getEvent(0,e2); // J'ai modifié à 0 ( et ça marche )
     if (not player.is_jumping())
     {
-        Event e2;
-        getEvent(0,e2); // J'ai modifié à 0 ( et ça marche )
-        if ((e2.type == EVT_KEY_ON) and (e2.key == KEY_UP))
+        if (e2.type == EVT_KEY_ON and e2.key == KEY_UP)
         {
-            spacebar_timer += 0.75;
+            player.setFalling(1);
+            player.jump();
         }
-        if ((spacebar_timer >= max_jump_force) or ((e2.type == EVT_KEY_OFF) and (e2.key == KEY_UP)))
+    }
+    else
+    {
+        if (e2.type == EVT_KEY_OFF and e2.key == KEY_UP and player.getFalling() == 1) 
         {
-            player.jump(minf(max_jump_force,spacebar_timer));
-            spacebar_timer = 1.5;
+            player.setFalling(0);
         }
     }
 }

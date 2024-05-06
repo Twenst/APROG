@@ -29,11 +29,12 @@ Personnage::Personnage()
     jumping = false;
     t_jump = 0;
     jump_height = 0;
+    falling = 1;
 }
 
 void Personnage::draw() const
 {
-    // A FAIRE: AFFICHER LE SPRITE A LA PLACE DE LA COULEUR
+    // A FAIRE: AFFICHER UN SPRITE A LA PLACE DE LA COULEUR
 
     fillRect(crds.x(),crds.y(),size.x(),size.y(),clr);
 }
@@ -43,42 +44,80 @@ int Personnage::getHp() const
     return hp;
 }
 
-void Personnage::jump(float force)
+void Personnage::jump()
 {
     if (not jumping)
     {
         jumping = true;
-        jump_height = (floor_level - size_y) * (force/max_jump_force);
         t_jump = 0;
     }
 }
 
 void Personnage::update_color(float power)
 {
-    Color col(255 - (power*255)/max_jump_force,0,255 - (power*255)/max_jump_force );
+    Color col(255 - (power*255)/max_jump_force,0,255 - (power*255)/max_jump_force);
     clr =  col;
 }
 
 void Personnage::update_jump() //eq saut: y = (t - sqrt(max_height))² - max_height 
 {
+    // falling = 1 -> montée, falling = 0 -> début de la chute, falling = -1 -> chute
     if (jumping)
     {
-        int new_y = pow(t_jump - sqrt(jump_height),2) - jump_height + floor_level; 
+        if (falling == 1)
+        {
+            int max_height = floor_level - size_y;
+            int new_y = pow(t_jump - sqrt(max_height),2) - max_height + floor_level; 
 
-        if (new_y <= floor_level)
-        {
-            crds.y() = new_y - size_y;
-            t_jump++;
+            if (crds.y() >= new_y - size_y)
+            {
+                crds.y() = new_y - size_y;
+                t_jump++;
+            }
+            else
+            {
+                falling = 0;
+            }
         }
-        else
+
+        if (falling == -1)
         {
-            crds.y() = crds_y_init;
+            int new_y = pow(t_jump,2) + jump_height; 
+
+            if (new_y + size_y <= floor_level)
+            {
+                crds.y() = new_y;
+                t_jump++;
+            }
+            else
+            {
+                crds.y() = crds_y_init;
+                t_jump = 0;
+                jumping = false;
+                jump_height = 0;
+                falling = 1;
+                flushEvents();
+            }
+        }
+
+        if (falling == 0) // début de la chute, on récupère la hauteur du saut pour change l'eq
+        {
+            falling = -1;
+            jump_height = crds.y();
             t_jump = 0;
-            jumping = false;
-            jump_height = 0;
-            flushEvents();
         }
+        
     } 
+}
+
+void Personnage::setFalling(int f)
+{
+    falling = f;
+}
+
+int Personnage::getFalling() const
+{
+    return falling;
 }
 
 bool Personnage::is_jumping() const

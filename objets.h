@@ -63,18 +63,21 @@ class Personnage
     bool jumping;
     int t_jump; // cf eq saut
     int jump_height;
+    int falling; // falling = 1 -> montée, falling = 0 -> début de la chute, falling = -1 -> chute
 
     public:
         Personnage();
         void draw() const;
         int getHp() const;
-        void jump(float force = max_jump_force);
+        void jump();
         void update_jump();
         void update_color(float power); //Selon la force du saut
         bool is_jumping() const;
         void walk();
         bool getHit(Obstacle& obstacle) const;
         void looseHP();
+        void setFalling(int f);
+        int getFalling() const;
 
 };
 
