@@ -7,6 +7,11 @@ using namespace Imagine;
 
 Color floor_color = ORANGE;
 
+int pos(int a)
+{
+	return (a>0) ? a : 0;
+}
+
 int min(int a, int b)
 {
 	return (a > b) ? b : a;
@@ -31,8 +36,12 @@ void draw_sky(Image<AlphaColor> sky_textures[nb_sky])
 	{
 		for (int j = 0; 8*j*fac < floor_level; j++)
 		{
-			display(sky_textures[nb_sky-1-min(j,nb_sky-1)],8*i*fac,8*j*fac,false,fac);
+			display(sky_textures[min(pos(nb_sky-1-j),nb_sky-1)],8*i*fac,8*j*fac,false,fac);
 		}
+/* 		for (int j = floor_level/(8*fac); j > 0; j--)
+		{
+			display(sky_textures[pos(min(nb_sky-1-j,nb_sky-1))],8*i*fac,8*j*fac,false,fac);
+		} */
 	}
 }
 
@@ -83,12 +92,6 @@ void draw_scrolling(int typescrolling)
         //Les obstacles viennent du haut
       drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"BAS",RED,46);
       drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"BAS",BLUE,45);
-    }
-    if(typescrolling == 4)
-    {
-        //Les obstacles viennent du haut
-      drawString(w/2 - 160 + rand()%2,h/4 + rand()%2,"BONUS",RED,46);
-      drawString(w/2 - 160 + rand()%2,h/4 + rand()%2,"BONUS",BLUE,45);
     }
 }
 

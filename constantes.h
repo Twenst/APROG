@@ -3,9 +3,9 @@
 #include <string>
 
 // Taille de la fenetre de jeu
-const int w = 1200;
+const int w = 1024;
 const int h = 1024;
-const double fac = 10.;
+const double fac = 8.;
 
 // Niveau du sol
 const int floor_level = (7./12.)*h;
