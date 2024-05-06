@@ -145,14 +145,10 @@ void Personnage::walk(Event e)
     if ((e.type == EVT_KEY_ON) and (e.key == KEY_RIGHT))
     {
         crds.x() = crds.x() + speed;
-
-
     }
     if ((e.type == EVT_KEY_ON) and (e.key == KEY_LEFT))
     {
         crds.x() = crds.x() - speed;
-
-
     }
 }
 

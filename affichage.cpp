@@ -1,4 +1,3 @@
-#include "constantes.h"
 #include "affichage.h"
 
 #include <Imagine/Graphics.h>
@@ -8,22 +7,46 @@ using namespace Imagine;
 
 Color floor_color = ORANGE;
 
-void draw_background()
+int min(int a, int b)
 {
-    draw_floor();
+	return (a > b) ? b : a;
 }
 
-void draw_floor()
+void load_textures(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky])
 {
-	Image<AlphaColor> grass_texture; Image<AlphaColor> dirt_texture;
-	load(grass_texture,stringSrcPath(grass)); load(dirt_texture,stringSrcPath(dirt));
+	for (int i = 0; i < nb_grass; i++) load(grass_textures[i],stringSrcPath(grass[i]));
+	for (int i = 0; i < nb_dirt; i++) load(dirt_textures[i],stringSrcPath(dirt[i]));
+	for (int i = 0; i < nb_sky; i++) load(sky_textures[i],stringSrcPath(sky[i]));
+}
 
+void draw_background(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky])
+{
+	draw_sky(sky_textures);
+    draw_floor(grass_textures,dirt_textures);
+}
+
+void draw_sky(Image<AlphaColor> sky_textures[nb_sky])
+{
 	for (int i = 0; 8*i*fac <= w; i++)
 	{
-		display(grass_texture,8*i*fac,floor_level,false,fac);
+		for (int j = 0; 8*j*fac < floor_level; j++)
+		{
+			display(sky_textures[nb_sky-1-min(j,nb_sky-1)],8*i*fac,8*j*fac,false,fac);
+		}
 	}
-    //affiche le sol au niveau défini
-    //fillRect(0,floor_level,w,h,floor_color);
+}
+
+void draw_floor(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt])
+{
+	for (int i = 0; 8*i*fac <= w; i++)
+	{
+		display(grass_textures[i%nb_grass],8*i*fac,floor_level,false,fac);
+
+		for (int j = 1; 8*j*fac <= h-floor_level; j++)
+		{
+			display(dirt_textures[(i+j)%nb_dirt],8*i*fac,floor_level + 8*j*fac,false,fac);
+		}
+	}
 }
 
 void draw_hp(int num_hp)
