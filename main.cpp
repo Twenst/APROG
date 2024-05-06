@@ -93,7 +93,7 @@ int main(int argc, char** argv)
         }
 
         
-        milliSleep(15);
+        milliSleep(5);
     }
 
     endGraphics();

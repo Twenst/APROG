@@ -29,6 +29,7 @@ public:
     bool alreadyHit = false; // vérifie si l'obstacle à déjà touché le joueur
     int getType() const;
     void setType(int new_type);
+    void erase();
 
 };
 class Partie

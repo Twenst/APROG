@@ -157,6 +157,8 @@ void Personnage::walk(Event e)
     }
 }
 
+
+
 void Personnage::getHit(Obstacle& obstacle)
 {
     if(obstacle.alreadyHit == false)
@@ -184,6 +186,7 @@ void Personnage::getHit(Obstacle& obstacle)
 
 void Personnage::getBonus(Obstacle& obstacle)
 {
+    obstacle.erase();
     if(obstacle.getType() == 1)
     {
         addHP();
@@ -305,4 +308,9 @@ int Obstacle::getType() const
 void Obstacle::setType(int new_type)
 {
     type = new_type;
+}
+
+void Obstacle::erase()
+{
+    size = (0);
 }
