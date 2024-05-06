@@ -10,7 +10,7 @@ using namespace Imagine;
 #include "affichage.h"
 #include "objets.h"
 float minf(float a, float b);
-void load_jumping(Personnage & player, float & spacebar_timer);
+void load_jumping(Personnage & player,Event e);
 
 //---Main---//
 int main(int argc, char** argv)
@@ -22,10 +22,13 @@ int main(int argc, char** argv)
     Obstacle* obstacle = new Obstacle[nbr_obstacle];
     float spacebar_timer = 1.5;
     int type_scrolling = 0;
+    Event e;
 
     while(player.getHp() > 0)
     {
+        getEvent(0,e);
         player.update_jump();
+        //player.update_color(spacebar_timer);
         partie.Timer ++;
 
         noRefreshBegin();
@@ -38,7 +41,7 @@ int main(int argc, char** argv)
 
         // JOUEUR :
 
-        //player.walk();
+        player.walk(e);
         player.draw();
 
         // OBSTACLES :
@@ -53,10 +56,11 @@ int main(int argc, char** argv)
         if(outOfBounds)
         {
             delete[] obstacle;
-            Obstacle* obstacle = new Obstacle[nbr_obstacle];
+            nbr_obstacle = partie.get_nbr_obstacle();
+            obstacle = new Obstacle[nbr_obstacle];
             partie.init(obstacle);
             type_scrolling = partie.get_scrolling_type();
-            nbr_obstacle = partie.get_nbr_obstacle();
+
 
         }
         for(int i = 0 ; i<nbr_obstacle;i++)
@@ -77,12 +81,13 @@ int main(int argc, char** argv)
             }
         }
 
-        load_jumping(player, spacebar_timer);
+        // Saut
+        load_jumping(player,e);
 
         //Changement de scrolling quand le timer atteint 1000
         if(partie.Timer % 100 == 0)
         {
-            partie.update_scrolling(rand()%2) ;
+            partie.update_scrolling(rand()%4) ;
         }
 
         
@@ -99,21 +104,21 @@ float minf(float a, float b)
     return (a < b) ? a : b;
 }
 
-void load_jumping(Personnage & player, float & spacebar_timer)
+void load_jumping(Personnage & player,Event e)
 {
-
     if (not player.is_jumping())
     {
-        Event e2;
-        getEvent(0,e2); // J'ai modifié à 0 ( et ça marche )
-        if ((e2.type == EVT_KEY_ON) and (e2.key == KEY_UP))
+        if (e.type == EVT_KEY_ON and e.key == KEY_UP)
         {
-            spacebar_timer += 0.75;
+            player.setFalling(1);
+            player.jump();
         }
-        if ((spacebar_timer >= max_jump_force) or ((e2.type == EVT_KEY_OFF) and (e2.key == KEY_UP)))
+    }
+    else
+    {
+        if (e.type == EVT_KEY_OFF and e.key == KEY_UP and player.getFalling() == 1)
         {
-            player.jump(minf(max_jump_force,spacebar_timer));
-            spacebar_timer = 1.5;
+            player.setFalling(0);
         }
     }
 }

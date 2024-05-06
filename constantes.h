@@ -14,6 +14,4 @@ const int crds_x_init = w/2 - size_x/2;
 const int crds_y_init = floor_level - size_y;
 
 // Saut
-const float max_jump_force = 10.;
-//eq saut: y = (t - sqrt(max_height))² - max_height
-
+const double jump_lenght = 1.2;
