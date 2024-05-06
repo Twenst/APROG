@@ -1,2 +1,4 @@
 build/
 .vscode/
+main_*
+objets_*
