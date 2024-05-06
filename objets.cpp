@@ -64,23 +64,23 @@ void Personnage::update_jump() //eq saut: y = (t - sqrt(max_height))² - max_hei
     // falling = 1 -> montée, falling = 0 -> début de la chute, falling = -1 -> chute
     if (jumping)
     {
-        if (falling == 1)
+        if (falling == 1) // Monte
         {
             int max_height = floor_level - size_y;
-            int new_y = pow(t_jump - sqrt(max_height),2) - max_height + floor_level; 
+            int new_y = pow(t_jump - sqrt(max_height),2) - max_height + floor_level - size_y; 
 
-            if (crds.y() >= new_y - size_y)
+            if (crds.y() >= new_y)
             {
-                crds.y() = new_y - size_y;
+                crds.y() = new_y;
                 t_jump++;
             }
-            else
+            else // on est arrivé en haut du saut -> mtn chute
             {
                 falling = 0;
             }
         }
 
-        if (falling == -1)
+        if (falling == -1) // Chute
         {
             int new_y = pow(t_jump,2) + jump_height; 
 
@@ -105,8 +105,7 @@ void Personnage::update_jump() //eq saut: y = (t - sqrt(max_height))² - max_hei
             falling = -1;
             jump_height = crds.y();
             t_jump = 0;
-        }
-        
+        } 
     } 
 }
 
