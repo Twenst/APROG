@@ -1,7 +1,9 @@
 #include <Imagine/Graphics.h>
+using namespace Imagine;
+#include <Imagine/Images.h>
+using namespace Imagine;
 #include <iostream>
 #include <string>
-using namespace Imagine;
 
 //---Constantes---//
 #include "constantes.h"
@@ -24,6 +26,9 @@ int main(int argc, char** argv)
     int type_scrolling = 0;
     Event e;
 
+    Image<AlphaColor> grass_textures[nb_grass]; Image<AlphaColor> dirt_textures[nb_dirt]; Image<AlphaColor> sky_textures[nb_sky];
+	load_textures(grass_textures,dirt_textures,sky_textures);
+
     while(player.getHp() > 0)
     {
         getEvent(0,e);
@@ -34,7 +39,7 @@ int main(int argc, char** argv)
         noRefreshBegin();
         
         clearWindow();
-        draw_background();
+        draw_background(grass_textures,dirt_textures,sky_textures);
         draw_hp(player.getHp());
         draw_timer(partie.Timer);
         draw_scrolling(type_scrolling);

@@ -20,5 +20,9 @@ const int crds_y_init = floor_level - size_y;
 const double jump_lenght = 1.2;
 
 // Textures
-const std::string grass = "./assets/grass.png";
-const std::string dirt = "./assets/dirt.png";
+const int nb_grass = 2;
+const int nb_dirt = 3;
+const int nb_sky = 5;
+const std::string grass[nb_grass] = {"./assets/grass1.png","./assets/grass2.png"};
+const std::string dirt[nb_dirt] = {"./assets/dirt1.png","./assets/dirt2.png","./assets/dirt3.png"};
+const std::string sky[nb_sky] = {"./assets/sky1.png","./assets/sky2.png","./assets/sky3.png","./assets/sky4.png","./assets/sky5.png"};
