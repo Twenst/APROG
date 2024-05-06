@@ -33,7 +33,7 @@ int main(int argc, char** argv)
         {
             load_jumping(player, spacebar_timer);
         }
-        //player.walk();
+        player.walk();
         
         milliSleep(25);
     }
