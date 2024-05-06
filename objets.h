@@ -6,18 +6,6 @@ using namespace Imagine;
 
 typedef IntPoint2 Coord;
 
-class Partie
-{
-    int type_scrolling;
-
-public:
-    Partie();
-    int Timer;
-    void update_scrolling(int type);
-    int get_scrolling_type() const;
-
-};
-
 class Obstacle
 {
     Coord crds; // Coords du coin gauche haut
@@ -35,14 +23,27 @@ public:
     Coord getSize() const;
     Coord getCoord() const;
     void draw() const;
-    void move();
+    void move(int scrollingType);
     bool outOfBounds() const;
     void init(int scrollingType = 0); //Pour relancer l'obstacle depuis le début
     bool alreadyHit = false; // vérifie si l'obstacle à déjà touché le joueur
 
+};
+class Partie
+{
+    int type_scrolling;
+    int nbr_obstacle;
 
+public:
+    Partie();
+    int Timer;
+    void update_scrolling(int type);
+    int get_scrolling_type() const;
+    int get_nbr_obstacle() const;
+    void init(Obstacle* obstacle) const;
 
 };
+
 
 class Personnage
 {
@@ -73,11 +74,25 @@ class Personnage
         void jump();
         void update_jump();
         bool is_jumping() const;
-        void walk();
+        void walk(Event e);
         bool getHit(Obstacle& obstacle) const;
         void looseHP();
+        void addHP();
         void setFalling(int f);
         int getFalling() const;
+
+};
+
+class Bonus
+{
+        int type;
+
+    public:
+
+        Bonus();
+        void use_Bonus(Personnage player) const;
+        void draw() const;
+
 
 };
 

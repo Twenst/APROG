@@ -10,7 +10,7 @@ using namespace Imagine;
 #include "affichage.h"
 #include "objets.h"
 float minf(float a, float b);
-void load_jumping(Personnage & player);
+void load_jumping(Personnage & player,Event e);
 
 //---Main---//
 int main(int argc, char** argv)
@@ -18,11 +18,15 @@ int main(int argc, char** argv)
     openWindow(w,h,"Swolling");
     Partie partie;
     Personnage player;
-    Obstacle obstacle;
+    int nbr_obstacle = partie.get_nbr_obstacle();
+    Obstacle* obstacle = new Obstacle[nbr_obstacle];
+    float spacebar_timer = 1.5;
     int type_scrolling = 0;
+    Event e;
 
     while(player.getHp() > 0)
     {
+        getEvent(0,e);
         player.update_jump();
         //player.update_color(spacebar_timer);
         partie.Timer ++;
@@ -35,38 +39,55 @@ int main(int argc, char** argv)
         draw_timer(partie.Timer);
         draw_scrolling(type_scrolling);
 
-
-
         // JOUEUR :
 
-        //player.walk(); Ca marche pas cette merde
+        player.walk(e);
         player.draw();
 
         // OBSTACLES :
-        if(obstacle.outOfBounds())
+        bool outOfBounds = true;
+        for(int i = 0 ; i<nbr_obstacle;i++)
         {
-
-            obstacle.init(partie.get_scrolling_type());
-            type_scrolling = partie.get_scrolling_type();
+            if(obstacle[i].outOfBounds() == false)
+            {
+                outOfBounds= false;
+            }
         }
-        obstacle.move();
-        obstacle.draw();
+        if(outOfBounds)
+        {
+            delete[] obstacle;
+            nbr_obstacle = partie.get_nbr_obstacle();
+            obstacle = new Obstacle[nbr_obstacle];
+            partie.init(obstacle);
+            type_scrolling = partie.get_scrolling_type();
+
+
+        }
+        for(int i = 0 ; i<nbr_obstacle;i++)
+        {
+            obstacle[i].move(type_scrolling);
+            obstacle[i].draw();
+
+        }
 
         noRefreshEnd();
 
         //Le joueur se fait touché
-        if(player.getHit(obstacle))
+        for (int i = 0; i < nbr_obstacle; ++i)
         {
-            player.looseHP();
+            if(player.getHit(obstacle[i]))
+            {
+                player.looseHP();
+            }
         }
 
         // Saut
-        load_jumping(player);
+        load_jumping(player,e);
 
         //Changement de scrolling quand le timer atteint 1000
         if(partie.Timer % 100 == 0)
         {
-            partie.update_scrolling(rand()%2) ;
+            partie.update_scrolling(rand()%4) ;
         }
 
         
@@ -83,13 +104,11 @@ float minf(float a, float b)
     return (a < b) ? a : b;
 }
 
-void load_jumping(Personnage & player)
+void load_jumping(Personnage & player,Event e)
 {
-    Event e2;
-    getEvent(0,e2); // J'ai modifié à 0 ( et ça marche )
     if (not player.is_jumping())
     {
-        if (e2.type == EVT_KEY_ON and e2.key == KEY_UP)
+        if (e.type == EVT_KEY_ON and e.key == KEY_UP)
         {
             player.setFalling(1);
             player.jump();
@@ -97,7 +116,7 @@ void load_jumping(Personnage & player)
     }
     else
     {
-        if (e2.type == EVT_KEY_OFF and e2.key == KEY_UP and player.getFalling() == 1) 
+        if (e.type == EVT_KEY_OFF and e.key == KEY_UP and player.getFalling() == 1)
         {
             player.setFalling(0);
         }
