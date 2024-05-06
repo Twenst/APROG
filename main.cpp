@@ -28,6 +28,8 @@ int main(int argc, char** argv)
 
     Image<AlphaColor> grass_textures[nb_grass]; Image<AlphaColor> dirt_textures[nb_dirt]; Image<AlphaColor> sky_textures[nb_sky];
 	load_textures(grass_textures,dirt_textures,sky_textures);
+    Image<AlphaColor> left[2]; Image<AlphaColor> right[2]; Image<AlphaColor> up[2]; Image<AlphaColor> down[2];
+    load_arrow(left,right,up,down);
 
     while(player.getHp() > 0)
     {
@@ -44,6 +46,7 @@ int main(int argc, char** argv)
         draw_background(grass_textures,dirt_textures,sky_textures);
         draw_hp(player.getHp());
         draw_timer(partie.Timer);
+        draw_scrolling(type_scrolling,left,right,up,down);
         draw_scrolling(type_scrolling);
         player.draw();
 
