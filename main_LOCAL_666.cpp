@@ -18,14 +18,14 @@ int main(int argc, char** argv)
     openWindow(w,h,"Swolling");
     Partie partie;
     Personnage player;
-    int nbr_obstacle = partie.get_nbr_obstacle();
-    Obstacle* obstacle = new Obstacle[nbr_obstacle];
+    Obstacle obstacle;
     float spacebar_timer = 1.5;
     int type_scrolling = 0;
 
     while(player.getHp() > 0)
     {
         player.update_jump();
+        player.update_color(spacebar_timer);
         partie.Timer ++;
 
         noRefreshBegin();
@@ -36,47 +36,30 @@ int main(int argc, char** argv)
         draw_timer(partie.Timer);
         draw_scrolling(type_scrolling);
 
+
+
         // JOUEUR :
 
-        //player.walk();
+        //player.walk(); Ca marche pas cette merde
         player.draw();
 
         // OBSTACLES :
-        bool outOfBounds = true;
-        for(int i = 0 ; i<nbr_obstacle;i++)
+        if(obstacle.outOfBounds())
         {
-            if(obstacle[i].outOfBounds() == false)
-            {
-                outOfBounds= false;
-            }
-        }
-        if(outOfBounds)
-        {
-            delete[] obstacle;
-            Obstacle* obstacle = new Obstacle[nbr_obstacle];
-            partie.init(obstacle);
+
+            obstacle.init(partie.get_scrolling_type());
             type_scrolling = partie.get_scrolling_type();
-            nbr_obstacle = partie.get_nbr_obstacle();
-
         }
-        for(int i = 0 ; i<nbr_obstacle;i++)
-        {
-            obstacle[i].move(type_scrolling);
-            obstacle[i].draw();
-
-        }
+        obstacle.move();
+        obstacle.draw();
 
         noRefreshEnd();
 
         //Le joueur se fait touché
-        for (int i = 0; i < nbr_obstacle; ++i)
+        if(player.getHit(obstacle))
         {
-            if(player.getHit(obstacle[i]))
-            {
-                player.looseHP();
-            }
+            player.looseHP();
         }
-
         load_jumping(player, spacebar_timer);
 
         //Changement de scrolling quand le timer atteint 1000

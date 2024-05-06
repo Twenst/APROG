@@ -15,4 +15,5 @@ const int crds_y_init = floor_level - size_y;
 
 // Saut
 const float max_jump_force = 10.;
-//eq saut: y = (t - sqrt(max_height))² - max_height 
+//eq saut: y = (t - sqrt(max_height))² - max_height
+

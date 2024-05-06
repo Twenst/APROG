@@ -7,7 +7,6 @@ Partie::Partie()
 {
     type_scrolling = 0;
     Timer = 0;
-    nbr_obstacle = 1;
 }
 
 int Partie::get_scrolling_type() const
@@ -18,27 +17,6 @@ int Partie::get_scrolling_type() const
 void Partie::update_scrolling(int type)
 {
     type_scrolling = type;
-    if(type == 0 or type == 1)
-    {
-        nbr_obstacle = 1;
-    }
-    else
-    {
-        nbr_obstacle = 3;
-    }
-}
-
-int Partie::get_nbr_obstacle() const
-{
-    return nbr_obstacle;
-}
-
-void Partie::init(Obstacle* obstacle) const
-{
-    for(int i = 0; i < nbr_obstacle;i++)
-    {
-        obstacle[i].init(type_scrolling);
-    }
 }
 
 
@@ -111,7 +89,7 @@ bool Personnage::is_jumping() const
 void Personnage::walk()
 {
     Event e;
-    getEvent(-1,e);
+    getEvent(-2,e);
     if ((e.type == EVT_KEY_ON) and (e.key == KEY_RIGHT))
     {
         crds.x() = crds.x() + speed;
@@ -169,17 +147,9 @@ void Obstacle::draw() const
     fillRect(crds.x(),crds.y(),size.x(),size.y(),clr);
 }
 
-void Obstacle::move(int scrollingType)
+void Obstacle::move()
 {
-    if(scrollingType == 0 or scrollingType == 1)
-    {
-      crds.x() = crds.x() - speed;//Gauche ou Droite
-    }
-    if(scrollingType == 2 or scrollingType == 3)
-    {
-      crds.y() = crds.y() - speed;//Gauche ou Droite
-    }
-
+    crds.x() = crds.x() - speed;
 
 }
 
@@ -199,34 +169,20 @@ void Obstacle::init(int scrollingType)
 {
 
     alreadyHit = false;
+    size = Coord(35,40 + rand()%200);
+
 
     if(scrollingType == 0)
     {
-        //Obstacles viennent de la droite
-        speed = abs(speed)*1;
-        size = Coord(35,40 + rand()%50);
+        //Obstacle se dirige vers la droite
         crds = Coord(w,floor_level - size.y());
+        speed = abs(speed)*1.1;
     }
-    if(scrollingType == 1)
+    else
     {
-        //Obstacles viennent de la gauche
-        speed = - abs(speed)*1;
-        size = Coord(35,40 + rand()%50);
+         //Obstacle se dirige vers la gauche
         crds = Coord(0,floor_level - size.y());
-    }
-    if(scrollingType == 2)
-    {
-        //Obstacles viennent du haut
-        speed = - abs(speed)*1;
-        size = Coord(35 + rand()%70,35);
-        crds = Coord(rand()%w,0);
-    }
-    if(scrollingType == 3)
-    {
-        //Obstacles viennent du bas
-        speed =  abs(speed)*1;
-        size = Coord(35 + rand()%70,35);
-        crds = Coord(rand()%w,h);
+        speed = - abs(speed)*1.1;
     }
 }
 

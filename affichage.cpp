@@ -30,13 +30,27 @@ void draw_scrolling(int typescrolling)
 {
     if(typescrolling == 0)
     {
-      drawString(w/3 + rand()%2,h/4 + rand()%2,"DROITE",RED,46);
-      drawString(w/3 + rand()%2,h/4 + rand()%2,"DROITE",BLUE,45);
+      //Les obstacles viennent de la droite
+      drawString(w/2 - 200 + rand()%2,h/4 + rand()%2,"DROITE",RED,46);
+      drawString(w/2 - 200 + rand()%2,h/4 + rand()%2,"DROITE",BLUE,45);
     }
     if(typescrolling == 1)
     {
-      drawString(w/3 + rand()%2,h/4 + rand()%2,"GAUCHE",RED,46);
-      drawString(w/3 + rand()%2,h/4 + rand()%2,"GAUCHE",BLUE,45);
+      //Les obstacles viennent de la gauche
+      drawString(w/2 - 200 + rand()%2,h/4 + rand()%2,"GAUCHE",RED,46);
+      drawString(w/2 - 200 + rand()%2,h/4 + rand()%2,"GAUCHE",BLUE,45);
+    }
+    if(typescrolling == 2)
+    {
+      //Les obstacles viennent du haut
+      drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"HAUT",RED,46);
+      drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"HAUT",BLUE,45);
+    }
+    if(typescrolling == 3)
+    {
+        //Les obstacles viennent du haut
+      drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"BAS",RED,46);
+      drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"BAS",BLUE,45);
     }
 }
 

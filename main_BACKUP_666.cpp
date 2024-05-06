@@ -18,14 +18,14 @@ int main(int argc, char** argv)
     openWindow(w,h,"Swolling");
     Partie partie;
     Personnage player;
-    int nbr_obstacle = partie.get_nbr_obstacle();
-    Obstacle* obstacle = new Obstacle[nbr_obstacle];
+    Obstacle obstacle;
     float spacebar_timer = 1.5;
     int type_scrolling = 0;
 
     while(player.getHp() > 0)
     {
         player.update_jump();
+        player.update_color(spacebar_timer);
         partie.Timer ++;
 
         noRefreshBegin();
@@ -36,47 +36,31 @@ int main(int argc, char** argv)
         draw_timer(partie.Timer);
         draw_scrolling(type_scrolling);
 
+
+
         // JOUEUR :
 
-        //player.walk();
+        //player.walk(); Ca marche pas cette merde
         player.draw();
 
         // OBSTACLES :
-        bool outOfBounds = true;
-        for(int i = 0 ; i<nbr_obstacle;i++)
+        if(obstacle.outOfBounds())
         {
-            if(obstacle[i].outOfBounds() == false)
-            {
-                outOfBounds= false;
-            }
-        }
-        if(outOfBounds)
-        {
-            delete[] obstacle;
-            Obstacle* obstacle = new Obstacle[nbr_obstacle];
-            partie.init(obstacle);
+
+            obstacle.init(partie.get_scrolling_type());
             type_scrolling = partie.get_scrolling_type();
-            nbr_obstacle = partie.get_nbr_obstacle();
-
         }
-        for(int i = 0 ; i<nbr_obstacle;i++)
-        {
-            obstacle[i].move(type_scrolling);
-            obstacle[i].draw();
-
-        }
+        obstacle.move();
+        obstacle.draw();
 
         noRefreshEnd();
 
+<<<<<<< HEAD
         //Le joueur se fait touché
-        for (int i = 0; i < nbr_obstacle; ++i)
+        if(player.getHit(obstacle))
         {
-            if(player.getHit(obstacle[i]))
-            {
-                player.looseHP();
-            }
+            player.looseHP();
         }
-
         load_jumping(player, spacebar_timer);
 
         //Changement de scrolling quand le timer atteint 1000
@@ -85,6 +69,13 @@ int main(int argc, char** argv)
             partie.update_scrolling(rand()%2) ;
         }
 
+=======
+        if (not player.is_jumping())
+        {
+            load_jumping(player, spacebar_timer);
+        }
+        //player.walk();
+>>>>>>> 5e1b5dd670e312d01e37ac2477d2156eb18df91a
         
         milliSleep(25);
     }
@@ -101,6 +92,7 @@ float minf(float a, float b)
 
 void load_jumping(Personnage & player, float & spacebar_timer)
 {
+<<<<<<< HEAD
 
     if (not player.is_jumping())
     {
@@ -115,5 +107,18 @@ void load_jumping(Personnage & player, float & spacebar_timer)
             player.jump(minf(max_jump_force,spacebar_timer));
             spacebar_timer = 1.5;
         }
+=======
+    Event e;
+    getEvent(-1,e);
+
+    if ((e.type == EVT_KEY_ON) and (e.key == KEY_UP))
+    {
+        spacebar_timer += 0.75;
+    }
+    if ((spacebar_timer >= max_jump_force) or ((e.type == EVT_KEY_OFF) and (e.key == KEY_UP)))
+    {
+        player.jump(minf(max_jump_force,spacebar_timer));
+        spacebar_timer = 1.5;
+>>>>>>> 5e1b5dd670e312d01e37ac2477d2156eb18df91a
     }
 }
