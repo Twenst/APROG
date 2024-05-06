@@ -6,6 +6,44 @@ using namespace Imagine;
 
 typedef IntPoint2 Coord;
 
+class Partie
+{
+    int type_scrolling;
+
+public:
+    Partie();
+    int Timer;
+    void update_scrolling(int type);
+    int get_scrolling_type() const;
+
+};
+
+class Obstacle
+{
+    Coord crds; // Coords du coin gauche haut
+    Coord size; // Taille de l'obstacle
+
+    Color clr;
+
+    int speed = 12; // Vitesse de l'obstacle
+
+    int type; // Type de l'obstacle
+
+
+public:
+    Obstacle();
+    Coord getSize() const;
+    Coord getCoord() const;
+    void draw() const;
+    void move();
+    bool outOfBounds() const;
+    void init(int scrollingType = 0); //Pour relancer l'obstacle depuis le début
+    bool alreadyHit = false; // vérifie si l'obstacle à déjà touché le joueur
+
+
+
+};
+
 class Personnage
 {
     Coord crds; // coords du coin gauche haut
@@ -13,6 +51,9 @@ class Personnage
 
     //à ajouter l'image(s) à afficher; pour l'instant couleur
     Color clr;
+
+    //Vitesse
+    int speed = 10;
 
     // Gameplay
     int hp;
@@ -29,25 +70,12 @@ class Personnage
         int getHp() const;
         void jump(float force = max_jump_force);
         void update_jump();
+        void update_color(float power); //Selon la force du saut
         bool is_jumping() const;
         void walk();
+        bool getHit(Obstacle& obstacle) const;
+        void looseHP();
 
 };
 
-class Obstacle
-{
-    Coord crds; // coords du coin gauche haut
-    Coord size; // taille de l'obstacle
 
-    Color clr;
-
-    int type; // Type de l'obstaccle
-
-    public:
-        Obstacle();
-        void draw();
-
-
-
-
-};
