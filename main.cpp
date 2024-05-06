@@ -34,6 +34,7 @@ int main(int argc, char** argv)
         getEvent(0,e);
         player.update_jump();
         player.update_walk();
+        player.update_dash();
         //player.update_color(spacebar_timer);
         partie.Timer ++;
 
@@ -44,11 +45,14 @@ int main(int argc, char** argv)
         draw_hp(player.getHp());
         draw_timer(partie.Timer);
         draw_scrolling(type_scrolling);
+        player.draw();
+
+        noRefreshEnd();
 
         // JOUEUR :
-
+        load_jumping(player,e);
         player.walk(e);
-        player.draw();
+        player.dash(e);
 
         // OBSTACLES :
         bool outOfBounds = true;
@@ -76,23 +80,17 @@ int main(int argc, char** argv)
 
         }
 
-        noRefreshEnd();
-
         //Le joueur se fait touché
         for (int i = 0; i < nbr_obstacle; ++i)
         {
             player.getHit(obstacle[i]);
         }
 
-        // Saut
-        load_jumping(player,e);
-
         //Changement de scrolling quand le timer atteint 1000
         if(partie.Timer % 100 == 0)
         {
             partie.update_scrolling(rand()%5) ;
         }
-
         
         milliSleep(15);
     }

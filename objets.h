@@ -57,6 +57,7 @@ class Personnage
 
     //Vitesse
     int speed;
+    double dash_speed;
 
     // Gameplay
     int hp;
@@ -78,6 +79,8 @@ class Personnage
         bool is_jumping() const;
         void walk(Event e);
         void update_walk();
+        void dash(Event e);
+        void update_dash();
         void getHit(Obstacle& obstacle);
         void looseHP();
         void addHP();

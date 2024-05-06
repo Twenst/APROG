@@ -59,6 +59,7 @@ Personnage::Personnage()
     falling = 1;
     max_height = (floor_level - size_y)/2;
     speed = 0;
+    dash_speed = 1.;
 }
 
 void Personnage::draw() const
@@ -164,7 +165,27 @@ void Personnage::walk(Event e)
 
 void Personnage::update_walk()
 {
-    crds.x() += speed;
+    crds.x() += speed*dash_speed;
+}
+
+void Personnage::dash(Event e)
+{
+    if (e.type == EVT_KEY_ON and e.key == ' ' and dash_speed <= 1.1)
+    {
+        dash_speed = 4.;
+    }
+}
+
+void Personnage::update_dash()
+{
+    if (dash_speed > 1.2)
+    {
+        dash_speed -= .2;
+    }
+    else
+    {
+        dash_speed = 1.;
+    }
 }
 
 void Personnage::getHit(Obstacle& obstacle)
