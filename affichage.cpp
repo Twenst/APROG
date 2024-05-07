@@ -24,6 +24,17 @@ void load_textures(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> 
 	for (int i = 0; i < nb_sky; i++) load(sky_textures[i],stringSrcPath(sky[i]));
 }
 
+void load_arrow(Image<AlphaColor> left[2], Image<AlphaColor> right[2], Image<AlphaColor> up[2], Image<AlphaColor> down[2])
+{
+  for (int i = 0; i < 2; i++)
+  {
+    load(left[i],stringSrcPath(left_arrow[i]));
+    load(down[i],stringSrcPath(down_arrow[i]));
+    load(right[i],stringSrcPath(right_arrow[i]));
+    load(up[i],stringSrcPath(up_arrow[i]));
+  }
+}
+
 void draw_background(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky])
 {
 	draw_sky(sky_textures);
@@ -92,6 +103,30 @@ void draw_scrolling(int typescrolling)
         //Les obstacles viennent du haut
       drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"BAS",RED,46);
       drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"BAS",BLUE,45);
+    }
+}
+
+void draw_scrolling(int typescrolling,Image<AlphaColor> left[2], Image<AlphaColor> right[2], Image<AlphaColor> up[2], Image<AlphaColor> down[2])
+{
+  	if(typescrolling == 0)
+    {
+      	//Les obstacles viennent de la droite
+	  	display(right[rand()%2],w/2-4*fac,3*h/4,false,fac);
+    }
+    if(typescrolling == 1)
+    {
+      	//Les obstacles viennent de la gauche
+      	display(left[rand()%2],w/2-4*fac,3*h/4,false,fac);
+    }
+    if(typescrolling == 2)
+    {
+      	//Les obstacles viennent du haut
+      	display(up[rand()%2],w/2-4*fac,3*h/4,false,fac);
+    }
+    if(typescrolling == 3)
+    {
+        //Les obstacles viennent du bas
+      	display(down[rand()%2],w/2-4*fac,3*h/4,false,fac);
     }
 }
 
