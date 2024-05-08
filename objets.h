@@ -4,8 +4,6 @@
 #include <Imagine/Graphics.h>
 using namespace Imagine;
 
-typedef IntPoint2 Coord;
-
 class Obstacle
 {
     Coord crds; // Coords du coin gauche haut
@@ -87,7 +85,8 @@ class Personnage
         void setFalling(int f);
         int getFalling() const;
         void getBonus(Obstacle& obstacle);
-
+        Coord getPos() const;
+        Coord getSize() const;
 };
 
 

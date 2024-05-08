@@ -231,6 +231,15 @@ void Personnage::addHP()
     hp ++;
 }
 
+Coord Personnage::getPos() const
+{
+    return crds;
+}
+
+Coord Personnage::getSize() const
+{
+    return size;
+}
 
 Obstacle::Obstacle()
 {
