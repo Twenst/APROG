@@ -71,6 +71,11 @@ void Obstacle::move(int scrollingType)
 
 }
 
+int Obstacle::isFlying() const
+{
+    return flying;
+}
+
 bool Obstacle::outOfBounds() const
 {
     if(crds.x()> w or crds.x() < -size.x() or crds.y() < -size.y() or crds.y() > h)
@@ -87,21 +92,34 @@ void Obstacle::init(int scrollingType)
 {
 
     alreadyHit = false;
+    flying = 0;
     clr = BLACK;
     setType(0);
     if(scrollingType == 0)
     {
         //Obstacles viennent de la droite
+        flying = rand()%2; // Volant ou non
         speed = abs(speed)*1;
         size = Coord(35,40 + rand()%50);
         crds = Coord(w,floor_level - size.y());
+        if(flying == 0)
+        {
+            size = Coord(60,20);
+            crds.y() = floor_level - size.y() - size_y/2-rand()%30 ;
+        }
     }
     if(scrollingType == 1)
     {
         //Obstacles viennent de la gauche
+        flying = rand()%2; // Volant ou non
         speed = - abs(speed)*1;
         size = Coord(35,40 + rand()%50);
         crds = Coord(0,floor_level - size.y());
+        if(flying == 0)
+        {
+            size = Coord(60,20);
+            crds.y() = floor_level - size.y() - size_y/2 -rand()%30;
+        }
     }
     if(scrollingType == 2)
     {

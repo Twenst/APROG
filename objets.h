@@ -13,6 +13,7 @@ class Obstacle
     int speed = 12; // Vitesse de l'obstacle
 
     int type; // Type de l'obstacle (1 : dangereux , 2 : Bonus)
+    int flying = 0; //Obstacle qui vole ou non (0 : non , 1 : oui)
 
 
 public:
@@ -27,6 +28,7 @@ public:
     int getType() const;
     void setType(int new_type);
     void erase();
+    int isFlying() const;
 
 };
 class Partie

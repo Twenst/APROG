@@ -78,55 +78,31 @@ void draw_hp(int num_hp)
 
 }
 
-void draw_scrolling(int typescrolling)
-{
-    if(typescrolling == 0)
-    {
-      //Les obstacles viennent de la droite
-      drawString(w/2 - 200 + rand()%2,h/4 + rand()%2,"DROITE",RED,46);
-      drawString(w/2 - 200 + rand()%2,h/4 + rand()%2,"DROITE",BLUE,45);
-    }
-    if(typescrolling == 1)
-    {
-      //Les obstacles viennent de la gauche
-      drawString(w/2 - 200 + rand()%2,h/4 + rand()%2,"GAUCHE",RED,46);
-      drawString(w/2 - 200 + rand()%2,h/4 + rand()%2,"GAUCHE",BLUE,45);
-    }
-    if(typescrolling == 2)
-    {
-      //Les obstacles viennent du haut
-      drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"HAUT",RED,46);
-      drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"HAUT",BLUE,45);
-    }
-    if(typescrolling == 3)
-    {
-        //Les obstacles viennent du haut
-      drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"BAS",RED,46);
-      drawString(w/2 - 80 + rand()%2,h/4 + rand()%2,"BAS",BLUE,45);
-    }
-}
+
 
 void draw_scrolling(int typescrolling,Image<AlphaColor> left[2], Image<AlphaColor> right[2], Image<AlphaColor> up[2], Image<AlphaColor> down[2])
 {
   	if(typescrolling == 0)
     {
       	//Les obstacles viennent de la droite
-	  	display(right[rand()%2],w/2-4*fac,3*h/4,false,fac);
+        display(left[rand()%2],w/2-4*fac,3*h/4,false,fac);
     }
     if(typescrolling == 1)
     {
       	//Les obstacles viennent de la gauche
-      	display(left[rand()%2],w/2-4*fac,3*h/4,false,fac);
+        display(right[rand()%2],w/2-4*fac,3*h/4,false,fac);
     }
     if(typescrolling == 2)
     {
       	//Les obstacles viennent du haut
-      	display(up[rand()%2],w/2-4*fac,3*h/4,false,fac);
+        display(down[rand()%2],w/2-4*fac,3*h/4,false,fac);
+
     }
     if(typescrolling == 3)
     {
         //Les obstacles viennent du bas
-      	display(down[rand()%2],w/2-4*fac,3*h/4,false,fac);
+        display(up[rand()%2],w/2-4*fac,3*h/4,false,fac);
+
     }
 }
 

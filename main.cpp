@@ -69,7 +69,6 @@ int main(int argc, char** argv)
         draw_timer(partie.Timer);
         draw_score(Score);
         draw_scrolling(type_scrolling,left,right,up,down);
-        draw_scrolling(type_scrolling);
         draw_glowing(player,glow_ul, glow_dl, glow_ur, glow_dr);
         player.draw(partie.Timer);
 
@@ -113,7 +112,7 @@ int main(int argc, char** argv)
         }
 
         //Changement de scrolling quand le timer atteint 1000
-        if(partie.Timer % 100 == 0)
+        if(partie.Timer % 70 == 0)
         {
             if(partie.Timer% 1000 == 0)
             {
@@ -127,6 +126,7 @@ int main(int argc, char** argv)
         
         milliSleep(5);
     }
+    delete[] obstacle;
     if(partie.Timer > std::stoi(Score))
     {
         std::ofstream fileScoreWrite(score_path);
@@ -157,13 +157,16 @@ void cinematic(Personnage& player,Image<AlphaColor> grass_textures[nb_grass],Ima
         noRefreshBegin();
 
         draw_background(grass_textures,dirt_textures,sky_textures);
+        drawString(w/2 - 690/2,h/5,"SWOLLING",RED,50,0,false,true); //ON pourra prendre des vrai png pour les textes
         if(i < cinematic_lenght /2)
         {
-            drawString(w/2 - 300,h/4,"De retour à la grotte...",BLACK,20,0,false,true);
+
+            drawString(w/2 - 150,h/3,"De retour...",BLACK,20,0,false,true);
+
         }
         else
         {
-            drawString(w/2 - 300,h/4,"On a déjà parcourue " + score +"M",BLACK,20,0,false,true);
+             drawString(w/2 - 760/2,h/3,"Déjà " + score +" mètres explorés...",BLACK,20,0,false,true);
         }
         player.draw(0);
 
