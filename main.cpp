@@ -26,10 +26,12 @@ int main(int argc, char** argv)
     int type_scrolling = 0;
     Event e;
 
-    Image<AlphaColor> grass_textures[nb_grass]; Image<AlphaColor> dirt_textures[nb_dirt]; Image<AlphaColor> sky_textures[nb_sky];
+    Image<AlphaColor> grass_textures[nb_grass], dirt_textures[nb_dirt], sky_textures[nb_sky];
 	load_textures(grass_textures,dirt_textures,sky_textures);
-    Image<AlphaColor> left[2]; Image<AlphaColor> right[2]; Image<AlphaColor> up[2]; Image<AlphaColor> down[2];
+    Image<AlphaColor> left[2], right[2], up[2], down[2];
     load_arrow(left,right,up,down);
+    Image<AlphaColor> glow_ul[nb_glow], glow_dl[nb_glow], glow_ur[nb_glow], glow_dr[nb_glow];
+    load_glow(glow_ul, glow_dl, glow_ur, glow_dr);
 
     while(player.getHp() > 0)
     {
@@ -48,6 +50,7 @@ int main(int argc, char** argv)
         draw_timer(partie.Timer);
         draw_scrolling(type_scrolling,left,right,up,down);
         draw_scrolling(type_scrolling);
+        draw_glowing(player,glow_ul, glow_dl, glow_ur, glow_dr);
         player.draw();
 
         noRefreshEnd();

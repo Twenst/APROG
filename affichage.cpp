@@ -134,3 +134,42 @@ void draw_timer(int Timer)
 {
     drawString(30,90,std::to_string(Timer),BLACK,30);
 }
+
+void load_glow(Image<AlphaColor> glow_ul[3],Image<AlphaColor> glow_dl[3],Image<AlphaColor> glow_ur[3],Image<AlphaColor> glow_dr[3])
+{
+	for (int i = 0; i < nb_glow; i++)
+	{
+		load(glow_ul[i],stringSrcPath(glow[i]));
+		glow_dl[i] = rotate(glow_ul[i]);
+		glow_dr[i] = rotate(glow_dl[i]);
+		glow_ur[i] = rotate(glow_dr[i]);
+	}
+}
+
+void draw_glowing(Personnage player, Image<AlphaColor> glow_ul[nb_glow],Image<AlphaColor> glow_dl[nb_glow],Image<AlphaColor> glow_ur[nb_glow],Image<AlphaColor> glow_dr[nb_glow])
+{
+	// Affiche l'effet d'éclairement sur le centre du joueur
+	Coord c = player.getPos() + player.getSize()/2;
+
+	double fac2 = 2*fac;
+	int i = time(NULL)%nb_glow;
+	display(glow_ul[i],c.x()-8*fac2,c.y()-8*fac2,false,fac2);
+	display(glow_ur[i],c.x(),c.y()-8*fac2,false,fac2);
+	display(glow_dr[i],c.x(),c.y(),false,fac2);
+	display(glow_dl[i],c.x()-8*fac2,c.y(),false,fac2);
+}
+
+Image<AlphaColor> rotate(Image<AlphaColor> I) // rotate an square image clockwise
+{
+	int w = I.width(), h = I.height();
+	Image<AlphaColor> Ir(h,w);
+
+	for (int i = 0; i < w; i++)
+	{
+		for (int j = 0; j < h; j++)
+		{
+			Ir(j,w-1-i) = I(i,j);
+		}
+	}
+	return Ir;
+}
