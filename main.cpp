@@ -3,20 +3,36 @@ using namespace Imagine;
 #include <Imagine/Images.h>
 using namespace Imagine;
 #include <iostream>
+#include <fstream>
 #include <string>
 
 //---Constantes---//
 #include "constantes.h"
 
 //---Prototypes---//
+#include "personnage.h"
 #include "affichage.h"
 #include "objets.h"
 float minf(float a, float b);
 void load_jumping(Personnage & player,Event e);
+void cinematic(Personnage& player,Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky],std::string score);
 
 //---Main---//
 int main(int argc, char** argv)
 {
+    //Affichage score
+    std::ifstream fileScoreRead(score_path);
+    if (!fileScoreRead.is_open()) {
+        std::cerr << "Erreur lors de l'ouverture du fichier de lecture du score"<< std::endl;
+        return 1;
+    }
+    std::string Score;
+    fileScoreRead >> Score;
+    fileScoreRead.close();
+
+
+
+
     openWindow(w,h,"Swolling");
     Partie partie;
     Personnage player;
@@ -33,12 +49,15 @@ int main(int argc, char** argv)
     Image<AlphaColor> glow_ul[nb_glow], glow_dl[nb_glow], glow_ur[nb_glow], glow_dr[nb_glow];
     load_glow(glow_ul, glow_dl, glow_ur, glow_dr);
 
+    cinematic(player,grass_textures,dirt_textures,sky_textures,Score);
+
     while(player.getHp() > 0)
     {
         getEvent(0,e);
         player.update_jump();
         player.update_walk();
         player.update_dash();
+        player.update_status();
         //player.update_color(spacebar_timer);
         partie.Timer ++;
 
@@ -48,10 +67,11 @@ int main(int argc, char** argv)
         draw_background(grass_textures,dirt_textures,sky_textures);
         draw_hp(player.getHp());
         draw_timer(partie.Timer);
+        draw_score(Score);
         draw_scrolling(type_scrolling,left,right,up,down);
         draw_scrolling(type_scrolling);
         draw_glowing(player,glow_ul, glow_dl, glow_ur, glow_dr);
-        player.draw();
+        player.draw(partie.Timer);
 
         noRefreshEnd();
 
@@ -95,14 +115,63 @@ int main(int argc, char** argv)
         //Changement de scrolling quand le timer atteint 1000
         if(partie.Timer % 100 == 0)
         {
-            partie.update_scrolling(rand()%5) ;
+            if(partie.Timer% 1000 == 0)
+            {
+                partie.update_scrolling(4);
+            }
+            else
+            {
+                partie.update_scrolling(rand()%4) ;
+            }
         }
         
         milliSleep(5);
     }
+    if(partie.Timer > std::stoi(Score))
+    {
+        std::ofstream fileScoreWrite(score_path);
+        if (!fileScoreWrite.is_open()) {
+            std::cerr << "Erreur lors de l'ouverture du fichier de modification du score" << std::endl;
+            return 1;
+        }
+
+        fileScoreWrite << partie.Timer << std::endl;
+        fileScoreWrite.close();
+    }
 
     endGraphics();
     return 0;
+}
+
+//---Cinematique---//
+void cinematic(Personnage& player,Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky],std::string score)
+{
+    int cinematic_lenght = 100;
+    int cinematic_speed = w/cinematic_lenght;
+    int crd = 0;
+    for(int i = 0 ; i < cinematic_lenght ; i++)
+    {
+        crd += cinematic_speed;
+        player.setCoords(crd,crds_y_init);
+
+        noRefreshBegin();
+
+        draw_background(grass_textures,dirt_textures,sky_textures);
+        if(i < cinematic_lenght /2)
+        {
+            drawString(w/2 - 300,h/4,"De retour à la grotte...",BLACK,20,0,false,true);
+        }
+        else
+        {
+            drawString(w/2 - 300,h/4,"On a déjà parcourue " + score +"M",BLACK,20,0,false,true);
+        }
+        player.draw(0);
+
+        noRefreshEnd();
+        milliSleep(5);
+    }
+    player.setCoords(crds_x_init,crds_y_init);
+
 }
 
 //---Fonctions---//

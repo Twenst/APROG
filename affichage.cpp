@@ -73,7 +73,7 @@ void draw_hp(int num_hp)
 {
     for(int i = 0;i < num_hp ; i++)
     {
-      drawString(200 + i*115,110,u8"❤️",RED,45);
+      drawString(350 + i*115,110,u8"❤️",RED,45);
     }
 
 }
@@ -132,7 +132,7 @@ void draw_scrolling(int typescrolling,Image<AlphaColor> left[2], Image<AlphaColo
 
 void draw_timer(int Timer)
 {
-    drawString(30,90,std::to_string(Timer),BLACK,30);
+    drawString(30,90,std::to_string(Timer) + "M",BLACK,30,0,false,true);
 }
 
 void load_glow(Image<AlphaColor> glow_ul[3],Image<AlphaColor> glow_dl[3],Image<AlphaColor> glow_ur[3],Image<AlphaColor> glow_dr[3])
@@ -172,4 +172,9 @@ Image<AlphaColor> rotate(Image<AlphaColor> I) // rotate an square image clockwis
 		}
 	}
 	return Ir;
+}
+
+void draw_score(std::string score)
+{
+    drawString(20,h-10,"Meilleur Score: " + score + "M",BLACK,20,0,false,true);
 }

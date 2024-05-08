@@ -8,6 +8,7 @@ find_package(Imagine REQUIRED COMPONENTS Graphics Images)
 add_executable(APROG main.cpp
                affichage.h affichage.cpp
                objets.h objets.cpp
-               constantes.h)
+               constantes.h
+               personnage.h personnage.cpp)
 
 target_link_libraries(APROG Imagine::Graphics Imagine::Images)
