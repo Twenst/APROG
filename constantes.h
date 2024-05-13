@@ -12,11 +12,11 @@ const int h = 1024;
 const double fac = 8.;
 
 // Niveau du sol
-const int floor_level = (7./12.)*h;
+const int floor_level = (10./16.)*h;
 
 // Carac du personnage
-const int size_x = 30;
-const int size_y = 60;
+const int size_x = 4*fac;
+const int size_y = 8*fac;
 const int crds_x_init = w/2 - size_x/2;
 const int crds_y_init = floor_level - size_y;
 
