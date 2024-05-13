@@ -36,3 +36,6 @@ const std::string up_arrow[2] = {"./assets/up_red.png","./assets/up_green.png"};
 const std::string right_arrow[2] = {"./assets/right_red.png","./assets/right_green.png"};
 const std::string down_arrow[2] = {"./assets/down_red.png","./assets/down_green.png"};
 const std::string glow[nb_glow] = {"./assets/glow1.png","./assets/glow2.png","./assets/glow3.png","./assets/glow2.png"};
+
+//Score
+const std::string score_path = "./Score.txt";
