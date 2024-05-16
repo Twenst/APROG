@@ -5,8 +5,6 @@ using namespace Imagine;
 #include <Imagine/Images.h>
 using namespace Imagine;
 
-Color floor_color = ORANGE;
-
 int pos(int a)
 {
 	return (a>0) ? a : 0;
@@ -75,9 +73,7 @@ void draw_hp(int num_hp)
     {
       drawString(350 + i*115,110,u8"❤️",RED,45);
     }
-
 }
-
 
 
 void draw_scrolling(int typescrolling,Image<AlphaColor> left[2], Image<AlphaColor> right[2], Image<AlphaColor> up[2], Image<AlphaColor> down[2])
@@ -127,12 +123,11 @@ void draw_glowing(Personnage player, Image<AlphaColor> glow_ul[nb_glow],Image<Al
 	// Affiche l'effet d'éclairement sur le centre du joueur
 	Coord c = player.getPos() + player.getSize()/2;
 
-	double fac2 = 2*fac;
 	int i = time(NULL)%nb_glow;
-	display(glow_ul[i],c.x()-8*fac2,c.y()-8*fac2,false,fac2);
-	display(glow_ur[i],c.x(),c.y()-8*fac2,false,fac2);
-	display(glow_dr[i],c.x(),c.y(),false,fac2);
-	display(glow_dl[i],c.x()-8*fac2,c.y(),false,fac2);
+	display(glow_ul[i],c.x()-16*fac,c.y()-16*fac,false,fac);
+	display(glow_ur[i],c.x(),c.y()-16*fac,false,fac);
+	display(glow_dr[i],c.x(),c.y(),false,fac);
+	display(glow_dl[i],c.x()-16*fac,c.y(),false,fac);
 }
 
 Image<AlphaColor> rotate(Image<AlphaColor> I) // rotate an square image clockwise
@@ -153,4 +148,24 @@ Image<AlphaColor> rotate(Image<AlphaColor> I) // rotate an square image clockwis
 void draw_score(std::string score)
 {
     drawString(20,h-10,"Meilleur Score: " + score + "M",BLACK,20,0,false,true);
+}
+
+void draw_cave(Image<AlphaColor> cave, int timer)
+{
+	display(cave,0,0,false,fac);
+}
+
+void load_cave(Image<AlphaColor> cave)
+{
+	load(cave,stringSrcPath(cave_name));
+}
+
+void draw_background(Image<AlphaColor> background)
+{
+	display(background,0,0,false,fac);
+}
+
+void load_background(Image<AlphaColor> background)
+{
+	load(background, stringSrcPath(background_name));
 }

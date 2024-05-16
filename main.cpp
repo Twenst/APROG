@@ -42,14 +42,16 @@ int main(int argc, char** argv)
     int type_scrolling = 0;
     Event e;
 
-    Image<AlphaColor> grass_textures[nb_grass], dirt_textures[nb_dirt], sky_textures[nb_sky];
-	load_textures(grass_textures,dirt_textures,sky_textures);
+    //Image<AlphaColor> grass_textures[nb_grass], dirt_textures[nb_dirt], sky_textures[nb_sky];
+	//load_textures(grass_textures,dirt_textures,sky_textures);
     Image<AlphaColor> left[2], right[2], up[2], down[2];
     load_arrow(left,right,up,down);
     Image<AlphaColor> glow_ul[nb_glow], glow_dl[nb_glow], glow_ur[nb_glow], glow_dr[nb_glow];
     load_glow(glow_ul, glow_dl, glow_ur, glow_dr);
+    Image<AlphaColor> cave; load_cave(cave);
+    Image<AlphaColor> background; load_background(background);
 
-    cinematic(player,grass_textures,dirt_textures,sky_textures,Score);
+    //cinematic(player,grass_textures,dirt_textures,sky_textures,Score);
 
     while(player.getHp() > 0)
     {
@@ -64,7 +66,9 @@ int main(int argc, char** argv)
         noRefreshBegin();
         
         clearWindow();
-        draw_background(grass_textures,dirt_textures,sky_textures);
+        //draw_background(grass_textures,dirt_textures,sky_textures);
+        draw_background(background);
+        draw_cave(cave,partie.Timer);
         draw_hp(player.getHp());
         draw_timer(partie.Timer);
         draw_score(Score);
@@ -124,7 +128,7 @@ int main(int argc, char** argv)
             }
         }
         
-        milliSleep(5);
+        milliSleep(15);
     }
     delete[] obstacle;
     if(partie.Timer > std::stoi(Score))

@@ -37,10 +37,7 @@ void Personnage::draw(int Timer) const
 
 int Personnage::getHp() const
 {
-    if(hp < max_hp)
-    {
-        return hp;
-    }
+    return hp;
 }
 
 void Personnage::jump()
