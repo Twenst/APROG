@@ -131,7 +131,7 @@ int main(int argc, char** argv)
     delete[] obstacle;
     if(partie.Timer > std::stoi(Score))
     {
-        std::ofstream fileScoreWrite(score_path);
+        std::ofstream fileScoreWrite(stringSrcPath(score_path));
         if (!fileScoreWrite.is_open()) {
             std::cerr << "Erreur lors de l'ouverture du fichier de modification du score" << std::endl;
             return 1;
