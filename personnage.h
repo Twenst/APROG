@@ -53,6 +53,7 @@ class Personnage
         void getBonus(Obstacle& obstacle);
         Coord getPos() const;
         Coord getSize() const;
+        Coord getCenter() const;
         void update_status(); // Pour l'invincibilité par exemple
 };
 

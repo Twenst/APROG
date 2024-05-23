@@ -239,13 +239,7 @@ Coord Personnage::getSize() const
     return size;
 }
 
-Obstacle::Obstacle()
+Coord Personnage::getCenter() const
 {
-    srand((unsigned int) time(0));
-    size = Coord(35,40 + rand()%200);
-
-    clr = BLACK;
-    crds = Coord(w,floor_level - size.y());
-    type = 0;
+    return crds + size/2;
 }
-

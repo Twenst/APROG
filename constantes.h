@@ -28,6 +28,7 @@ const int nb_grass = 2;
 const int nb_dirt = 3;
 const int nb_sky = 5;
 const int nb_glow = 4;
+const int nb_shadow = 5;
 const std::string grass[nb_grass] = {"./assets/grass1.png","./assets/grass2.png"};
 const std::string dirt[nb_dirt] = {"./assets/dirt1.png","./assets/dirt2.png","./assets/dirt3.png"};
 const std::string sky[nb_sky] = {"./assets/sky1.png","./assets/sky2.png","./assets/sky3.png","./assets/sky4.png","./assets/sky5.png"};
@@ -38,6 +39,7 @@ const std::string down_arrow[2] = {"./assets/down_red.png","./assets/down_green.
 const std::string glow[nb_glow] = {"./assets/glow1.png","./assets/glow2.png","./assets/glow3.png","./assets/glow2.png"};
 const std::string cave_name = "./assets/double_grotte.png";
 const std::string background_name = "./assets/background.png";
+const std::string shadows_name[nb_shadow] = {"./assets/shadow1.png","./assets/shadow2.png","./assets/shadow3.png","./assets/shadow4.png","./assets/shadow5.png"};
 
 //Score
 const std::string score_path = "./Score.txt";

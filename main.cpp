@@ -15,7 +15,7 @@ using namespace Imagine;
 #include "objets.h"
 float minf(float a, float b);
 void load_jumping(Personnage & player,Event e);
-void cinematic(Personnage& player,Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky],std::string score);
+void cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score);
 
 //---Main---//
 int main(int argc, char** argv)
@@ -30,10 +30,10 @@ int main(int argc, char** argv)
     fileScoreRead >> Score;
     fileScoreRead.close();
 
-
-
-
+    // Initialisation de la partie
+    srand(time(NULL));
     openWindow(w,h,"Swolling");
+
     Partie partie;
     Personnage player;
     int nbr_obstacle = partie.get_nbr_obstacle();
@@ -42,14 +42,15 @@ int main(int argc, char** argv)
     int type_scrolling = 0;
     Event e;
 
-    //Image<AlphaColor> grass_textures[nb_grass], dirt_textures[nb_dirt], sky_textures[nb_sky];
+    //Img grass_textures[nb_grass], dirt_textures[nb_dirt], sky_textures[nb_sky];
 	//load_textures(grass_textures,dirt_textures,sky_textures);
-    Image<AlphaColor> left[2], right[2], up[2], down[2];
+    Img left[2], right[2], up[2], down[2];
     load_arrow(left,right,up,down);
-    Image<AlphaColor> glow_ul[nb_glow], glow_dl[nb_glow], glow_ur[nb_glow], glow_dr[nb_glow];
-    load_glow(glow_ul, glow_dl, glow_ur, glow_dr);
-    Image<AlphaColor> cave; load_cave(cave);
-    Image<AlphaColor> background; load_background(background);
+    //Img glow_ul[nb_glow], glow_dl[nb_glow], glow_ur[nb_glow], glow_dr[nb_glow];
+    //load_glow(glow_ul, glow_dl, glow_ur, glow_dr);
+    Img cave; load_cave(cave);
+    Img background; load_background(background);
+    Img shadows[nb_shadow]; load_shadow(shadows);
 
     //cinematic(player,grass_textures,dirt_textures,sky_textures,Score);
 
@@ -68,12 +69,13 @@ int main(int argc, char** argv)
         clearWindow();
         //draw_background(grass_textures,dirt_textures,sky_textures);
         draw_background(background);
+        //draw_glowing(player,glow_ul, glow_dl, glow_ur, glow_dr);
         draw_cave(cave,partie.Timer);
+        draw_shadow(shadows, player);
         draw_hp(player.getHp());
         draw_timer(partie.Timer);
         draw_score(Score);
         draw_scrolling(type_scrolling,left,right,up,down);
-        draw_glowing(player,glow_ul, glow_dl, glow_ur, glow_dr);
         player.draw(partie.Timer);
 
         noRefreshEnd();
@@ -148,7 +150,7 @@ int main(int argc, char** argv)
 }
 
 //---Cinematique---//
-void cinematic(Personnage& player,Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky],std::string score)
+void cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score)
 {
     int cinematic_lenght = 100;
     int cinematic_speed = w/cinematic_lenght;
