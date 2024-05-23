@@ -128,7 +128,7 @@ void draw_timer(int Timer)
     drawString(30,90,std::to_string(Timer) + "M",WHITE,30,0,false,true);
 }
 
-void load_glow(Img glow_ul[3],Img glow_dl[3],Img glow_ur[3],Img glow_dr[3])
+/* void load_glow(Img glow_ul[3],Img glow_dl[3],Img glow_ur[3],Img glow_dr[3])
 {
 	for (int i = 0; i < nb_glow; i++)
 	{
@@ -149,7 +149,7 @@ void draw_glowing(Personnage player, Img glow_ul[nb_glow],Img glow_dl[nb_glow],I
 	display(glow_ur[i],c.x(),c.y()-16*fac,false,fac);
 	display(glow_dr[i],c.x(),c.y(),false,fac);
 	display(glow_dl[i],c.x()-16*fac,c.y(),false,fac);
-}
+} */
 
 Img rotate(Img I) // rotate an square image clockwise
 {
@@ -206,7 +206,11 @@ void draw_shadow(Img shadows[nb_shadow])
 
 void draw_shadow(Img shadows[nb_shadow], Personnage player)
 {
-	Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],16*fac,player.getCenter()); 
+	std::vector<int> radius;
+	for (int i = 0; i < player.getLighForce(); i++) radius.push_back(4*(i+1)*fac); 
+
+	std::vector<double> alphas(radius.size(), 0.75);
+	Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],radius,player.getCenter(),alphas);
 	display(shadow_mask,0,0,false,fac);
 }
 
@@ -223,6 +227,50 @@ Img applyMaskCircle(Img target, int radius, Coord center)
 			if (is_within_circle(x,radius,center))
 			{
 				res(i,j).a() = 0;
+			}
+		}
+	}
+
+	return res;
+}
+
+Img applyMaskCircle(Img target, int radius, Coord center, double alpha)
+{
+	Img res = target.clone();
+	int wid = target.width(), hei = target.height(); 
+
+	for (int i = 0; i < wid; i++)
+	{
+		for (int j = 0; j < hei; j++)
+		{
+			Coord x(i,j);
+			if (is_within_circle(x,radius,center))
+			{
+				res(i,j).a() *= alpha;
+			}
+		}
+	}
+
+	return res;
+}
+
+Img applyMaskCircle(Img target, std::vector<int> radius, Coord center, std::vector<double> alphas)
+{
+	assert(radius.size() == alphas.size());
+	Img res = target.clone();
+	int wid = target.width(), hei = target.height(); 
+
+	for (int i = 0; i < wid; i++)
+	{
+		for (int j = 0; j < hei; j++)
+		{
+			Coord x(i,j);
+			for (int k = 0; k < radius.size(); k++)
+			{
+				if (is_within_circle(x,radius[k],center))
+				{
+				res(i,j).a() *= alphas[k];
+				}
 			}
 		}
 	}

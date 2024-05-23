@@ -20,11 +20,12 @@ class Personnage
 
     // Gameplay
     int hp;
-    int max_hp = 5;
+    int max_hp;
     int scrolling_type;
-    bool invincible = false;
-    int invincible_duration = 20;
-    int invincible_count = 0;
+    bool invincible;
+    int invincible_duration;
+    int invincible_count;
+    int light_force;
 
     // Saut
     int max_height;
@@ -55,6 +56,8 @@ class Personnage
         Coord getSize() const;
         Coord getCenter() const;
         void update_status(); // Pour l'invincibilité par exemple
+        int getLighForce() const;
+        void setLighForce(int light_lvl);
 };
 
 

@@ -46,8 +46,6 @@ int main(int argc, char** argv)
 	//load_textures(grass_textures,dirt_textures,sky_textures);
     Img left[2], right[2], up[2], down[2];
     load_arrow(left,right,up,down);
-    //Img glow_ul[nb_glow], glow_dl[nb_glow], glow_ur[nb_glow], glow_dr[nb_glow];
-    //load_glow(glow_ul, glow_dl, glow_ur, glow_dr);
     Img cave; load_cave(cave);
     Img background; load_background(background);
     Img shadows[nb_shadow]; load_shadow(shadows);
@@ -67,9 +65,7 @@ int main(int argc, char** argv)
         noRefreshBegin();
         
         clearWindow();
-        //draw_background(grass_textures,dirt_textures,sky_textures);
         draw_background(background);
-        //draw_glowing(player,glow_ul, glow_dl, glow_ur, glow_dr);
         draw_cave(cave,partie.Timer);
         draw_shadow(shadows, player);
         draw_hp(player.getHp());
