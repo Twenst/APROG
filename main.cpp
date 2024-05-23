@@ -21,7 +21,7 @@ void cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures
 int main(int argc, char** argv)
 {
     //Affichage score
-    std::ifstream fileScoreRead(score_path);
+    std::ifstream fileScoreRead(stringSrcPath(score_path));
     if (!fileScoreRead.is_open()) {
         std::cerr << "Erreur lors de l'ouverture du fichier de lecture du score"<< std::endl;
         return 1;
