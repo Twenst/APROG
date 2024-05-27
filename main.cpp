@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 
 
 
-    openWindow(w,h,"Swolling");
+    openWindow(w,h,"CaveScroll");
     Partie partie;
     Personnage player;
     int nbr_obstacle = partie.get_nbr_obstacle();
@@ -57,7 +57,12 @@ int main(int argc, char** argv)
         player.update_jump();
         player.update_walk();
         player.update_dash();
-        player.update_status();
+        for(int i = 0 ; i<nbr_obstacle;i++)
+        {
+            player.update_status(obstacle[i]);
+
+        }
+
         //player.update_color(spacebar_timer);
         partie.Timer ++;
 
@@ -114,7 +119,7 @@ int main(int argc, char** argv)
         //Changement de scrolling quand le timer atteint 1000
         if(partie.Timer % 70 == 0)
         {
-            if(partie.Timer% 1000 == 0)
+            if(partie.Timer% 100 == 0)
             {
                 partie.update_scrolling(4);
             }
@@ -124,7 +129,7 @@ int main(int argc, char** argv)
             }
         }
         
-        milliSleep(5);
+        milliSleep(15);
     }
     delete[] obstacle;
     if(partie.Timer > std::stoi(Score))
@@ -157,7 +162,8 @@ void cinematic(Personnage& player,Image<AlphaColor> grass_textures[nb_grass],Ima
         noRefreshBegin();
 
         draw_background(grass_textures,dirt_textures,sky_textures);
-        drawString(w/2 - 690/2,h/5,"SWOLLING",RED,50,0,false,true); //ON pourra prendre des vrai png pour les textes
+        //drawString(w/2 - 840/2,h/5,"CAVESCROLL",RED,50,0,false,true); //ON pourra prendre des vrai png pour les textes
+        //display(title,2,2,false,3);
         if(i < cinematic_lenght /2)
         {
 

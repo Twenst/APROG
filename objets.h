@@ -14,6 +14,7 @@ class Obstacle
 
     int type; // Type de l'obstacle (1 : dangereux , 2 : Bonus)
     int flying = 0; //Obstacle qui vole ou non (0 : non , 1 : oui)
+    int bonus_type = 0 ;//(0 : aucun bonus, 1 : bonus 1, 2 : bonus 2, 3 : bonus 3)
 
 
 public:
@@ -29,6 +30,7 @@ public:
     void setType(int new_type);
     void erase();
     int isFlying() const;
+    int getBonusType() const;
 
 };
 class Partie

@@ -39,3 +39,8 @@ const std::string glow[nb_glow] = {"./assets/glow1.png","./assets/glow2.png","./
 
 //Score
 const std::string score_path = "./Score.txt";
+
+//Title
+
+
+//const std::string title = {"./assets/title"};

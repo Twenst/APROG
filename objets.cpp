@@ -52,6 +52,16 @@ void Partie::init(Obstacle* obstacle) const
 
 //---------------------OBSTACLE ET BONUS---------------------//
 
+Obstacle::Obstacle()
+{
+    srand((unsigned int) time(0));
+    size = Coord(35,40 + rand()%200);
+
+    clr = BLACK;
+    crds = Coord(w,floor_level - size.y());
+    type = 0;
+}
+
 void Obstacle::draw() const
 {
     fillRect(crds.x(),crds.y(),size.x(),size.y(),clr);
@@ -144,6 +154,11 @@ void Obstacle::init(int scrollingType)
         clr = RED;
         setType(1);
     }
+}
+
+int Obstacle::getBonusType() const
+{
+    return bonus_type;
 }
 
 Coord Obstacle::getSize() const

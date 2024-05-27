@@ -22,9 +22,16 @@ class Personnage
     int hp;
     int max_hp = 5;
     int scrolling_type;
+
+    // Invincibilité
     bool invincible = false;
     int invincible_duration = 20;
     int invincible_count = 0;
+
+    // Bonus
+    int bonus_duration = 100; // même durée pour chaque bonus, on pourrait en avoir différent si on le voulait
+    int bonus_count = 0;
+    bool bonus = false;
 
     // Saut
     int max_height;
@@ -53,7 +60,9 @@ class Personnage
         void getBonus(Obstacle& obstacle);
         Coord getPos() const;
         Coord getSize() const;
-        void update_status(); // Pour l'invincibilité par exemple
+        void update_status(Obstacle& obstacle); // Pour l'invincibilité par exemple et les bonus aussi
+        void setSpeed(int newSpee);
+        int getSpeeed() const;
 };
 
 

@@ -37,10 +37,8 @@ void Personnage::draw(int Timer) const
 
 int Personnage::getHp() const
 {
-    if(hp < max_hp)
-    {
         return hp;
-    }
+
 }
 
 void Personnage::jump()
@@ -163,7 +161,7 @@ void Personnage::setCoords(int x,int y)
 
 }
 
-void Personnage::update_status()
+void Personnage::update_status(Obstacle& obstacle)
 {
     //invincibilité
     if(invincible)
@@ -178,6 +176,25 @@ void Personnage::update_status()
             invincible_count ++;
         }
 
+    }
+    //bonus
+    if(bonus)
+    {
+        int type = obstacle.getBonusType();
+        if(bonus_count == bonus_duration)
+        {
+
+            bonus = false;
+            bonus_count = 0;
+            if (type == 1)
+            {
+                setSpeed(getSpeeed()- 30);
+            }
+        }
+        else
+        {
+            bonus_count ++;
+        }
     }
 
 }
@@ -211,9 +228,18 @@ void Personnage::getHit(Obstacle& obstacle)
 void Personnage::getBonus(Obstacle& obstacle)
 {
     obstacle.erase();
-    if(obstacle.getType() == 1)
+    if(obstacle.getBonusType() == 1)//Coeur
     {
         addHP();
+    }
+    if(obstacle.getBonusType() == 2)//Vitesse
+    {
+        bonus = true;
+        setSpeed(getSpeeed() + 30);
+    }
+    if(obstacle.getBonusType() == 3)//Invulnérabilité
+    {
+        bonus = true;
     }
 }
 
@@ -232,6 +258,11 @@ void Personnage::addHP()
     hp ++;
 }
 
+void Personnage::setSpeed(int newSpeed)
+{
+    speed = newSpeed;
+}
+
 Coord Personnage::getPos() const
 {
     return crds;
@@ -242,13 +273,8 @@ Coord Personnage::getSize() const
     return size;
 }
 
-Obstacle::Obstacle()
+int Personnage::getSpeeed() const
 {
-    srand((unsigned int) time(0));
-    size = Coord(35,40 + rand()%200);
-
-    clr = BLACK;
-    crds = Coord(w,floor_level - size.y());
-    type = 0;
+    return speed;
 }
 
