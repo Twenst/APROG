@@ -31,10 +31,10 @@ int main(int argc, char** argv)
     fileScoreRead >> Score;
     fileScoreRead.close();
 
-    // Initialisation de la partie
-    srand(time(NULL));
-    openWindow(w,h,"Swolling");
 
+
+    srand(time(NULL));
+    openWindow(w,h,"CaveScroll");
     Partie partie;
     Personnage player;
     int nbr_obstacle = partie.get_nbr_obstacle();
@@ -61,9 +61,14 @@ int main(int argc, char** argv)
         player.update_jump();
         player.update_walk();
         player.update_dash();
-        player.update_status();
+        for(int i = 0 ; i<nbr_obstacle;i++)
+        {
+            player.update_status(obstacle[i]);
+
+        }
+
         //player.update_color(spacebar_timer);
-        partie.Timer ++;
+        partie.Timer += 1;
 
         noRefreshBegin();
         
@@ -84,6 +89,7 @@ int main(int argc, char** argv)
         load_jumping(player,e);
         player.walk(e);
         player.dash(e);
+        player.crouch(e);
 
         // OBSTACLES :
         bool outOfBounds = true;
@@ -120,7 +126,7 @@ int main(int argc, char** argv)
         //Changement de scrolling quand le timer atteint 1000
         if(partie.Timer % 70 == 0)
         {
-            if(partie.Timer% 1000 == 0)
+            if(partie.Timer% 100 == 0)
             {
                 partie.update_scrolling(4);
             }
@@ -163,7 +169,8 @@ void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_te
         noRefreshBegin();
 
         draw_background(grass_textures,dirt_textures,sky_textures);
-        drawString(w/2 - 690/2,h/5,"SWOLLING",RED,50,0,false,true); //ON pourra prendre des vrai png pour les textes
+        //drawString(w/2 - 840/2,h/5,"CAVESCROLL",RED,50,0,false,true); //ON pourra prendre des vrai png pour les textes
+        //display(title,2,2,false,3);
         if(i < cinematic_lenght /2)
         {
 

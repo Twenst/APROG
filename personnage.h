@@ -17,6 +17,7 @@ class Personnage
     //Vitesse
     int speed;
     double dash_speed;
+    int max_speed = 10;
 
     // Gameplay
     int hp;
@@ -26,6 +27,12 @@ class Personnage
     int invincible_duration;
     int invincible_count;
     int light_force;
+    bool crouching = false;
+
+    // Bonus
+    int bonus_duration = 250; // même durée pour chaque bonus, on pourrait en avoir différent si on le voulait
+    int bonus_count = 0;
+    bool bonus = false;
 
     // Saut
     int max_height;
@@ -46,6 +53,7 @@ class Personnage
         void walk(Event e);
         void update_walk();
         void dash(Event e);
+        void crouch(Event e);
         void update_dash();
         void getHit(Obstacle& obstacle);
         void looseHP();
@@ -56,7 +64,9 @@ class Personnage
         Coord getPos() const;
         Coord getSize() const;
         Coord getCenter() const;
-        void update_status(); // Pour l'invincibilité par exemple
+        void update_status(Obstacle& obstacle); // Pour l'invincibilité par exemple
+        void setSpeed(int newSpeed);
+        int getSpeed() const;
         int getLighForce() const;
         void setLighForce(int light_lvl);
 };
