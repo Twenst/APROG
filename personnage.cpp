@@ -45,6 +45,11 @@ int Personnage::getHp() const
     return hp;
 }
 
+int Personnage::getMaxHp() const
+{
+    return max_hp;
+}
+
 void Personnage::jump()
 {
     if (not jumping)

@@ -68,10 +68,6 @@ void draw_sky(Img sky_textures[nb_sky])
 		{
 			display(sky_textures[min(pos(nb_sky-1-j),nb_sky-1)],8*i*fac,8*j*fac,false,fac);
 		}
-/* 		for (int j = floor_level/(8*fac); j > 0; j--)
-		{
-			display(sky_textures[pos(min(nb_sky-1-j,nb_sky-1))],8*i*fac,8*j*fac,false,fac);
-		} */
 	}
 }
 
@@ -276,4 +272,19 @@ Img applyMaskCircle(Img target, std::vector<int> radius, Coord center, std::vect
 	}
 
 	return res;
+}
+
+void load_heart(Img heart[2])
+{
+	load(heart[0],stringSrcPath(heart_name[0]));
+	load(heart[1],stringSrcPath(heart_name[1]));
+}
+
+void draw_heart(Img heart[2], Personnage player)
+{
+	int hp = player.getHp();
+	for (int i = 1; i <= player.getMaxHp(); i++)
+	{
+		display(heart[(i <= hp) ? 0 : 1],w - 8*(i+1)*fac,8*fac,false,fac);
+	}
 }

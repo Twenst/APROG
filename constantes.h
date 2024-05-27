@@ -10,6 +10,7 @@ typedef IntPoint2 Coord;
 const int w = 1024;
 const int h = 1024;
 const double fac = 8.;
+const int msleep = 15;
 
 // Niveau du sol
 const int floor_level = (10./16.)*h;
@@ -40,6 +41,7 @@ const std::string down_arrow[2] = {"./assets/down_red.png","./assets/down_green.
 const std::string cave_name = "./assets/double_grotte.png";
 const std::string background_name = "./assets/background.png";
 const std::string shadows_name[nb_shadow] = {"./assets/shadow1.png","./assets/shadow2.png","./assets/shadow3.png","./assets/shadow4.png","./assets/shadow5.png"};
+const std::string heart_name[2] = {"./assets/heart.png","./assets/heart_lost.png"};
 
 //Score
 const std::string score_path = "./Score.txt";
