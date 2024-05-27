@@ -15,7 +15,8 @@ using namespace Imagine;
 #include "objets.h"
 float minf(float a, float b);
 void load_jumping(Personnage & player,Event e);
-void cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score);
+void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score);
+void end_cinematic(Personnage player, Img cave, Img background);
 
 //---Main---//
 int main(int argc, char** argv)
@@ -42,6 +43,7 @@ int main(int argc, char** argv)
     int type_scrolling = 0;
     Event e;
 
+    // Chargement des textures
     //Img grass_textures[nb_grass], dirt_textures[nb_dirt], sky_textures[nb_sky];
 	//load_textures(grass_textures,dirt_textures,sky_textures);
     Img left[2], right[2], up[2], down[2];
@@ -49,8 +51,9 @@ int main(int argc, char** argv)
     Img cave; load_cave(cave);
     Img background; load_background(background);
     Img shadows[nb_shadow]; load_shadow(shadows);
+    Img heart[2]; load_heart(heart);
 
-    //cinematic(player,grass_textures,dirt_textures,sky_textures,Score);
+    //start_cinematic(player,grass_textures,dirt_textures,sky_textures,Score);
 
     while(player.getHp() > 0)
     {
@@ -73,7 +76,8 @@ int main(int argc, char** argv)
         draw_background(background);
         draw_cave(cave,partie.Timer);
         draw_shadow(shadows, player);
-        draw_hp(player.getHp());
+        //draw_hp(player.getHp());
+        draw_heart(heart, player);
         draw_timer(partie.Timer);
         draw_score(Score);
         draw_scrolling(type_scrolling,left,right,up,down);
@@ -131,7 +135,7 @@ int main(int argc, char** argv)
             }
         }
         
-        milliSleep(15);
+        milliSleep(msleep);
     }
     delete[] obstacle;
     if(partie.Timer > std::stoi(Score))
@@ -151,7 +155,7 @@ int main(int argc, char** argv)
 }
 
 //---Cinematique---//
-void cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score)
+void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score)
 {
     int cinematic_lenght = 100;
     int cinematic_speed = w/cinematic_lenght;
@@ -179,10 +183,38 @@ void cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures
         player.draw(0);
 
         noRefreshEnd();
-        milliSleep(5);
+        milliSleep(msleep);
     }
     player.setCoords(crds_x_init,crds_y_init);
 
+}
+
+void end_cinematic(Personnage player, Img cave, Img background)
+{
+    int cinematic_lenght = 100;
+    for(int i = 0 ; i < cinematic_lenght ; i++)
+    {
+        noRefreshBegin();
+
+        draw_background(background);
+
+
+        /* drawString(w/2 - 690/2,h/5,"SWOLLING",RED,50,0,false,true); //ON pourra prendre des vrai png pour les textes
+        if(i < cinematic_lenght /2)
+        {
+
+            drawString(w/2 - 150,h/3,"De retour...",BLACK,20,0,false,true);
+
+        }
+        else
+        {
+             drawString(w/2 - 760/2,h/3,"Déjà " + score +" mètres explorés...",BLACK,20,0,false,true);
+        } */
+        player.draw(0);
+
+        noRefreshEnd();
+        milliSleep(msleep);
+    }
 }
 
 //---Fonctions---//

@@ -43,6 +43,7 @@ class Personnage
         Personnage();
         void draw(int Timer) const;
         int getHp() const;
+        int getMaxHp() const;
         void setCoords(int x,int y);//Cinématique
         void jump();
         void update_jump();

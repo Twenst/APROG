@@ -20,6 +20,7 @@ void draw_cave(Img cave, int timer);
 void draw_background(Img background);
 void draw_shadow(Img shadows[nb_shadow]);
 void draw_shadow(Img shadows[nb_shadow], Personnage player);
+void draw_heart(Img heart[2], Personnage player);
 
 // Load functions
 void load_textures(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky]);
@@ -28,6 +29,7 @@ void load_arrow(Img left[2], Img right[2], Img up[2], Img down[2]);
 void load_cave(Img & cave);
 void load_background(Img & background);
 void load_shadow(Img shadows[nb_shadow]);
+void load_heart(Img heart[2]);
 
 // Edit functions
 Img rotate(Img I);
