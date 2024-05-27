@@ -191,8 +191,13 @@ void end_cinematic(Personnage player, Img cave, Img background)
         noRefreshBegin();
 
         draw_background(background);
+/* 
+        std::vector<int> radius;
+	    for (int i = 0; i < player.getLighForce(); i++) radius.push_back(4*(i+1)*fac); 
 
-        
+	    std::vector<double> alphas(radius.size(), 0.75);
+	    Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],radius,player.getCenter(),alphas);
+	    display(shadow_mask,0,0,false,fac); */
 
         player.draw(0);
 
