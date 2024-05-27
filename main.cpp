@@ -198,18 +198,8 @@ void end_cinematic(Personnage player, Img cave, Img background)
 
         draw_background(background);
 
+        
 
-        /* drawString(w/2 - 690/2,h/5,"SWOLLING",RED,50,0,false,true); //ON pourra prendre des vrai png pour les textes
-        if(i < cinematic_lenght /2)
-        {
-
-            drawString(w/2 - 150,h/3,"De retour...",BLACK,20,0,false,true);
-
-        }
-        else
-        {
-             drawString(w/2 - 760/2,h/3,"Déjà " + score +" mètres explorés...",BLACK,20,0,false,true);
-        } */
         player.draw(0);
 
         noRefreshEnd();
