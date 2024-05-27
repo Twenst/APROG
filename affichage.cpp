@@ -5,8 +5,6 @@ using namespace Imagine;
 #include <Imagine/Images.h>
 using namespace Imagine;
 
-Color floor_color = ORANGE;
-
 int pos(int a)
 {
 	return (a>0) ? a : 0;
@@ -17,14 +15,35 @@ int min(int a, int b)
 	return (a > b) ? b : a;
 }
 
-void load_textures(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky])
+int max(int a, int b)
+{
+	return (a < b) ? b : a;
+}
+
+bool is_within_square(Coord x, Coord c1, Coord c2)
+{
+	bool res = (x.x() <= max(c1.x(), c2.x()));
+	res = res and (x.y() <= max(c1.y(), c2.y()));
+	res = res and (x.y() >= min(c1.y(), c2.y()));
+	res = res and (x.x() >= min(c1.x(), c2.x()));
+
+	return res;
+}
+
+bool is_within_circle(Coord x, int radius, Coord center)
+{
+	Coord p = 8*x - center;
+	return (radius*radius >= p.x()*p.x() + p.y()*p.y());
+}
+
+void load_textures(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky])
 {
 	for (int i = 0; i < nb_grass; i++) load(grass_textures[i],stringSrcPath(grass[i]));
 	for (int i = 0; i < nb_dirt; i++) load(dirt_textures[i],stringSrcPath(dirt[i]));
 	for (int i = 0; i < nb_sky; i++) load(sky_textures[i],stringSrcPath(sky[i]));
 }
 
-void load_arrow(Image<AlphaColor> left[2], Image<AlphaColor> right[2], Image<AlphaColor> up[2], Image<AlphaColor> down[2])
+void load_arrow(Img left[2], Img right[2], Img up[2], Img down[2])
 {
   for (int i = 0; i < 2; i++)
   {
@@ -35,13 +54,13 @@ void load_arrow(Image<AlphaColor> left[2], Image<AlphaColor> right[2], Image<Alp
   }
 }
 
-void draw_background(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky])
+void draw_background(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky])
 {
 	draw_sky(sky_textures);
     draw_floor(grass_textures,dirt_textures);
 }
 
-void draw_sky(Image<AlphaColor> sky_textures[nb_sky])
+void draw_sky(Img sky_textures[nb_sky])
 {
 	for (int i = 0; 8*i*fac <= w; i++)
 	{
@@ -56,7 +75,7 @@ void draw_sky(Image<AlphaColor> sky_textures[nb_sky])
 	}
 }
 
-void draw_floor(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt])
+void draw_floor(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt])
 {
 	for (int i = 0; 8*i*fac <= w; i++)
 	{
@@ -75,12 +94,10 @@ void draw_hp(int num_hp)
     {
       drawString(350 + i*115,110,u8"❤️",RED,45);
     }
-
 }
 
 
-
-void draw_scrolling(int typescrolling,Image<AlphaColor> left[2], Image<AlphaColor> right[2], Image<AlphaColor> up[2], Image<AlphaColor> down[2])
+void draw_scrolling(int typescrolling,Img left[2], Img right[2], Img up[2], Img down[2])
 {
   	if(typescrolling == 0)
     {
@@ -108,10 +125,10 @@ void draw_scrolling(int typescrolling,Image<AlphaColor> left[2], Image<AlphaColo
 
 void draw_timer(int Timer)
 {
-    drawString(30,90,std::to_string(Timer) + "M",BLACK,30,0,false,true);
+    drawString(30,90,std::to_string(Timer) + "M",WHITE,30,0,false,true);
 }
 
-void load_glow(Image<AlphaColor> glow_ul[3],Image<AlphaColor> glow_dl[3],Image<AlphaColor> glow_ur[3],Image<AlphaColor> glow_dr[3])
+/* void load_glow(Img glow_ul[3],Img glow_dl[3],Img glow_ur[3],Img glow_dr[3])
 {
 	for (int i = 0; i < nb_glow; i++)
 	{
@@ -122,23 +139,22 @@ void load_glow(Image<AlphaColor> glow_ul[3],Image<AlphaColor> glow_dl[3],Image<A
 	}
 }
 
-void draw_glowing(Personnage player, Image<AlphaColor> glow_ul[nb_glow],Image<AlphaColor> glow_dl[nb_glow],Image<AlphaColor> glow_ur[nb_glow],Image<AlphaColor> glow_dr[nb_glow])
+void draw_glowing(Personnage player, Img glow_ul[nb_glow],Img glow_dl[nb_glow],Img glow_ur[nb_glow],Img glow_dr[nb_glow])
 {
 	// Affiche l'effet d'éclairement sur le centre du joueur
 	Coord c = player.getPos() + player.getSize()/2;
 
-	double fac2 = 2*fac;
 	int i = time(NULL)%nb_glow;
-	display(glow_ul[i],c.x()-8*fac2,c.y()-8*fac2,false,fac2);
-	display(glow_ur[i],c.x(),c.y()-8*fac2,false,fac2);
-	display(glow_dr[i],c.x(),c.y(),false,fac2);
-	display(glow_dl[i],c.x()-8*fac2,c.y(),false,fac2);
-}
+	display(glow_ul[i],c.x()-16*fac,c.y()-16*fac,false,fac);
+	display(glow_ur[i],c.x(),c.y()-16*fac,false,fac);
+	display(glow_dr[i],c.x(),c.y(),false,fac);
+	display(glow_dl[i],c.x()-16*fac,c.y(),false,fac);
+} */
 
-Image<AlphaColor> rotate(Image<AlphaColor> I) // rotate an square image clockwise
+Img rotate(Img I) // rotate an square image clockwise
 {
 	int w = I.width(), h = I.height();
-	Image<AlphaColor> Ir(h,w);
+	Img Ir(h,w);
 
 	for (int i = 0; i < w; i++)
 	{
@@ -152,5 +168,112 @@ Image<AlphaColor> rotate(Image<AlphaColor> I) // rotate an square image clockwis
 
 void draw_score(std::string score)
 {
-    drawString(20,h-10,"Meilleur Score: " + score + "M",BLACK,20,0,false,true);
+    drawString(20,h-10,"Meilleur Score: " + score + "M",WHITE,20,0,false,true);
+}
+
+void draw_cave(Img cave, int timer)
+{
+	display(cave,0,0,false,fac);
+}
+
+void load_cave(Img & cave)
+{
+	load(cave,stringSrcPath(cave_name));
+}
+
+void draw_background(Img background)
+{
+	display(background,0,0,false,fac);
+}
+
+void load_background(Img & background)
+{
+	load(background, stringSrcPath(background_name));
+}
+
+void load_shadow(Img shadows[nb_shadow])
+{
+	for (int i = 0; i < nb_shadow; i++)
+	{
+		load(shadows[i],stringSrcPath(shadows_name[i]));
+	}
+}
+
+void draw_shadow(Img shadows[nb_shadow])
+{
+	display(shadows[rand()%nb_shadow],0,0,false,fac);
+}
+
+void draw_shadow(Img shadows[nb_shadow], Personnage player)
+{
+	std::vector<int> radius;
+	for (int i = 0; i < player.getLighForce(); i++) radius.push_back(4*(i+1)*fac); 
+
+	std::vector<double> alphas(radius.size(), 0.75);
+	Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],radius,player.getCenter(),alphas);
+	display(shadow_mask,0,0,false,fac);
+}
+
+Img applyMaskCircle(Img target, int radius, Coord center)
+{
+	Img res = target.clone();
+	int wid = target.width(), hei = target.height(); 
+
+	for (int i = 0; i < wid; i++)
+	{
+		for (int j = 0; j < hei; j++)
+		{
+			Coord x(i,j);
+			if (is_within_circle(x,radius,center))
+			{
+				res(i,j).a() = 0;
+			}
+		}
+	}
+
+	return res;
+}
+
+Img applyMaskCircle(Img target, int radius, Coord center, double alpha)
+{
+	Img res = target.clone();
+	int wid = target.width(), hei = target.height(); 
+
+	for (int i = 0; i < wid; i++)
+	{
+		for (int j = 0; j < hei; j++)
+		{
+			Coord x(i,j);
+			if (is_within_circle(x,radius,center))
+			{
+				res(i,j).a() *= alpha;
+			}
+		}
+	}
+
+	return res;
+}
+
+Img applyMaskCircle(Img target, std::vector<int> radius, Coord center, std::vector<double> alphas)
+{
+	assert(radius.size() == alphas.size());
+	Img res = target.clone();
+	int wid = target.width(), hei = target.height(); 
+
+	for (int i = 0; i < wid; i++)
+	{
+		for (int j = 0; j < hei; j++)
+		{
+			Coord x(i,j);
+			for (int k = 0; k < radius.size(); k++)
+			{
+				if (is_within_circle(x,radius[k],center))
+				{
+				res(i,j).a() *= alphas[k];
+				}
+			}
+		}
+	}
+
+	return res;
 }

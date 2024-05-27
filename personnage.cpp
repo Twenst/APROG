@@ -16,6 +16,11 @@ Personnage::Personnage()
     max_height = (floor_level - size_y)/2;
     speed = 0;
     dash_speed = 1.;
+    max_hp = 5;
+    invincible = false;
+    invincible_count = 0;
+    invincible_duration = 20;
+    light_force = 6;
 }
 
 void Personnage::draw(int Timer) const
@@ -37,8 +42,7 @@ void Personnage::draw(int Timer) const
 
 int Personnage::getHp() const
 {
-        return hp;
-
+    return hp;
 }
 
 void Personnage::jump()
@@ -278,3 +282,17 @@ int Personnage::getSpeeed() const
     return speed;
 }
 
+Coord Personnage::getCenter() const
+{
+    return crds + size/2;
+}
+
+int Personnage::getLighForce() const
+{
+    return light_force;
+}
+
+void Personnage::setLighForce(int light_lvl)
+{
+    light_force = light_lvl;   
+}

@@ -4,16 +4,33 @@
 #include <Imagine/Images.h>
 using namespace Imagine;
 
-void draw_background(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky]);
-void draw_floor(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt]);
-void draw_sky(Image<AlphaColor> sky_textures[nb_sky]);
+typedef Image<AlphaColor> Img;
+
+// Draw functions
+void draw_background(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky]);
+void draw_floor(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt]);
+void draw_sky(Img sky_textures[nb_sky]);
 void draw_score(std::string score);
 void draw_hp(int hp_num);
 void draw_timer(int Timer);
 void draw_scrolling(int typescrolling);
-void draw_scrolling(int typescrolling,Image<AlphaColor> left[2], Image<AlphaColor> right[2], Image<AlphaColor> up[2], Image<AlphaColor> down[2]);
-void draw_glowing(Personnage player, Image<AlphaColor> glow_ul[nb_glow],Image<AlphaColor> glow_dl[nb_glow],Image<AlphaColor> glow_ur[nb_glow],Image<AlphaColor> glow_dr[nb_glow]);
-void load_textures(Image<AlphaColor> grass_textures[nb_grass],Image<AlphaColor> dirt_textures[nb_dirt], Image<AlphaColor> sky_textures[nb_sky]);
-void load_arrow(Image<AlphaColor> left[2], Image<AlphaColor> right[2], Image<AlphaColor> up[2], Image<AlphaColor> down[2]);
-void load_glow(Image<AlphaColor> glow_ul[nb_glow],Image<AlphaColor> glow_dl[nb_glow],Image<AlphaColor> glow_ur[nb_glow],Image<AlphaColor> glow_dr[nb_glow]);
-Image<AlphaColor> rotate(Image<AlphaColor> I);
+void draw_scrolling(int typescrolling,Img left[2], Img right[2], Img up[2], Img down[2]);
+//void draw_glowing(Personnage player, Img glow_ul[nb_glow],Img glow_dl[nb_glow],Img glow_ur[nb_glow],Img glow_dr[nb_glow]);
+void draw_cave(Img cave, int timer);
+void draw_background(Img background);
+void draw_shadow(Img shadows[nb_shadow]);
+void draw_shadow(Img shadows[nb_shadow], Personnage player);
+
+// Load functions
+void load_textures(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky]);
+void load_arrow(Img left[2], Img right[2], Img up[2], Img down[2]);
+//void load_glow(Img glow_ul[nb_glow],Img glow_dl[nb_glow],Img glow_ur[nb_glow],Img glow_dr[nb_glow]);
+void load_cave(Img & cave);
+void load_background(Img & background);
+void load_shadow(Img shadows[nb_shadow]);
+
+// Edit functions
+Img rotate(Img I);
+Img applyMaskCircle(Img target, int radius, Coord center);
+Img applyMaskCircle(Img target, int radius, Coord center, double alpha);
+Img applyMaskCircle(Img target, std::vector<int> radius, Coord center, std::vector<double> alphas);

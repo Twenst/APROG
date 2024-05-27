@@ -73,6 +73,14 @@ build CMakeFiles/APROG.dir/objets.cpp.o: CXX_COMPILER__APROG_unscanned_Debug /ho
   OBJECT_DIR = CMakeFiles/APROG.dir
   OBJECT_FILE_DIR = CMakeFiles/APROG.dir
 
+build CMakeFiles/APROG.dir/personnage.cpp.o: CXX_COMPILER__APROG_unscanned_Debug /home/titouan/Ingé/APROG/personnage.cpp || cmake_object_order_depends_target_APROG
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DSRCDIR=/home/titouan/Ingé/APROG
+  DEP_FILE = CMakeFiles/APROG.dir/personnage.cpp.o.d
+  FLAGS = -g -std=gnu++11 -fPIC
+  INCLUDES = -isystem /usr/share/Imagine++/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+  OBJECT_DIR = CMakeFiles/APROG.dir
+  OBJECT_FILE_DIR = CMakeFiles/APROG.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target APROG
@@ -81,7 +89,7 @@ build CMakeFiles/APROG.dir/objets.cpp.o: CXX_COMPILER__APROG_unscanned_Debug /ho
 #############################################
 # Link the executable APROG
 
-build APROG: CXX_EXECUTABLE_LINKER__APROG_Debug CMakeFiles/APROG.dir/main.cpp.o CMakeFiles/APROG.dir/affichage.cpp.o CMakeFiles/APROG.dir/objets.cpp.o | /usr/share/Imagine++/lib/libImagineGraphics.a /usr/share/Imagine++/lib/libImagineGraphics.a /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.10 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.10 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.10 /usr/lib/x86_64-linux-gnu/libGL.so
+build APROG: CXX_EXECUTABLE_LINKER__APROG_Debug CMakeFiles/APROG.dir/main.cpp.o CMakeFiles/APROG.dir/affichage.cpp.o CMakeFiles/APROG.dir/objets.cpp.o CMakeFiles/APROG.dir/personnage.cpp.o | /usr/share/Imagine++/lib/libImagineGraphics.a /usr/share/Imagine++/lib/libImagineGraphics.a /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.10 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.10 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.10 /usr/lib/x86_64-linux-gnu/libGL.so
   FLAGS = -g
   LINK_LIBRARIES = /usr/share/Imagine++/lib/libImagineGraphics.a  /usr/share/Imagine++/lib/libImagineGraphics.a  /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.10  /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.10  /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.10  /usr/lib/x86_64-linux-gnu/libGL.so
   OBJECT_DIR = CMakeFiles/APROG.dir
