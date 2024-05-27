@@ -250,20 +250,31 @@ Img applyMaskCircle(Img target, int radius, Coord center, double alpha)
 	return res;
 }
 
-Img applyMaskCircle(Img target, std::vector<int> radius, Coord center, std::vector<double> alphas)
+int max(const std::vector<int>& radius)
+{
+	int m = radius[0];
+	for (int i = 0; i < radius.size(); i++)
+	{
+		m = (radius[i] > m) ? radius[i] : m;
+	}
+	return m;
+}
+
+Img applyMaskCircle(Img target, const std::vector<int>& radius, Coord center, const std::vector<double>& alphas)
 {
 	assert(radius.size() == alphas.size());
 	Img res = target.clone();
 	int wid = target.width(), hei = target.height(); 
+	int rad_max = max(radius);
 
-	for (int i = 0; i < wid; i++)
+	for (int i = center.x()/fac - rad_max; i <= center.x()/fac + rad_max; i++)
 	{
-		for (int j = 0; j < hei; j++)
+		for (int j = center.y()/fac - rad_max; j <= center.y()/fac + rad_max; j++)
 		{
 			Coord x(i,j);
 			for (int k = 0; k < radius.size(); k++)
 			{
-				if (is_within_circle(x,radius[k],center))
+				if (is_within_square(x, Coord(0,0), Coord(wid,hei)) and is_within_circle(x,radius[k],center))
 				{
 				res(i,j).a() *= alphas[k];
 				}
@@ -287,4 +298,14 @@ void draw_heart(Img heart[2], Personnage player)
 	{
 		display(heart[(i <= hp) ? 0 : 1],w - 8*(i+1)*fac,8*fac,false,fac);
 	}
+}
+
+void draw_gameover(Img gameover)
+{
+	display(gameover,0,0,false,fac*2);
+}
+
+void load_gameover(Img & gameover)
+{
+	load(gameover,stringSrcPath(gameover_name));
 }

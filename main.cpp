@@ -16,7 +16,7 @@ using namespace Imagine;
 float minf(float a, float b);
 void load_jumping(Personnage & player,Event e);
 void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score);
-void end_cinematic(Personnage player, Img cave, Img background);
+void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow]);
 
 //---Main---//
 int main(int argc, char** argv)
@@ -138,6 +138,9 @@ int main(int argc, char** argv)
         
         milliSleep(msleep);
     }
+
+    end_cinematic(player, cave, background, shadows);
+
     delete[] obstacle;
     if(partie.Timer > std::stoi(Score))
     {
@@ -167,6 +170,7 @@ void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_te
         player.setCoords(crd,crds_y_init);
 
         noRefreshBegin();
+        clearWindow();
 
         draw_background(grass_textures,dirt_textures,sky_textures);
         //drawString(w/2 - 840/2,h/5,"CAVESCROLL",RED,50,0,false,true); //ON pourra prendre des vrai png pour les textes
@@ -190,27 +194,33 @@ void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_te
 
 }
 
-void end_cinematic(Personnage player, Img cave, Img background)
+void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow])
 {
-    int cinematic_lenght = 100;
+    Img gameover; load_gameover(gameover);
+    int cinematic_lenght = 35;
     for(int i = 0 ; i < cinematic_lenght ; i++)
     {
         noRefreshBegin();
+        clearWindow();
 
         draw_background(background);
-/* 
+        draw_cave(cave,0);
+
         std::vector<int> radius;
 	    for (int i = 0; i < player.getLighForce(); i++) radius.push_back(4*(i+1)*fac); 
 
-	    std::vector<double> alphas(radius.size(), 0.75);
+	    std::vector<double> alphas(radius.size(), 0.75 + 0.25*i/cinematic_lenght);
 	    Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],radius,player.getCenter(),alphas);
-	    display(shadow_mask,0,0,false,fac); */
+	    display(shadow_mask,0,0,false,fac);
 
         player.draw(0);
 
         noRefreshEnd();
         milliSleep(msleep);
     }
+    noRefreshBegin();
+    draw_gameover(gameover);
+    noRefreshEnd();
 }
 
 //---Fonctions---//

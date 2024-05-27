@@ -47,6 +47,6 @@ const std::string heart_name[2] = {"./assets/heart.png","./assets/heart_lost.png
 const std::string score_path = "./Score.txt";
 
 //Title
-
+const std::string gameover_name = "./assets/gameover.png";
 
 //const std::string title = {"./assets/title"};
