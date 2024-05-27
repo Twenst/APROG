@@ -68,7 +68,7 @@ int main(int argc, char** argv)
         }
 
         //player.update_color(spacebar_timer);
-        partie.Timer ++;
+        partie.Timer += 1;
 
         noRefreshBegin();
         
@@ -89,6 +89,7 @@ int main(int argc, char** argv)
         load_jumping(player,e);
         player.walk(e);
         player.dash(e);
+        player.crouch(e);
 
         // OBSTACLES :
         bool outOfBounds = true;

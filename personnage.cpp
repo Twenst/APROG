@@ -52,10 +52,13 @@ int Personnage::getMaxHp() const
 
 void Personnage::jump()
 {
-    if (not jumping)
+    if(not crouching)
     {
-        jumping = true;
-        t_jump = 0;
+        if (not jumping)
+        {
+            jumping = true;
+            t_jump = 0;
+        }
     }
 }
 
@@ -127,15 +130,34 @@ void Personnage::walk(Event e)
 {
     if ((e.type == EVT_KEY_ON) and (e.key == KEY_RIGHT))
     {
-        speed = 10;
+        speed = max_speed;
     }
     else if ((e.type == EVT_KEY_ON) and (e.key == KEY_LEFT))
     {
-        speed = -10;
+        speed = -max_speed;
     }
     else if (e.type == EVT_KEY_OFF and (e.key == KEY_LEFT or e.key == KEY_RIGHT))
     {
         speed = 0;
+    }
+}
+
+void Personnage::crouch(Event e)
+{
+    if(not jumping)
+    {
+        if ((e.type == EVT_KEY_ON) and (e.key == KEY_DOWN))
+        {
+            crouching = true;
+            size = Coord(size_x,size_y - 30);
+            crds = Coord(getPos().x(),crds_y_init + 30);
+        }
+        else if (e.type == EVT_KEY_OFF and e.key == KEY_DOWN)
+        {
+            size = Coord(size_x,size_y);
+            crds = Coord(getPos().x(),crds_y_init);
+            crouching = false;
+        }
     }
 }
 
@@ -172,8 +194,30 @@ void Personnage::setCoords(int x,int y)
 
 void Personnage::update_status(Obstacle& obstacle)
 {
-    //invincibilité
-    if(invincible)
+    //bonus
+    if(bonus)
+    {
+        int type = obstacle.getBonusType();
+        if(bonus_count == bonus_duration)
+        {
+
+            bonus = false;
+            bonus_count = 0;
+            if (type == 1)
+            {
+                setSpeed(getSpeed()- 30);
+            }
+            if(type ==3)
+            {
+                invincible = false;
+            }
+        }
+        else
+        {
+            bonus_count ++;
+        }
+    }
+    else if (invincible) //invincibilité
     {
         if(invincible_count == invincible_duration)
         {
@@ -186,25 +230,7 @@ void Personnage::update_status(Obstacle& obstacle)
         }
 
     }
-    //bonus
-    if(bonus)
-    {
-        int type = obstacle.getBonusType();
-        if(bonus_count == bonus_duration)
-        {
 
-            bonus = false;
-            bonus_count = 0;
-            if (type == 1)
-            {
-                setSpeed(getSpeeed()- 30);
-            }
-        }
-        else
-        {
-            bonus_count ++;
-        }
-    }
 
 }
 
@@ -244,11 +270,12 @@ void Personnage::getBonus(Obstacle& obstacle)
     if(obstacle.getBonusType() == 2)//Vitesse
     {
         bonus = true;
-        setSpeed(getSpeeed() + 30);
+        max_speed += 20;
     }
     if(obstacle.getBonusType() == 3)//Invulnérabilité
     {
         bonus = true;
+        invincible = true;
     }
 }
 
@@ -282,7 +309,7 @@ Coord Personnage::getSize() const
     return size;
 }
 
-int Personnage::getSpeeed() const
+int Personnage::getSpeed() const
 {
     return speed;
 }

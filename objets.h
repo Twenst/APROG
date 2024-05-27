@@ -31,6 +31,7 @@ public:
     void erase();
     int isFlying() const;
     int getBonusType() const;
+    void setBonusType(int new_type);
 
 };
 class Partie
