@@ -48,5 +48,6 @@ const std::string score_path = "./Score.txt";
 
 //Title
 const std::string gameover_name = "./assets/gameover.png";
+const std::string keyboard_name = "./assets/keyboard.png";
 
 //const std::string title = {"./assets/title"};

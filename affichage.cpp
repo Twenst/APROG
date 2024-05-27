@@ -309,3 +309,13 @@ void load_gameover(Img & gameover)
 {
 	load(gameover,stringSrcPath(gameover_name));
 }
+
+void draw_keyboard(Img keyboard)
+{
+	display(keyboard,0,0,false,fac*2);
+}
+
+void load_keyboard(Img & keyboard)
+{
+	load(keyboard,stringSrcPath(keyboard_name));
+}

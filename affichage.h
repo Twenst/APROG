@@ -22,6 +22,7 @@ void draw_shadow(Img shadows[nb_shadow]);
 void draw_shadow(Img shadows[nb_shadow], Personnage player);
 void draw_heart(Img heart[2], Personnage player);
 void draw_gameover(Img gameover);
+void draw_keyboard(Img keyboard);
 
 // Load functions
 void load_textures(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky]);
@@ -32,6 +33,7 @@ void load_background(Img & background);
 void load_shadow(Img shadows[nb_shadow]);
 void load_heart(Img heart[2]);
 void load_gameover(Img & gameover);
+void load_keyboard(Img & keyboard);
 
 // Edit functions
 Img rotate(Img I);
