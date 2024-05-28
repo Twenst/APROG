@@ -17,9 +17,10 @@ const int floor_level = (10./16.)*h;
 
 // Carac du personnage
 const int size_x = 4*fac;
-const int size_y = 8*fac;
+const int size_y = 12*fac;
 const int crds_x_init = w/2 - size_x/2;
 const int crds_y_init = floor_level - size_y;
+const int lightforce_init = 16;
 
 // Saut
 const double jump_lenght = 1.2;

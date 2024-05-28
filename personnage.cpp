@@ -20,7 +20,7 @@ Personnage::Personnage()
     invincible = false;
     invincible_count = 0;
     invincible_duration = 20;
-    light_force = 6;
+    light_force = 16;
 }
 
 void Personnage::draw(int Timer) const
@@ -149,8 +149,8 @@ void Personnage::crouch(Event e)
         if ((e.type == EVT_KEY_ON) and (e.key == KEY_DOWN))
         {
             crouching = true;
-            size = Coord(size_x,size_y - 30);
-            crds = Coord(getPos().x(),crds_y_init + 30);
+            size = Coord(size_x,size_y/2);
+            crds = Coord(getPos().x(),crds_y_init + size_y/2);
         }
         else if (e.type == EVT_KEY_OFF and e.key == KEY_DOWN)
         {

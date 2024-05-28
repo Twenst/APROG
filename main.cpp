@@ -90,6 +90,7 @@ int main(int argc, char** argv)
         player.walk(e);
         player.dash(e);
         player.crouch(e);
+        player.setLighForce(lightforce_init - partie.Timer/100);
 
         // OBSTACLES :
         bool outOfBounds = true;
