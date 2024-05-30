@@ -16,7 +16,8 @@ using namespace Imagine;
 float minf(float a, float b);
 void load_jumping(Personnage & player,Event e);
 void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score);
-void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5]);
+void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5],std::string score);
+void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5], int Timer);
 
 //---Main---//
 int main(int argc, char** argv)
@@ -52,9 +53,9 @@ int main(int argc, char** argv)
     Img background; load_background(background);
     Img shadows[nb_shadow]; load_shadow(shadows);
     Img heart[2]; load_heart(heart);
-    Img player_right[5], player_left[5]; load_charac(player_right, player_left);
+    Img player_right[10], player_left[10]; load_charac(player_right, player_left);
 
-    //start_cinematic(player,grass_textures,dirt_textures,sky_textures,Score);
+    start_cinematic2(player,player_right, player_left,Score);
 
     while(player.getHp() > 0)
     {
@@ -83,7 +84,7 @@ int main(int argc, char** argv)
         draw_score(Score);
         draw_scrolling(type_scrolling,left,right,up,down);
         //player.draw(partie.Timer);
-        draw_charac(player_right, player_left, player);
+        draw_charac(player_right, player_left, player, partie.Timer);
 
         noRefreshEnd();
 
@@ -142,7 +143,7 @@ int main(int argc, char** argv)
         milliSleep(msleep);
     }
 
-    end_cinematic(player, cave, background, shadows, player_right, player_left);
+    end_cinematic(player, cave, background, shadows, player_right, player_left, partie.Timer);
 
     delete[] obstacle;
     if(partie.Timer > std::stoi(Score))
@@ -189,7 +190,7 @@ void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_te
         {
              drawString(w/2 - 760/2,h/3,"Déjà " + score +" mètres explorés...",BLACK,20,0,false,true);
         }
-        draw_charac(player_right, player_left, player);
+        draw_charac(player_right, player_left, player, 0);
 
         noRefreshEnd();
         milliSleep(msleep);
@@ -198,7 +199,44 @@ void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_te
 
 }
 
-void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5])
+void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5],std::string score)
+{
+    int cinematic_lenght = 1000;
+    int cinematic_speed = w/cinematic_lenght;
+    int crd = 0;
+    
+    Img startbackground; load_startback(startbackground);
+
+    for(int i = 0 ; i < cinematic_lenght ; i++)
+    {
+        crd += cinematic_speed;
+        player.setCoords(crd,crds_y_init);
+
+        noRefreshBegin();
+        clearWindow();
+
+        draw_startback(startbackground);
+
+        if(i < cinematic_lenght /2)
+        {
+
+            drawString(w/2 - 150,h/3,"De retour...",BLACK,20,0,false,true);
+
+        }
+        else
+        {
+             drawString(w/2 - 760/2,h/3,"Déjà " + score +" mètres explorés...",BLACK,20,0,false,true);
+        }
+        draw_charac(player_right, player_left, player, 0);
+
+        noRefreshEnd();
+        milliSleep(msleep);
+    }
+    player.setCoords(crds_x_init,crds_y_init);
+
+}
+
+void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5], int Timers)
 {
     Img gameover; load_gameover(gameover);
     int cinematic_lenght = 35;
@@ -220,13 +258,15 @@ void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_s
 	    Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],radius,player.getCenter() - size_y/4,alphas);
 	    display(shadow_mask,0,0,false,fac);
 
-        draw_charac(player_right, player_left, player);
+        draw_timer(Timers);
+        draw_charac(player_right, player_left, player, 0);
 
         noRefreshEnd();
         milliSleep(msleep);
     }
     noRefreshBegin();
     draw_gameover(gameover);
+    draw_timer(Timers);
     noRefreshEnd();
 }
 

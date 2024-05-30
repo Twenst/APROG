@@ -95,26 +95,27 @@ void draw_hp(int num_hp)
 
 void draw_scrolling(int typescrolling,Img left[2], Img right[2], Img up[2], Img down[2])
 {
+	double fac2 = fac/2;
   	if(typescrolling == 0)
     {
       	//Les obstacles viennent de la droite
-        display(left[rand()%2],w/2-4*fac,3*h/4,false,fac);
+        display(left[rand()%2],w/2-4*fac,3*h/4,false,fac2);
     }
     if(typescrolling == 1)
     {
       	//Les obstacles viennent de la gauche
-        display(right[rand()%2],w/2-4*fac,3*h/4,false,fac);
+        display(right[rand()%2],w/2-4*fac,3*h/4,false,fac2);
     }
     if(typescrolling == 2)
     {
       	//Les obstacles viennent du haut
-        display(down[rand()%2],w/2-4*fac,3*h/4,false,fac);
+        display(down[rand()%2],w/2-4*fac,3*h/4,false,fac2);
 
     }
     if(typescrolling == 3)
     {
         //Les obstacles viennent du bas
-        display(up[rand()%2],w/2-4*fac,3*h/4,false,fac);
+        display(up[rand()%2],w/2-4*fac,3*h/4,false,fac2);
 
     }
 }
@@ -320,13 +321,14 @@ void load_keyboard(Img & keyboard)
 	load(keyboard,stringSrcPath(keyboard_name));
 }
 
-void load_charac(Img player_right[5], Img player_left[5])
+void load_charac(Img player_right[10], Img player_left[10])
 {
 	for (int i = 0; i < 5; i++) 
 	{
 		load(player_right[i], stringSrcPath(player_right_name[i]));
+		load(player_right[5+i], stringSrcPath(player_right_alter_name[i]));
 	}
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		player_left[i] = mirrorVert(player_right[i]);
 	}
@@ -347,29 +349,33 @@ Img mirrorVert(Img I)
 	return Im;
 }
 
-void draw_charac(Img player_right[5], Img player_left[5], Personnage player)
+void draw_charac(Img player_right[10], Img player_left[10], Personnage player, int Timer)
 {
 	double fac2 = fac/2;
+	Timer /= 5;
+	int x = player.getPos().x()-size_x/2;
+	int y = player.getPos().y();
+	int hurt = (player.is_invicible()) ? 5 : 0;
 	if (player.is_facing_right()) // Right
 	{
 		if (player.is_crouching())
 		{
-			display(player_right[4],player.getPos().x(),player.getPos().y(),false,fac2);
+			display(player_right[4 + hurt*(Timer%2)],x,y,false,fac2);
 		}
 		else
 		{
-			display(player_right[(player.getPos().x()/50)%4],player.getPos().x(),player.getPos().y(),false,fac2);
+			display(player_right[(player.getPos().x()/50)%4 + hurt*(Timer%2)],x,y,false,fac2);
 		}
 	}
 	else // Left
 	{
 		if (player.is_crouching())
 		{
-			display(player_left[4],player.getPos().x(),player.getPos().y(),false,fac2);
+			display(player_left[4 + hurt*(Timer%2)],x,y,false,fac2);
 		}
 		else
 		{
-			display(player_left[(player.getPos().x()/50)%4],player.getPos().x(),player.getPos().y(),false,fac2);
+			display(player_left[(player.getPos().x()/50)%4 + hurt*(Timer%2)],x,y,false,fac2);
 		}
 	}
 }
@@ -383,4 +389,24 @@ void test_charac(Img player_right[5], Img player_left[5], Personnage player)
 		display(player_right[i],16*fac2*i,0,false,fac2);
 		display(player_left[i],16*fac2*i,24*fac2,false,fac2);
 	}
+}
+
+void load_bat(Img & bat)
+{
+	load(bat, stringSrcPath(bat_name));
+}
+
+void draw_bat(Img bat, Coord c)
+{
+	display(bat,c.x(),c.y(),false,fac);
+}
+
+void load_startback(Img & startbackground)
+{
+	load(startbackground, stringSrcPath(earth_name));
+}
+
+void draw_startback(Img starbackground)
+{
+	display(starbackground,0,0,false,fac);
 }

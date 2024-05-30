@@ -73,6 +73,7 @@ class Personnage
         bool is_crouching() const;
         bool is_facing_right() const;
         void set_crouching(bool b);
+        bool is_invicible() const;
 };
 
 

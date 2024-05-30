@@ -23,8 +23,10 @@ void draw_shadow(Img shadows[nb_shadow], Personnage player);
 void draw_heart(Img heart[2], Personnage player);
 void draw_gameover(Img gameover);
 void draw_keyboard(Img keyboard);
-void draw_charac(Img player_right[5], Img player_left[5], Personnage player);
-void test_charac(Img player_right[5], Img player_left[5], Personnage player);
+void draw_charac(Img player_right[10], Img player_left[10], Personnage player, int Timer);
+void test_charac(Img player_right[10], Img player_left[10], Personnage player);
+void draw_bat(Img bat, Coord c);
+void draw_startback(Img starbackground);
 
 // Load functions
 void load_textures(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky]);
@@ -36,7 +38,9 @@ void load_shadow(Img shadows[nb_shadow]);
 void load_heart(Img heart[2]);
 void load_gameover(Img & gameover);
 void load_keyboard(Img & keyboard);
-void load_charac(Img player_right[5], Img player_left[5]);
+void load_charac(Img player_right[10], Img player_left[10]);
+void load_bat(Img & bat);
+void load_startback(Img & startbackground);
 
 // Edit functions
 Img rotate(Img I);

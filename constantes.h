@@ -16,7 +16,7 @@ const int msleep = 15;
 const int floor_level = (10./16.)*h;
 
 // Carac du personnage
-const int size_x = 8*fac;
+const int size_x = 4*fac; //hitbox de cette taille, image de largeur 8*fac
 const int size_y = 12*fac;
 const int crds_x_init = w/2 - size_x/2;
 const int crds_y_init = floor_level - size_y;
@@ -43,8 +43,11 @@ const std::string cave_name = "./assets/double_grotte.png";
 const std::string background_name = "./assets/background.png";
 const std::string shadows_name[nb_shadow] = {"./assets/shadow1.png","./assets/shadow2.png","./assets/shadow3.png","./assets/shadow4.png","./assets/shadow5.png"};
 const std::string heart_name[2] = {"./assets/heart.png","./assets/heart_lost.png"};
+const std::string earth_name = "./assets/start_background.png";
 
 const std::string player_right_name[5] = {"./assets/character/right_walk1.png","./assets/character/right_walk2.png","./assets/character/right_walk3.png","./assets/character/right_walk4.png","./assets/character/right_down.png"};
+const std::string player_right_alter_name[5] = {"./assets/character/right_walk1_alter.png","./assets/character/right_walk2_alter.png","./assets/character/right_walk3_alter.png","./assets/character/right_walk4_alter.png","./assets/character/right_down_alter.png"};
+const std::string bat_name = "./assets/bat.png";
 
 //Score
 const std::string score_path = "./Score.txt";

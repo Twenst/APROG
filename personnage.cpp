@@ -171,6 +171,14 @@ void Personnage::crouch(Event e)
 void Personnage::update_walk()
 {
     crds.x() += speed*dash_speed;
+    if (crds.x() < 0)
+    {
+        crds.x() = 0;
+    }
+    if (crds.x() > w - size_x)
+    {
+        crds.x() = w - size_x;
+    }
 }
 
 void Personnage::dash(Event e)
@@ -349,4 +357,9 @@ bool Personnage::is_facing_right() const
 void Personnage::set_crouching(bool b)
 {
     crouching = b;
+}
+
+bool Personnage::is_invicible() const
+{
+    return invincible;
 }
