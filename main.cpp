@@ -166,9 +166,6 @@ int main(int argc, char** argv)
 
 void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5],std::string score)
 {
-    Img keyboard;Img grass[nb_grass];Img dirt[nb_dirt]; Img sky[nb_sky];
-    load_textures(grass,dirt,sky);
-    load_keyboard(keyboard);
     int crd = 0;
     int cinematic_lenght_1 = 80;
     int cinematic_lenght_2 = 50;
@@ -177,7 +174,9 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
     int crdx = 0;int crdy = crds_y_init;
     int fall_lenght = 50;
     
+    Img keyboard; load_keyboard(keyboard);
     Img startbackground; load_startback(startbackground);
+    Img rock; load_rock(rock);
 
     for(int i = 0 ; i < cinematic_lenght_1 - 1; i++)
     {
@@ -200,6 +199,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
              drawString(w/2 - 760/2,h/3,"Déjà " + score +" mètres explorés...",BLACK,20,0,false,true);
         }
         draw_charac(player_right, player_left, player, 0);
+        draw_rock(rock);
 
         noRefreshEnd();
         milliSleep(msleep);
@@ -218,6 +218,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
                 player.set_facing(i%2);
             }
             draw_charac(player_right, player_left, player, 0);
+            draw_rock(rock);
 
             noRefreshEnd();
         }
@@ -243,14 +244,28 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
         milliSleep(msleep);
 
     }
-    //Affichae titre + touche
+    //Affichage titre + touche
+
+    // Fondu noir
+    int fondu_duree = 35;
+    AlphaColor noir(0,0,0,0);
+    for (int i = 0; i < fondu_duree; i++)
+    {
+        noRefreshBegin();
+        clearWindow();
+
+        draw_startback(startbackground);
+        noir.a() = 255 * (i/35);
+        fillRect(0,0,w,h,noir);
+
+        noRefreshEnd();
+        milliSleep(msleep);
+    }
 
     noRefreshBegin();
 
     clearWindow();
 
-
-    draw_startback(startbackground);
     drawString(w/2 - 760/2,h/3,"Scrolling (mettre vrai png)",BLACK,20,0,false,true);
     drawString(w/2 - 760/2,h/2,"Clic droit pour continuer...",WHITE,15,0,false,true);
     draw_keyboard(keyboard);
