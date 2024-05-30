@@ -3,3 +3,4 @@ build/
 main_*
 objets_*
 CMakeLists.txt.user
+assets/old_textures
