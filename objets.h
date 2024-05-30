@@ -10,7 +10,7 @@ class Obstacle
 
     Color clr;
 
-    int speed = 14; // Vitesse de l'obstacle
+    int speed = 16; // Vitesse de l'obstacle
 
     int type; // Type de l'obstacle (1 : dangereux , 2 : Bonus)
     int flying = 0; //Obstacle qui vole ou non (0 : non , 1 : oui)

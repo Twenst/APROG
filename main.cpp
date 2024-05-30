@@ -130,7 +130,7 @@ int main(int argc, char** argv)
         //Changement de scrolling quand le timer atteint 1000
         if(partie.Timer % 70 == 0)
         {
-            if(partie.Timer% 81 == 0)
+            if(partie.Timer% 100 == 0)
             {
                 partie.update_scrolling(4);
             }

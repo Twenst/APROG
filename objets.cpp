@@ -153,7 +153,7 @@ void Obstacle::init(int scrollingType)
         crds = Coord(w,h/2);
         clr = RED;
         setType(1);
-        setBonusType(rand()%3 +1);
+        setBonusType(rand()%3 + 1);
     }
 }
 

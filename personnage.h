@@ -17,7 +17,7 @@ class Personnage
     //Vitesse
     int speed;
     double dash_speed;
-    int max_speed = 10;
+    int max_speed = 13;
 
     // Gameplay
     int hp;

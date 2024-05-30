@@ -23,7 +23,7 @@ Personnage::Personnage()
     light_force = 16;
     facing_right = true;
     crouching = false;
-    bonus_duration = 300;
+    bonus_duration = 1500;
     bonus_count = 0;
     bonus = false;
 }
@@ -222,8 +222,22 @@ void Personnage::setCoords(int x,int y)
 
 void Personnage::update_status(Obstacle& obstacle)
 {
-    //bonus
-    if(bonus)
+
+
+    if (invincible and bonus_value != 3) //invincibilité
+    {
+        if(invincible_count == invincible_duration)
+        {
+            invincible = false;
+            invincible_count = 0;
+        }
+        else
+        {
+            invincible_count ++;
+        }
+
+    }
+    else if(bonus) //bonus
     {
         if(bonus_count == bonus_duration)
         {
@@ -243,19 +257,6 @@ void Personnage::update_status(Obstacle& obstacle)
         {
             bonus_count ++;
         }
-    }
-    else if (invincible and bonus==false) //invincibilité
-    {
-        if(invincible_count == invincible_duration)
-        {
-            invincible = false;
-            invincible_count = 0;
-        }
-        else
-        {
-            invincible_count ++;
-        }
-
     }
 
 
