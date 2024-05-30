@@ -76,6 +76,7 @@ class Personnage
         void set_facing(int side);
         void set_crouching(bool b);
         bool is_invicible() const;
+        void set_jumping(bool b);
 };
 
 

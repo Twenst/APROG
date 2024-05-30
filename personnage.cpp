@@ -380,3 +380,8 @@ bool Personnage::is_invicible() const
 {
     return invincible;
 }
+
+void Personnage::set_jumping(bool b)
+{
+    jumping = b;
+}

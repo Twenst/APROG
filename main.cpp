@@ -16,7 +16,7 @@ using namespace Imagine;
 float minf(float a, float b);
 void load_jumping(Personnage & player,Event e);
 void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score);
-void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5],std::string score);
+void start_cinematic2(Personnage& player, Img player_right[10], Img player_left[10], Img cave, Img background, Img shadows[nb_shadow], std::string score);
 void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5], int Timer);
 
 //---Main---//
@@ -55,7 +55,7 @@ int main(int argc, char** argv)
     Img heart[2]; load_heart(heart);
     Img player_right[10], player_left[10]; load_charac(player_right, player_left);
 
-    start_cinematic2(player,player_right, player_left,Score);
+    start_cinematic2(player,player_right, player_left,cave,background,shadows,Score);
 
     while(player.getHp() > 0)
     {
@@ -66,12 +66,11 @@ int main(int argc, char** argv)
         for(int i = 0 ; i<nbr_obstacle;i++)
         {
             player.update_status(obstacle[i]);
-
         }
 
-        //player.update_color(spacebar_timer);
         partie.Timer += 1;
 
+        // AFFICHAGE
         noRefreshBegin();
         
         clearWindow();
@@ -164,7 +163,7 @@ int main(int argc, char** argv)
 
 //---Cinematique---//
 
-void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5],std::string score)
+void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5], Img cave, Img background, Img shadows[nb_shadow], std::string score)
 {
     int crd = 0;
     int cinematic_lenght_1 = 80;
@@ -177,6 +176,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
     Img keyboard; load_keyboard(keyboard);
     Img startbackground; load_startback(startbackground);
     Img rock; load_rock(rock);
+    Img click; load_click(click);
 
     for(int i = 0 ; i < cinematic_lenght_1 - 1; i++)
     {
@@ -213,10 +213,9 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
             clearWindow();
 
             draw_startback(startbackground);
-            if(i%3 == 0) // Pour ralentir le rafraichissement de la direction du personnage
-            {
-                player.set_facing(i%2);
-            }
+            // Pour ralentir le rafraichissement de la direction du personnage
+            int k = i/7;
+            player.set_facing(k%2);
             draw_charac(player_right, player_left, player, 0);
             draw_rock(rock);
 
@@ -247,7 +246,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
     //Affichage titre + touche
 
     // Fondu noir
-    int fondu_duree = 35;
+    int fondu_duree = 50;
     AlphaColor noir(0,0,0,0);
     for (int i = 0; i < fondu_duree; i++)
     {
@@ -255,7 +254,22 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
         clearWindow();
 
         draw_startback(startbackground);
-        noir.a() = 255 * (i/35);
+        noir.a() = 255 * i/fondu_duree;
+        fillRect(0,0,w,h,noir);
+
+        noRefreshEnd();
+        milliSleep(msleep);
+    }
+
+    for (int i = 0; i < fondu_duree; i++)
+    {
+        noRefreshBegin();
+        clearWindow();
+
+        draw_background(background);
+        draw_cave(cave,0);
+        draw_shadow(shadows);
+        noir.a() = 255 - 255 * i/fondu_duree;
         fillRect(0,0,w,h,noir);
 
         noRefreshEnd();
@@ -266,14 +280,39 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
 
     clearWindow();
 
-    drawString(w/2 - 760/2,h/3,"Scrolling (mettre vrai png)",BLACK,20,0,false,true);
-    drawString(w/2 - 760/2,h/2,"Clic droit pour continuer...",WHITE,15,0,false,true);
+    draw_background(background);
+    draw_cave(cave,0);
+    draw_shadow(shadows);
+    //drawString(w/2 - 760/2,h/3,"Scrolling (mettre vrai png)",BLACK,20,0,false,true);
+    // TJRS A FAIRE, PEUT ETRE AFFICHER AVANT
+    draw_click(click);
     draw_keyboard(keyboard);
 
     noRefreshEnd();
 
-    click();
-    player.setCoords(crds_x_init,crds_y_init);
+    anyClick();
+
+    // chute du personnage par le haut
+    player.setCoords(crds_x_init,0);
+    player.setFalling(0);
+    player.set_jumping(true);
+
+    /* while(player.is_jumping())
+    {
+        player.update_jump();
+        player.update_walk();
+        player.update_dash();
+
+        noRefreshBegin();
+        
+        clearWindow();
+        draw_background(background);
+        draw_cave(cave,0);
+        draw_shadow(shadows, player);
+        draw_charac(player_right, player_left, player, 0);
+
+        noRefreshEnd();
+    } */
 
 }
 

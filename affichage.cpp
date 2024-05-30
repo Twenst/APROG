@@ -419,3 +419,13 @@ void draw_rock(Img rock)
 {
 	display(rock,0,0,false,fac);
 }
+
+void draw_click(Img click)
+{
+	display(click,0,0,false,fac);
+}
+
+void load_click(Img & click)
+{
+	load(click, stringSrcPath(click_name));
+}
