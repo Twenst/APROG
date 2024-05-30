@@ -23,6 +23,8 @@ void draw_shadow(Img shadows[nb_shadow], Personnage player);
 void draw_heart(Img heart[2], Personnage player);
 void draw_gameover(Img gameover);
 void draw_keyboard(Img keyboard);
+void draw_charac(Img player_right[5], Img player_left[5], Personnage player);
+void test_charac(Img player_right[5], Img player_left[5], Personnage player);
 
 // Load functions
 void load_textures(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky]);
@@ -34,9 +36,11 @@ void load_shadow(Img shadows[nb_shadow]);
 void load_heart(Img heart[2]);
 void load_gameover(Img & gameover);
 void load_keyboard(Img & keyboard);
+void load_charac(Img player_right[5], Img player_left[5]);
 
 // Edit functions
 Img rotate(Img I);
+Img mirrorVert(Img I);
 Img applyMaskCircle(Img target, int radius, Coord center);
 Img applyMaskCircle(Img target, int radius, Coord center, double alpha);
 Img applyMaskCircle(Img target, const std::vector<int>& radius, Coord center, const std::vector<double>& alphas);

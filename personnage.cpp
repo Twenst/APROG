@@ -21,6 +21,11 @@ Personnage::Personnage()
     invincible_count = 0;
     invincible_duration = 20;
     light_force = 16;
+    facing_right = true;
+    crouching = false;
+    bonus_duration = 250;
+    bonus_count = 0;
+    bonus = false;
 }
 
 void Personnage::draw(int Timer) const
@@ -131,10 +136,12 @@ void Personnage::walk(Event e)
     if ((e.type == EVT_KEY_ON) and (e.key == KEY_RIGHT))
     {
         speed = max_speed;
+        facing_right = true;
     }
     else if ((e.type == EVT_KEY_ON) and (e.key == KEY_LEFT))
     {
         speed = -max_speed;
+        facing_right = false;
     }
     else if (e.type == EVT_KEY_OFF and (e.key == KEY_LEFT or e.key == KEY_RIGHT))
     {
@@ -327,4 +334,19 @@ int Personnage::getLighForce() const
 void Personnage::setLighForce(int light_lvl)
 {
     light_force = light_lvl;   
+}
+
+bool Personnage::is_crouching() const
+{
+    return crouching;
+}
+
+bool Personnage::is_facing_right() const
+{
+    return facing_right;
+}
+
+void Personnage::set_crouching(bool b)
+{
+    crouching = b;
 }

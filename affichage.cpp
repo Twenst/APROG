@@ -206,7 +206,7 @@ void draw_shadow(Img shadows[nb_shadow], Personnage player)
 	for (int i = 2; i < 4; i++) radius.push_back(player.getLighForce()*i*fac); 
 
 	std::vector<double> alphas(radius.size(), 0.75);
-	Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],radius,player.getCenter(),alphas);
+	Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],radius,player.getCenter()-Coord(0,size_y/4),alphas);
 	display(shadow_mask,0,0,false,fac);
 }
 
@@ -318,4 +318,69 @@ void draw_keyboard(Img keyboard)
 void load_keyboard(Img & keyboard)
 {
 	load(keyboard,stringSrcPath(keyboard_name));
+}
+
+void load_charac(Img player_right[5], Img player_left[5])
+{
+	for (int i = 0; i < 5; i++) 
+	{
+		load(player_right[i], stringSrcPath(player_right_name[i]));
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		player_left[i] = mirrorVert(player_right[i]);
+	}
+}
+
+Img mirrorVert(Img I)
+{
+	int w = I.width(), h = I.height();
+	Img Im(w,h);
+
+	for (int i = 0; i < w; i++)
+	{
+		for (int j = 0; j < h; j++)
+		{
+			Im(w-1-i,j) = I(i,j);
+		}
+	}
+	return Im;
+}
+
+void draw_charac(Img player_right[5], Img player_left[5], Personnage player)
+{
+	double fac2 = fac/2;
+	if (player.is_facing_right()) // Right
+	{
+		if (player.is_crouching())
+		{
+			display(player_right[4],player.getPos().x(),player.getPos().y(),false,fac2);
+		}
+		else
+		{
+			display(player_right[(player.getPos().x()/50)%4],player.getPos().x(),player.getPos().y(),false,fac2);
+		}
+	}
+	else // Left
+	{
+		if (player.is_crouching())
+		{
+			display(player_left[4],player.getPos().x(),player.getPos().y(),false,fac2);
+		}
+		else
+		{
+			display(player_left[(player.getPos().x()/50)%4],player.getPos().x(),player.getPos().y(),false,fac2);
+		}
+	}
+}
+
+void test_charac(Img player_right[5], Img player_left[5], Personnage player)
+{
+	double fac2 = fac/2;
+
+	for (int i = 0; i < 5; i++)
+	{
+		display(player_right[i],16*fac2*i,0,false,fac2);
+		display(player_left[i],16*fac2*i,24*fac2,false,fac2);
+	}
 }

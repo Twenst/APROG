@@ -27,12 +27,13 @@ class Personnage
     int invincible_duration;
     int invincible_count;
     int light_force;
-    bool crouching = false;
+    bool crouching;
+    bool facing_right;
 
     // Bonus
-    int bonus_duration = 250; // même durée pour chaque bonus, on pourrait en avoir différent si on le voulait
-    int bonus_count = 0;
-    bool bonus = false;
+    int bonus_duration; // même durée pour chaque bonus, on pourrait en avoir différent si on le voulait
+    int bonus_count;
+    bool bonus;
 
     // Saut
     int max_height;
@@ -69,6 +70,9 @@ class Personnage
         int getSpeed() const;
         int getLighForce() const;
         void setLighForce(int light_lvl);
+        bool is_crouching() const;
+        bool is_facing_right() const;
+        void set_crouching(bool b);
 };
 
 

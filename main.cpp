@@ -16,7 +16,7 @@ using namespace Imagine;
 float minf(float a, float b);
 void load_jumping(Personnage & player,Event e);
 void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score);
-void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow]);
+void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5]);
 
 //---Main---//
 int main(int argc, char** argv)
@@ -52,6 +52,7 @@ int main(int argc, char** argv)
     Img background; load_background(background);
     Img shadows[nb_shadow]; load_shadow(shadows);
     Img heart[2]; load_heart(heart);
+    Img player_right[5], player_left[5]; load_charac(player_right, player_left);
 
     //start_cinematic(player,grass_textures,dirt_textures,sky_textures,Score);
 
@@ -81,7 +82,8 @@ int main(int argc, char** argv)
         draw_timer(partie.Timer);
         draw_score(Score);
         draw_scrolling(type_scrolling,left,right,up,down);
-        player.draw(partie.Timer);
+        //player.draw(partie.Timer);
+        draw_charac(player_right, player_left, player);
 
         noRefreshEnd();
 
@@ -140,7 +142,7 @@ int main(int argc, char** argv)
         milliSleep(msleep);
     }
 
-    end_cinematic(player, cave, background, shadows);
+    end_cinematic(player, cave, background, shadows, player_right, player_left);
 
     delete[] obstacle;
     if(partie.Timer > std::stoi(Score))
@@ -160,11 +162,12 @@ int main(int argc, char** argv)
 }
 
 //---Cinematique---//
-void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score)
+void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky], Img player_right[5], Img player_left[5],std::string score)
 {
     int cinematic_lenght = 100;
     int cinematic_speed = w/cinematic_lenght;
     int crd = 0;
+    
     for(int i = 0 ; i < cinematic_lenght ; i++)
     {
         crd += cinematic_speed;
@@ -186,7 +189,7 @@ void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_te
         {
              drawString(w/2 - 760/2,h/3,"Déjà " + score +" mètres explorés...",BLACK,20,0,false,true);
         }
-        player.draw(0);
+        draw_charac(player_right, player_left, player);
 
         noRefreshEnd();
         milliSleep(msleep);
@@ -195,10 +198,13 @@ void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_te
 
 }
 
-void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow])
+void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5])
 {
     Img gameover; load_gameover(gameover);
     int cinematic_lenght = 35;
+    player.set_crouching(true);
+    player.setCoords(player.getPos().x(),player.getPos().y() + size_y/2);
+
     for(int i = 0 ; i < cinematic_lenght ; i++)
     {
         noRefreshBegin();
@@ -208,13 +214,13 @@ void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_s
         draw_cave(cave,0);
 
         std::vector<int> radius;
-	    for (int i = 0; i < player.getLighForce(); i++) radius.push_back(4*(i+1)*fac); 
+	    for (int i = 2; i < 4; i++) radius.push_back(player.getLighForce()*i*fac);
 
 	    std::vector<double> alphas(radius.size(), 0.75 + 0.25*i/cinematic_lenght);
-	    Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],radius,player.getCenter(),alphas);
+	    Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],radius,player.getCenter() - size_y/4,alphas);
 	    display(shadow_mask,0,0,false,fac);
 
-        player.draw(0);
+        draw_charac(player_right, player_left, player);
 
         noRefreshEnd();
         milliSleep(msleep);
