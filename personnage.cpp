@@ -19,7 +19,7 @@ Personnage::Personnage()
     max_hp = 5;
     invincible = false;
     invincible_count = 0;
-    invincible_duration = 20;
+    invincible_duration = 90;
     light_force = 16;
     facing_right = true;
     crouching = false;
@@ -252,6 +252,7 @@ void Personnage::update_status(Obstacle& obstacle)
             {
                 invincible = false;
             }
+            bonus_value = 0;
         }
         else
         {
