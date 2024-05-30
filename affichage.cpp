@@ -214,9 +214,8 @@ void draw_shadow(Img shadows[nb_shadow], Personnage player)
 Img applyMaskCircle(Img target, int radius, Coord center)
 {
 	Img res = target.clone();
-	int wid = target.width(), hei = target.height(); 
-
-	for (int i = 0; i < wid; i++)
+    int wid = target.width(), hei = target.height();
+    for (int i = 0; i < wid; i++)
 	{
 		for (int j = 0; j < hei; j++)
 		{

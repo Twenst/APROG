@@ -126,6 +126,19 @@ int Personnage::getFalling() const
     return falling;
 }
 
+void Personnage::set_facing(int side)
+{
+    // side = 0 : droite, side = 1 : gauche
+    if(side == 0)
+    {
+        facing_right = true;
+    }
+    else
+    {
+        facing_right = false;
+    }
+}
+
 bool Personnage::is_jumping() const
 {
     return jumping;

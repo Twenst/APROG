@@ -72,6 +72,7 @@ class Personnage
         void setLighForce(int light_lvl);
         bool is_crouching() const;
         bool is_facing_right() const;
+        void set_facing(int side);
         void set_crouching(bool b);
         bool is_invicible() const;
 };
