@@ -27,6 +27,7 @@ void draw_charac(Img player_right[10], Img player_left[10], Personnage player, i
 void test_charac(Img player_right[10], Img player_left[10], Personnage player);
 void draw_bat(Img bat, Coord c);
 void draw_startback(Img starbackground);
+void draw_rock(Img rock);
 
 // Load functions
 void load_textures(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky]);
@@ -41,6 +42,7 @@ void load_keyboard(Img & keyboard);
 void load_charac(Img player_right[10], Img player_left[10]);
 void load_bat(Img & bat);
 void load_startback(Img & startbackground);
+void load_rock(Img & rock);
 
 // Edit functions
 Img rotate(Img I);

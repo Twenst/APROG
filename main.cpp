@@ -201,11 +201,12 @@ void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_te
 
 void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5],std::string score)
 {
-    int cinematic_lenght = 1000;
+    int cinematic_lenght = 500;
     int cinematic_speed = w/cinematic_lenght;
     int crd = 0;
     
     Img startbackground; load_startback(startbackground);
+    Img rock; load_rock(rock);
 
     for(int i = 0 ; i < cinematic_lenght ; i++)
     {
@@ -227,7 +228,9 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
         {
              drawString(w/2 - 760/2,h/3,"Déjà " + score +" mètres explorés...",BLACK,20,0,false,true);
         }
+
         draw_charac(player_right, player_left, player, 0);
+        draw_rock(rock);
 
         noRefreshEnd();
         milliSleep(msleep);

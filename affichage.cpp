@@ -410,3 +410,13 @@ void draw_startback(Img starbackground)
 {
 	display(starbackground,0,0,false,fac);
 }
+
+void load_rock(Img & rock)
+{
+	load(rock, stringSrcPath(rock_name));
+}
+
+void draw_rock(Img rock)
+{
+	display(rock,0,0,false,fac);
+}
