@@ -54,8 +54,10 @@ int main(int argc, char** argv)
     Img shadows[nb_shadow]; load_shadow(shadows);
     Img heart[2]; load_heart(heart);
     Img player_right[10], player_left[10]; load_charac(player_right, player_left);
+    Img shield_bonus;Img light_bonus;Img heart_bonus;load_bonus(shield_bonus,light_bonus,heart_bonus);
 
     start_cinematic2(player,player_right, player_left,cave,background,shadows,Score);
+    player.setLighForce(lightforce_init);
 
     while(player.getHp() > 0)
     {
@@ -92,8 +94,10 @@ int main(int argc, char** argv)
         player.walk(e);
         player.dash(e);
         player.crouch(e);
-        player.setLighForce(lightforce_init - partie.Timer/100);
-
+        if(partie.Timer%100 ==0)
+        {
+            player.setLighForce(player.getLighForce() - 1);
+        }
         // OBSTACLES :
         bool outOfBounds = true;
         for(int i = 0 ; i<nbr_obstacle;i++)
@@ -116,7 +120,7 @@ int main(int argc, char** argv)
         for(int i = 0 ; i<nbr_obstacle;i++)
         {
             obstacle[i].move(type_scrolling);
-            obstacle[i].draw();
+            obstacle[i].draw(shield_bonus,light_bonus,heart_bonus);
 
         }
 

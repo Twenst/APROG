@@ -60,11 +60,19 @@ Obstacle::Obstacle()
     clr = BLACK;
     crds = Coord(w,floor_level - size.y());
     type = 0;
+    is_visible = true;
 }
 
-void Obstacle::draw() const
+void Obstacle::draw(Img & shield_bonus,Img & light_bonus,Img & heart_bonus) const
 {
-    fillRect(crds.x(),crds.y(),size.x(),size.y(),clr);
+    if(type == 0)
+    {
+        fillRect(crds.x(),crds.y(),size.x(),size.y(),clr);
+    }
+    else if(type == 1)
+    {
+        draw_bonus(bonus_type,shield_bonus,light_bonus,heart_bonus,crds,is_visible);
+    }
 }
 
 void Obstacle::move(int scrollingType)
@@ -105,6 +113,7 @@ void Obstacle::init(int scrollingType)
     flying = 0;
     clr = BLACK;
     setType(0);
+    is_visible = true;
     if(scrollingType == 0)
     {
         //Obstacles viennent de la droite
@@ -187,7 +196,7 @@ void Obstacle::setType(int new_type)
     type = new_type;
 }
 
-void Obstacle::erase()
+void Obstacle::set_visibility(bool visible)
 {
-    size = (0);
+    is_visible = false;
 }

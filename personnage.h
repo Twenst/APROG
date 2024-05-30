@@ -1,10 +1,9 @@
 #pragma once
 #include "objets.h"
-#include "constantes.h"
 #include <Imagine/Graphics.h>
 using namespace Imagine;
 
-
+class Obstacle;
 
 class Personnage
 {

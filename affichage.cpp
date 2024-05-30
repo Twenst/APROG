@@ -1,8 +1,5 @@
 #include "affichage.h"
-
 #include <Imagine/Graphics.h>
-using namespace Imagine;
-#include <Imagine/Images.h>
 using namespace Imagine;
 
 int pos(int a)
@@ -414,6 +411,38 @@ void load_rock(Img & rock)
 {
 	load(rock, stringSrcPath(rock_name));
 }
+
+void load_bonus(Img & shield_bonus,Img & light_bonus,Img & heart_bonus)
+{
+    load(shield_bonus,stringSrcPath(shield_bonus_path));
+    load(light_bonus,stringSrcPath(light_bonus_path));
+    load(heart_bonus,stringSrcPath(heart_bonus_path));
+}
+
+void draw_bonus(int type_bonus,Img & shield_bonus,Img & light_bonus,Img & heart_bonus,Coord coord,bool is_visible)
+{
+    if(is_visible)
+    {
+        int x = coord.x();
+        int y = coord.y();
+        if(type_bonus == 1)
+        {
+            display(heart_bonus,x,y,false,fac);
+        }
+        else if (type_bonus == 2)
+        {
+            display(light_bonus,x,y,false,fac);
+        }
+        else if (type_bonus == 3)
+        {
+            display(shield_bonus,x,y,false,fac);
+        }
+    }
+
+}
+
+
+
 
 void draw_rock(Img rock)
 {

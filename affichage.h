@@ -1,10 +1,11 @@
 #pragma once
 #include "constantes.h"
 #include "personnage.h"
-#include <Imagine/Images.h>
+
 using namespace Imagine;
 
 typedef Image<AlphaColor> Img;
+class Personnage;
 
 // Draw functions
 void draw_background(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky]);
@@ -15,6 +16,7 @@ void draw_hp(int hp_num);
 void draw_timer(int Timer);
 void draw_scrolling(int typescrolling);
 void draw_scrolling(int typescrolling,Img left[2], Img right[2], Img up[2], Img down[2]);
+void draw_bonus(int type_bonus, Img & shield_bonus,Img & light_bonus,Img & heart_bonus);
 //void draw_glowing(Personnage player, Img glow_ul[nb_glow],Img glow_dl[nb_glow],Img glow_ur[nb_glow],Img glow_dr[nb_glow]);
 void draw_cave(Img cave, int timer);
 void draw_background(Img background);
@@ -29,6 +31,7 @@ void draw_bat(Img bat, Coord c);
 void draw_startback(Img starbackground);
 void draw_rock(Img rock);
 void draw_click(Img click);
+void draw_bonus(int type_bonus,Img & shield_bonus,Img & light_bonus,Img & heart_bonus,Coord coord,bool is_visible);
 
 // Load functions
 void load_textures(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky]);
@@ -45,7 +48,7 @@ void load_bat(Img & bat);
 void load_startback(Img & startbackground);
 void load_rock(Img & rock);
 void load_click(Img & click);
-
+void load_bonus(Img & shield_bonus,Img & light_bonus,Img & heart_bonus);
 // Edit functions
 Img rotate(Img I);
 Img mirrorVert(Img I);
