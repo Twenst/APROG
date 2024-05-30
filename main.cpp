@@ -163,62 +163,33 @@ int main(int argc, char** argv)
 }
 
 //---Cinematique---//
-void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky], Img player_right[5], Img player_left[5],std::string score)
-{
-    int cinematic_lenght = 100;
-    int cinematic_speed = w/cinematic_lenght;
-    int crd = 0;
-    
-    for(int i = 0 ; i < cinematic_lenght ; i++)
-    {
-        crd += cinematic_speed;
-        player.setCoords(crd,crds_y_init);
-
-        noRefreshBegin();
-        clearWindow();
-
-        draw_background(grass_textures,dirt_textures,sky_textures);
-        //drawString(w/2 - 840/2,h/5,"CAVESCROLL",RED,50,0,false,true); //ON pourra prendre des vrai png pour les textes
-        //display(title,2,2,false,3);
-        if(i < cinematic_lenght /2)
-        {
-
-            drawString(w/2 - 150,h/3,"De retour...",BLACK,20,0,false,true);
-
-        }
-        else
-        {
-             drawString(w/2 - 760/2,h/3,"Déjà " + score +" mètres explorés...",BLACK,20,0,false,true);
-        }
-        draw_charac(player_right, player_left, player, 0);
-
-        noRefreshEnd();
-        milliSleep(msleep);
-    }
-    player.setCoords(crds_x_init,crds_y_init);
-
-}
 
 void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5],std::string score)
 {
-    int cinematic_lenght = 500;
-    int cinematic_speed = w/cinematic_lenght;
+    Img keyboard;Img grass[nb_grass];Img dirt[nb_dirt]; Img sky[nb_sky];
+    load_textures(grass,dirt,sky);
+    load_keyboard(keyboard);
     int crd = 0;
+    int cinematic_lenght_1 = 80;
+    int cinematic_lenght_2 = 50;
+    int cinematic_speed_x = w/(cinematic_lenght_1*(5.6/4));
+    int cinematic_speed_y = crds_y_init/(cinematic_lenght_2);
+    int crdx = 0;int crdy = crds_y_init;
+    int fall_lenght = 50;
     
     Img startbackground; load_startback(startbackground);
-    Img rock; load_rock(rock);
 
-    for(int i = 0 ; i < cinematic_lenght ; i++)
+    for(int i = 0 ; i < cinematic_lenght_1 - 1; i++)
     {
-        crd += cinematic_speed;
-        player.setCoords(crd,crds_y_init);
+        crdx += cinematic_speed_x;
+        player.setCoords(crdx,crds_y_init);
 
         noRefreshBegin();
         clearWindow();
 
         draw_startback(startbackground);
 
-        if(i < cinematic_lenght /2)
+        if(i < cinematic_lenght_1 /2)
         {
 
             drawString(w/2 - 150,h/3,"De retour...",BLACK,20,0,false,true);
@@ -228,13 +199,65 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
         {
              drawString(w/2 - 760/2,h/3,"Déjà " + score +" mètres explorés...",BLACK,20,0,false,true);
         }
+        draw_charac(player_right, player_left, player, 0);
+
+        noRefreshEnd();
+        milliSleep(msleep);
+    }
+    //Attente avant de tomber
+    for(int i = 0; i < fall_lenght;i++)
+    {
+        if(i > cinematic_lenght_1 /4)
+        {
+            noRefreshBegin();
+            clearWindow();
+
+            draw_startback(startbackground);
+            if(i%3 == 0) // Pour ralentir le rafraichissement de la direction du personnage
+            {
+                player.set_facing(i%2);
+            }
+            draw_charac(player_right, player_left, player, 0);
+
+            noRefreshEnd();
+        }
+        milliSleep(msleep);
+    }
+
+    //Deuxième partie : le personnage tombe
+    for(int i = 0; i<cinematic_lenght_2;i++)
+    {
+        crdy += cinematic_speed_y;
+        player.setCoords(crdx,crdy);
+        noRefreshBegin();
+
+        clearWindow();
+        draw_startback(startbackground);
+
+
 
         draw_charac(player_right, player_left, player, 0);
         draw_rock(rock);
 
         noRefreshEnd();
         milliSleep(msleep);
+
     }
+    //Affichae titre + touche
+
+    noRefreshBegin();
+
+    clearWindow();
+
+
+    draw_startback(startbackground);
+    drawString(w/2 - 760/2,h/3,"Scrolling (mettre vrai png)",BLACK,20,0,false,true);
+    drawString(w/2 - 760/2,h/2,"Clic droit pour continuer...",WHITE,15,0,false,true);
+    draw_keyboard(keyboard);
+
+    noRefreshEnd();
+
+    click();
     player.setCoords(crds_x_init,crds_y_init);
 
 }

@@ -26,7 +26,7 @@ void Partie::update_scrolling(int type)
     }
     if(type == 2 or type == 3)
     {
-        nbr_obstacle = 6;
+        nbr_obstacle = 9;
     }
     if(type == 4)
     {
@@ -153,7 +153,7 @@ void Obstacle::init(int scrollingType)
         crds = Coord(w,h/2);
         clr = RED;
         setType(1);
-        setBonusType(rand()%4 + 1);
+        setBonusType(rand()%3 + 1);
     }
 }
 

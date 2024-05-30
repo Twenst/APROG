@@ -17,7 +17,7 @@ class Personnage
     //Vitesse
     int speed;
     double dash_speed;
-    int max_speed = 10;
+    int max_speed = 13;
 
     // Gameplay
     int hp;
@@ -33,6 +33,7 @@ class Personnage
     // Bonus
     int bonus_duration; // même durée pour chaque bonus, on pourrait en avoir différent si on le voulait
     int bonus_count;
+    int bonus_value;
     bool bonus;
 
     // Saut
@@ -72,6 +73,7 @@ class Personnage
         void setLighForce(int light_lvl);
         bool is_crouching() const;
         bool is_facing_right() const;
+        void set_facing(int side);
         void set_crouching(bool b);
         bool is_invicible() const;
 };
