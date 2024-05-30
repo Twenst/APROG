@@ -220,7 +220,7 @@ void Personnage::setCoords(int x,int y)
 
 }
 
-void Personnage::update_status(Obstacle& obstacle)
+void Personnage::update_status()
 {
 
 

@@ -65,7 +65,7 @@ class Personnage
         Coord getPos() const;
         Coord getSize() const;
         Coord getCenter() const;
-        void update_status(Obstacle& obstacle); // Pour l'invincibilité par exemple
+        void update_status(); // Pour l'invincibilité par exemple
         void setSpeed(int newSpeed);
         int getSpeed() const;
         int getLighForce() const;

@@ -65,10 +65,8 @@ int main(int argc, char** argv)
         player.update_jump();
         player.update_walk();
         player.update_dash();
-        for(int i = 0 ; i<nbr_obstacle;i++)
-        {
-            player.update_status(obstacle[i]);
-        }
+        player.update_status();
+
 
         partie.Timer += 1;
 
