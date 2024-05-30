@@ -23,7 +23,7 @@ Personnage::Personnage()
     light_force = 16;
     facing_right = true;
     crouching = false;
-    bonus_duration = 250;
+    bonus_duration = 300;
     bonus_count = 0;
     bonus = false;
 }
@@ -225,17 +225,16 @@ void Personnage::update_status(Obstacle& obstacle)
     //bonus
     if(bonus)
     {
-        int type = obstacle.getBonusType();
         if(bonus_count == bonus_duration)
         {
 
             bonus = false;
             bonus_count = 0;
-            if (type == 1)
+            if (bonus_value == 2)
             {
-                setSpeed(getSpeed()- 30);
+                max_speed -= 15;
             }
-            if(type ==3)
+            if(bonus_value ==3)
             {
                 invincible = false;
             }
@@ -245,7 +244,7 @@ void Personnage::update_status(Obstacle& obstacle)
             bonus_count ++;
         }
     }
-    else if (invincible) //invincibilité
+    else if (invincible and bonus==false) //invincibilité
     {
         if(invincible_count == invincible_duration)
         {
@@ -294,15 +293,18 @@ void Personnage::getBonus(Obstacle& obstacle)
     if(obstacle.getBonusType() == 1)//Coeur
     {
         addHP();
+        bonus_value = 1;
     }
     if(obstacle.getBonusType() == 2)//Vitesse
     {
         bonus = true;
-        max_speed += 20;
+        max_speed += 15;
+        bonus_value = 2;
     }
     if(obstacle.getBonusType() == 3)//Invulnérabilité
     {
         bonus = true;
+        bonus_value = 3;
         invincible = true;
     }
 }

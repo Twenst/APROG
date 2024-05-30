@@ -33,6 +33,7 @@ class Personnage
     // Bonus
     int bonus_duration; // même durée pour chaque bonus, on pourrait en avoir différent si on le voulait
     int bonus_count;
+    int bonus_value;
     bool bonus;
 
     // Saut

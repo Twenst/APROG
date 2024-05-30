@@ -130,7 +130,7 @@ int main(int argc, char** argv)
         //Changement de scrolling quand le timer atteint 1000
         if(partie.Timer % 70 == 0)
         {
-            if(partie.Timer% 100 == 0)
+            if(partie.Timer% 81 == 0)
             {
                 partie.update_scrolling(4);
             }
@@ -207,7 +207,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
     //Attente avant de tomber
     for(int i = 0; i < fall_lenght;i++)
     {
-        if(i > cinematic_lenght_1 /3)
+        if(i > cinematic_lenght_1 /4)
         {
             noRefreshBegin();
             clearWindow();
