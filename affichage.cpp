@@ -33,13 +33,6 @@ bool is_within_circle(Coord x, int radius, Coord center)
 	return (radius*radius >= p.x()*p.x() + p.y()*p.y());
 }
 
-void load_textures(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky])
-{
-	for (int i = 0; i < nb_grass; i++) load(grass_textures[i],stringSrcPath(grass[i]));
-	for (int i = 0; i < nb_dirt; i++) load(dirt_textures[i],stringSrcPath(dirt[i]));
-	for (int i = 0; i < nb_sky; i++) load(sky_textures[i],stringSrcPath(sky[i]));
-}
-
 void load_arrow(Img left[2], Img right[2], Img up[2], Img down[2])
 {
   for (int i = 0; i < 2; i++)
@@ -50,45 +43,6 @@ void load_arrow(Img left[2], Img right[2], Img up[2], Img down[2])
     load(up[i],stringSrcPath(up_arrow[i]));
   }
 }
-
-void draw_background(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky])
-{
-	draw_sky(sky_textures);
-    draw_floor(grass_textures,dirt_textures);
-}
-
-void draw_sky(Img sky_textures[nb_sky])
-{
-	for (int i = 0; 8*i*fac <= w; i++)
-	{
-		for (int j = 0; 8*j*fac < floor_level; j++)
-		{
-			display(sky_textures[min(pos(nb_sky-1-j),nb_sky-1)],8*i*fac,8*j*fac,false,fac);
-		}
-	}
-}
-
-void draw_floor(Img grass_textures[nb_grass],Img dirt_textures[nb_dirt])
-{
-	for (int i = 0; 8*i*fac <= w; i++)
-	{
-		display(grass_textures[i%nb_grass],8*i*fac,floor_level,false,fac);
-
-		for (int j = 1; 8*j*fac <= h-floor_level; j++)
-		{
-			display(dirt_textures[(i+j)%nb_dirt],8*i*fac,floor_level + 8*j*fac,false,fac);
-		}
-	}
-}
-
-void draw_hp(int num_hp)
-{
-    for(int i = 0;i < num_hp ; i++)
-    {
-      drawString(350 + i*115,110,u8"❤️",RED,45);
-    }
-}
-
 
 void draw_scrolling(int typescrolling,Img left[2], Img right[2], Img up[2], Img down[2])
 {
@@ -122,30 +76,7 @@ void draw_timer(int Timer)
     drawString(30,90,std::to_string(Timer) + "M",WHITE,30,0,false,true);
 }
 
-/* void load_glow(Img glow_ul[3],Img glow_dl[3],Img glow_ur[3],Img glow_dr[3])
-{
-	for (int i = 0; i < nb_glow; i++)
-	{
-		load(glow_ul[i],stringSrcPath(glow[i]));
-		glow_dl[i] = rotate(glow_ul[i]);
-		glow_dr[i] = rotate(glow_dl[i]);
-		glow_ur[i] = rotate(glow_dr[i]);
-	}
-}
-
-void draw_glowing(Personnage player, Img glow_ul[nb_glow],Img glow_dl[nb_glow],Img glow_ur[nb_glow],Img glow_dr[nb_glow])
-{
-	// Affiche l'effet d'éclairement sur le centre du joueur
-	Coord c = player.getPos() + player.getSize()/2;
-
-	int i = time(NULL)%nb_glow;
-	display(glow_ul[i],c.x()-16*fac,c.y()-16*fac,false,fac);
-	display(glow_ur[i],c.x(),c.y()-16*fac,false,fac);
-	display(glow_dr[i],c.x(),c.y(),false,fac);
-	display(glow_dl[i],c.x()-16*fac,c.y(),false,fac);
-} */
-
-Img rotate(Img I) // rotate an square image clockwise
+Img rotate(const Img & I) // rotate an square image clockwise
 {
 	int w = I.width(), h = I.height();
 	Img Ir(h,w);
@@ -165,7 +96,7 @@ void draw_score(std::string score)
     drawString(20,h-10,"Meilleur Score: " + score + "M",WHITE,20,0,false,true);
 }
 
-void draw_cave(Img cave, int timer)
+void draw_cave(const Img & cave, int timer)
 {
 	display(cave,0,0,false,fac);
 }
@@ -175,7 +106,7 @@ void load_cave(Img & cave)
 	load(cave,stringSrcPath(cave_name));
 }
 
-void draw_background(Img background)
+void draw_background(const Img & background)
 {
 	display(background,0,0,false,fac);
 }
@@ -198,7 +129,7 @@ void draw_shadow(Img shadows[nb_shadow])
 	display(shadows[rand()%nb_shadow],0,0,false,fac);
 }
 
-void draw_shadow(Img shadows[nb_shadow], Personnage player)
+void draw_shadow(Img shadows[nb_shadow], const Personnage & player)
 {
 	std::vector<int> radius;
 	for (int i = 2; i < 4; i++) radius.push_back(player.getLighForce()*i*fac); 
@@ -208,7 +139,7 @@ void draw_shadow(Img shadows[nb_shadow], Personnage player)
 	display(shadow_mask,0,0,false,fac);
 }
 
-Img applyMaskCircle(Img target, int radius, Coord center)
+Img applyMaskCircle(const Img & target, int radius, Coord center)
 {
 	Img res = target.clone();
     int wid = target.width(), hei = target.height();
@@ -227,7 +158,7 @@ Img applyMaskCircle(Img target, int radius, Coord center)
 	return res;
 }
 
-Img applyMaskCircle(Img target, int radius, Coord center, double alpha)
+Img applyMaskCircle(const Img & target, int radius, Coord center, double alpha)
 {
 	Img res = target.clone();
 	int wid = target.width(), hei = target.height(); 
@@ -257,7 +188,7 @@ int max(const std::vector<int>& radius)
 	return m;
 }
 
-Img applyMaskCircle(Img target, const std::vector<int>& radius, Coord center, const std::vector<double>& alphas)
+Img applyMaskCircle(const Img & target, const std::vector<int>& radius, Coord center, const std::vector<double>& alphas)
 {
 	assert(radius.size() == alphas.size());
 	Img res = target.clone();
@@ -288,7 +219,7 @@ void load_heart(Img heart[2])
 	load(heart[1],stringSrcPath(heart_name[1]));
 }
 
-void draw_heart(Img heart[2], Personnage player)
+void draw_heart(Img heart[2], const Personnage & player)
 {
 	int hp = player.getHp();
 	for (int i = 1; i <= player.getMaxHp(); i++)
@@ -297,7 +228,7 @@ void draw_heart(Img heart[2], Personnage player)
 	}
 }
 
-void draw_gameover(Img gameover)
+void draw_gameover(const Img & gameover)
 {
 	display(gameover,0,0,false,fac*2);
 }
@@ -307,9 +238,9 @@ void load_gameover(Img & gameover)
 	load(gameover,stringSrcPath(gameover_name));
 }
 
-void draw_keyboard(Img keyboard)
+void draw_keyboard(const Img & keyboard)
 {
-	display(keyboard,0,0,false,fac*2);
+	display(keyboard,0,0,false,fac);
 }
 
 void load_keyboard(Img & keyboard)
@@ -330,7 +261,7 @@ void load_charac(Img player_right[10], Img player_left[10])
 	}
 }
 
-Img mirrorVert(Img I)
+Img mirrorVert(const Img & I)
 {
 	int w = I.width(), h = I.height();
 	Img Im(w,h);
@@ -345,7 +276,7 @@ Img mirrorVert(Img I)
 	return Im;
 }
 
-void draw_charac(Img player_right[10], Img player_left[10], Personnage player, int Timer)
+void draw_charac(Img player_right[10], Img player_left[10], const Personnage & player, int Timer)
 {
 	double fac2 = fac/2;
 	Timer /= 5;
@@ -376,7 +307,7 @@ void draw_charac(Img player_right[10], Img player_left[10], Personnage player, i
 	}
 }
 
-void test_charac(Img player_right[5], Img player_left[5], Personnage player)
+void test_charac(Img player_right[5], Img player_left[5], const Personnage & player)
 {
 	double fac2 = fac/2;
 
@@ -392,7 +323,7 @@ void load_bat(Img & bat)
 	load(bat, stringSrcPath(bat_name));
 }
 
-void draw_bat(Img bat, Coord c)
+void draw_bat(const Img & bat, Coord c)
 {
 	display(bat,c.x(),c.y(),false,fac);
 }
@@ -402,7 +333,7 @@ void load_startback(Img & startbackground)
 	load(startbackground, stringSrcPath(earth_name));
 }
 
-void draw_startback(Img starbackground)
+void draw_startback(const Img & starbackground)
 {
 	display(starbackground,0,0,false,fac);
 }
@@ -412,26 +343,30 @@ void load_rock(Img & rock)
 	load(rock, stringSrcPath(rock_name));
 }
 
-void load_bonus(Img & shield_bonus,Img & light_bonus,Img & heart_bonus)
+void load_bonus(Img & shield_bonus,Img light_bonus[2],Img heart_bonus[2])
 {
     load(shield_bonus,stringSrcPath(shield_bonus_path));
-    load(light_bonus,stringSrcPath(light_bonus_path));
-    load(heart_bonus,stringSrcPath(heart_bonus_path));
+	for (int i = 0; i < 2; i++)
+	{
+    	load(light_bonus[i],stringSrcPath(light_bonus_path[i]));
+    	load(heart_bonus[i],stringSrcPath(heart_bonus_path[i]));
+	}
 }
 
-void draw_bonus(int type_bonus,Img & shield_bonus,Img & light_bonus,Img & heart_bonus,Coord coord,bool is_visible)
+void draw_bonus(int type_bonus, const Img & shield_bonus, Img light_bonus[2], Img heart_bonus[2],Coord coord,bool is_visible, int timer)
 {
     if(is_visible)
     {
+		timer /= 25;
         int x = coord.x();
         int y = coord.y();
         if(type_bonus == 1)
         {
-            display(heart_bonus,x,y,false,fac);
+            display(heart_bonus[timer%2],x,y,false,fac);
         }
         else if (type_bonus == 2)
         {
-            display(light_bonus,x,y,false,fac);
+            display(light_bonus[timer%2],x,y,false,fac);
         }
         else if (type_bonus == 3)
         {
@@ -441,15 +376,12 @@ void draw_bonus(int type_bonus,Img & shield_bonus,Img & light_bonus,Img & heart_
 
 }
 
-
-
-
-void draw_rock(Img rock)
+void draw_rock(const Img & rock)
 {
 	display(rock,0,0,false,fac);
 }
 
-void draw_click(Img click)
+void draw_click(const Img & click)
 {
 	display(click,0,0,false,fac);
 }
@@ -457,4 +389,14 @@ void draw_click(Img click)
 void load_click(Img & click)
 {
 	load(click, stringSrcPath(click_name));
+}
+
+void load_title(Img & title)
+{
+	load(title, stringSrcPath(title_path));
+}
+
+void draw_title(const Img & title)
+{
+	display(title,0,0,false,2*fac);
 }

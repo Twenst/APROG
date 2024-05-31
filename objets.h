@@ -25,7 +25,7 @@ public:
     Obstacle();
     Coord getSize() const;
     Coord getCoord() const;
-    void draw(Img & shield_bonus,Img & light_bonus,Img & heart_bonus) const;
+    void draw(const Img & shield_bonus,Img light_bonus[2], Img heart_bonus[2], int timer) const;
     void move(int scrollingType);
     bool outOfBounds() const;
     void init(int scrollingType = 0); //Pour relancer l'obstacle depuis le début
