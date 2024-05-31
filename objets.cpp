@@ -63,7 +63,7 @@ Obstacle::Obstacle()
     is_visible = true;
 }
 
-void Obstacle::draw(Img & shield_bonus,Img & light_bonus,Img & heart_bonus) const
+void Obstacle::draw(const Img & shield_bonus,Img light_bonus[2],Img heart_bonus[2], int timer) const
 {
     if(type == 0)
     {
@@ -71,7 +71,7 @@ void Obstacle::draw(Img & shield_bonus,Img & light_bonus,Img & heart_bonus) cons
     }
     else if(type == 1)
     {
-        draw_bonus(bonus_type,shield_bonus,light_bonus,heart_bonus,crds,is_visible);
+        draw_bonus(bonus_type,shield_bonus,light_bonus,heart_bonus,crds,is_visible,timer);
     }
 }
 

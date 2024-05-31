@@ -15,9 +15,8 @@ using namespace Imagine;
 #include "objets.h"
 float minf(float a, float b);
 void load_jumping(Personnage & player,Event e);
-void start_cinematic(Personnage& player,Img grass_textures[nb_grass],Img dirt_textures[nb_dirt], Img sky_textures[nb_sky],std::string score);
-void start_cinematic2(Personnage& player, Img player_right[10], Img player_left[10], Img cave, Img background, Img shadows[nb_shadow], std::string score);
-void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5], int Timer);
+void start_cinematic(Personnage& player, Img player_right[10], Img player_left[10], const Img & cave, const Img & background, Img shadows[nb_shadow], std::string score);
+void end_cinematic(Personnage& player, const Img & cave, const Img & background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5], int Timer);
 
 //---Main---//
 int main(int argc, char** argv)
@@ -45,18 +44,15 @@ int main(int argc, char** argv)
     Event e;
 
     // Chargement des textures
-    //Img grass_textures[nb_grass], dirt_textures[nb_dirt], sky_textures[nb_sky];
-	//load_textures(grass_textures,dirt_textures,sky_textures);
-    Img left[2], right[2], up[2], down[2];
-    load_arrow(left,right,up,down);
+    Img left[2], right[2], up[2], down[2]; load_arrow(left,right,up,down);
     Img cave; load_cave(cave);
     Img background; load_background(background);
     Img shadows[nb_shadow]; load_shadow(shadows);
     Img heart[2]; load_heart(heart);
     Img player_right[10], player_left[10]; load_charac(player_right, player_left);
-    Img shield_bonus;Img light_bonus;Img heart_bonus;load_bonus(shield_bonus,light_bonus,heart_bonus);
+    Img shield_bonus;Img light_bonus[2];Img heart_bonus[2]; load_bonus(shield_bonus,light_bonus,heart_bonus);
 
-    start_cinematic2(player,player_right, player_left,cave,background,shadows,Score);
+    start_cinematic(player,player_right, player_left,cave,background,shadows,Score);
     player.setLighForce(lightforce_init);
 
     while(player.getHp() > 0)
@@ -77,12 +73,10 @@ int main(int argc, char** argv)
         draw_background(background);
         draw_cave(cave,partie.Timer);
         draw_shadow(shadows, player);
-        //draw_hp(player.getHp());
         draw_heart(heart, player);
         draw_timer(partie.Timer);
         draw_score(Score);
         draw_scrolling(type_scrolling,left,right,up,down);
-        //player.draw(partie.Timer);
         draw_charac(player_right, player_left, player, partie.Timer);
 
         noRefreshEnd();
@@ -118,7 +112,7 @@ int main(int argc, char** argv)
         for(int i = 0 ; i<nbr_obstacle;i++)
         {
             obstacle[i].move(type_scrolling);
-            obstacle[i].draw(shield_bonus,light_bonus,heart_bonus);
+            obstacle[i].draw(shield_bonus,light_bonus,heart_bonus, partie.Timer);
 
         }
 
@@ -165,7 +159,7 @@ int main(int argc, char** argv)
 
 //---Cinematique---//
 
-void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5], Img cave, Img background, Img shadows[nb_shadow], std::string score)
+void start_cinematic(Personnage& player, Img player_right[5], Img player_left[5], const Img & cave, const Img & background, Img shadows[nb_shadow], std::string score)
 {
     int crd = 0;
     int cinematic_lenght_1 = 80;
@@ -176,6 +170,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
     int fall_lenght = 50;
     
     Img keyboard; load_keyboard(keyboard);
+    Img title; load_title(title);
     Img startbackground; load_startback(startbackground);
     Img rock; load_rock(rock);
     Img click; load_click(click);
@@ -202,6 +197,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
         }
         draw_charac(player_right, player_left, player, 0);
         draw_rock(rock);
+        draw_title(title);
 
         noRefreshEnd();
         milliSleep(msleep);
@@ -220,6 +216,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
             player.set_facing(k%2);
             draw_charac(player_right, player_left, player, 0);
             draw_rock(rock);
+            draw_title(title);
 
             noRefreshEnd();
         }
@@ -240,6 +237,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
 
         draw_charac(player_right, player_left, player, 0);
         draw_rock(rock);
+        draw_title(title);
 
         noRefreshEnd();
         milliSleep(msleep);
@@ -256,6 +254,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
         clearWindow();
 
         draw_startback(startbackground);
+        draw_title(title);
         noir.a() = 255 * i/fondu_duree;
         fillRect(0,0,w,h,noir);
 
@@ -263,7 +262,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
         milliSleep(msleep);
     }
 
-    for (int i = 0; i < fondu_duree; i++)
+    for (int i = 0; i <= fondu_duree; i++)
     {
         noRefreshBegin();
         clearWindow();
@@ -271,6 +270,8 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
         draw_background(background);
         draw_cave(cave,0);
         draw_shadow(shadows);
+        draw_click(click);
+        draw_keyboard(keyboard);
         noir.a() = 255 - 255 * i/fondu_duree;
         fillRect(0,0,w,h,noir);
 
@@ -285,8 +286,6 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
     draw_background(background);
     draw_cave(cave,0);
     draw_shadow(shadows);
-    //drawString(w/2 - 760/2,h/3,"Scrolling (mettre vrai png)",BLACK,20,0,false,true);
-    // TJRS A FAIRE, PEUT ETRE AFFICHER AVANT
     draw_click(click);
     draw_keyboard(keyboard);
 
@@ -320,7 +319,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
 
 }
 
-void end_cinematic(Personnage player, Img cave, Img background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5], int Timers)
+void end_cinematic(Personnage& player, const Img & cave, const Img & background, Img shadows[nb_shadow], Img player_right[5], Img player_left[5], int Timers)
 {
     Img gameover; load_gameover(gameover);
     int cinematic_lenght = 35;

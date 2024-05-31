@@ -58,10 +58,11 @@ const std::string score_path = "./Score.txt";
 const std::string gameover_name = "./assets/gameover.png";
 const std::string keyboard_name = "./assets/keyboard.png";
 const std::string click_name = "./assets/clicktostart.png";
+const std::string title_path = "./assets/title.png";
 
 //Bonus
 
-const std::string heart_bonus_path = "./assets/heart_bonus2.png";
+const std::string heart_bonus_path[2] = {"./assets/heart_bonus.png","./assets/heart_bonus2.png"};
 const std::string shield_bonus_path = "./assets/shield.png";
-const std::string light_bonus_path = "./assets/light_bonus.png";
+const std::string light_bonus_path[2] = {"./assets/light_bonus.png","./assets/light_bonus2.png"};
 
