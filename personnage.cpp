@@ -23,7 +23,7 @@ Personnage::Personnage()
     light_force = 16;
     facing_right = true;
     crouching = false;
-    bonus_duration = 1500;
+    bonus_duration = 1200;
     bonus_count = 0;
     bonus = false;
 }

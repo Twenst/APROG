@@ -351,29 +351,31 @@ void draw_charac(Img player_right[10], Img player_left[10], Personnage player, i
 	Timer /= 5;
 	int x = player.getPos().x()-size_x/2;
 	int y = player.getPos().y();
-	int hurt = (player.is_invicible()) ? 5 : 0;
-	if (player.is_facing_right()) // Right
-	{
-		if (player.is_crouching())
-		{
-			display(player_right[4 + hurt*(Timer%2)],x,y,false,fac2);
-		}
-		else
-		{
-			display(player_right[(player.getPos().x()/50)%4 + hurt*(Timer%2)],x,y,false,fac2);
-		}
-	}
-	else // Left
-	{
-		if (player.is_crouching())
-		{
-			display(player_left[4 + hurt*(Timer%2)],x,y,false,fac2);
-		}
-		else
-		{
-			display(player_left[(player.getPos().x()/50)%4 + hurt*(Timer%2)],x,y,false,fac2);
-		}
-	}
+    if((Timer%2 == 0 and player.is_invicible()) or not player.is_invicible())
+    {
+        if (player.is_facing_right()) // Right
+        {
+            if (player.is_crouching())
+            {
+                display(player_right[4],x,y,false,fac2);
+            }
+            else
+            {
+                display(player_right[(player.getPos().x()/50)%4],x,y,false,fac2);
+            }
+        }
+        else // Left
+        {
+            if (player.is_crouching())
+            {
+                display(player_left[4],x,y,false,fac2);
+            }
+            else
+            {
+                display(player_left[(player.getPos().x()/50)%4],x,y,false,fac2);
+            }
+        }
+    }
 }
 
 void test_charac(Img player_right[5], Img player_left[5], Personnage player)

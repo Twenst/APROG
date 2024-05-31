@@ -133,11 +133,11 @@ int main(int argc, char** argv)
         {
             if(partie.Timer% 100 == 0)
             {
-                partie.update_scrolling(4);
+                partie.update_scrolling(4);//Bonus
             }
             else
             {
-                partie.update_scrolling(rand()%4) ;
+                partie.update_scrolling(rand()%4) ;//Scrolling d'obstacles
             }
         }
         
@@ -299,7 +299,7 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
     player.setFalling(0);
     player.set_jumping(true);
 
-    /* while(player.is_jumping())
+    while(player.is_jumping())
     {
         player.update_jump();
         player.update_walk();
@@ -313,8 +313,10 @@ void start_cinematic2(Personnage& player, Img player_right[5], Img player_left[5
         draw_shadow(shadows, player);
         draw_charac(player_right, player_left, player, 0);
 
+
         noRefreshEnd();
-    } */
+        milliSleep(msleep);
+    }
 
 }
 
