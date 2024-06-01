@@ -2,8 +2,6 @@
 #include "constantes.h"
 #include "personnage.h"
 
-using namespace Imagine;
-
 typedef Image<AlphaColor> Img;
 class Personnage;
 

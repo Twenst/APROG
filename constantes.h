@@ -39,7 +39,6 @@ const std::string left_arrow[2] = {"./assets/left_red.png","./assets/left_green.
 const std::string up_arrow[2] = {"./assets/up_red.png","./assets/up_green.png"};
 const std::string right_arrow[2] = {"./assets/right_red.png","./assets/right_green.png"};
 const std::string down_arrow[2] = {"./assets/down_red.png","./assets/down_green.png"};
-//const std::string glow[nb_glow] = {"./assets/glow1.png","./assets/glow2.png","./assets/glow3.png","./assets/glow2.png"};
 const std::string cave_name = "./assets/double_grotte.png";
 const std::string background_name = "./assets/background.png";
 const std::string shadows_name[nb_shadow] = {"./assets/shadow1.png","./assets/shadow2.png","./assets/shadow3.png","./assets/shadow4.png","./assets/shadow5.png"};
