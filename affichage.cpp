@@ -134,7 +134,7 @@ void draw_shadow(Img shadows[nb_shadow], const Personnage & player)
 	std::vector<int> radius;
 	for (int i = 2; i < 4; i++) radius.push_back(player.getLighForce()*i*fac); 
 
-	std::vector<double> alphas(radius.size(), 0.75);
+	std::vector<double> alphas(radius.size(), 0.50);
 	Img shadow_mask = applyMaskCircle(shadows[rand()%nb_shadow],radius,player.getCenter()-Coord(0,size_y/4),alphas);
 	display(shadow_mask,0,0,false,fac);
 }

@@ -72,12 +72,12 @@ int main(int argc, char** argv)
         clearWindow();
         draw_background(background);
         draw_cave(cave,partie.Timer);
+        draw_charac(player_right, player_left, player, partie.Timer);
         draw_shadow(shadows, player);
         draw_heart(heart, player);
         draw_timer(partie.Timer);
         draw_score(Score);
         draw_scrolling(type_scrolling,left,right,up,down);
-        draw_charac(player_right, player_left, player, partie.Timer);
 
         noRefreshEnd();
 
