@@ -309,8 +309,8 @@ void start_cinematic(Personnage& player, Img player_right[5], Img player_left[5]
         clearWindow();
         draw_background(background);
         draw_cave(cave,0);
-        draw_shadow(shadows, player);
         draw_charac(player_right, player_left, player, 0);
+        draw_shadow(shadows, player);
 
 
         noRefreshEnd();
@@ -333,6 +333,7 @@ void end_cinematic(Personnage& player, const Img & cave, const Img & background,
 
         draw_background(background);
         draw_cave(cave,0);
+        draw_charac(player_right, player_left, player, 0);
 
         std::vector<int> radius;
 	    for (int i = 2; i < 4; i++) radius.push_back(player.getLighForce()*i*fac);
@@ -342,7 +343,6 @@ void end_cinematic(Personnage& player, const Img & cave, const Img & background,
 	    display(shadow_mask,0,0,false,fac);
 
         draw_timer(Timers);
-        draw_charac(player_right, player_left, player, 0);
 
         noRefreshEnd();
         milliSleep(msleep);
