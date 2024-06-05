@@ -1,4 +1,5 @@
 ### CAVESCROLL
+par Aden Elmi & Titouan Ledauphin
 
 Un spéléologue descend en exploration et se retrouve bloqué sous terre. Il tente alors desespérement d'explorer la grotte pour trouver une sortie. Malheureusement, il fait de plus en plus sombre et sa lampe faiblit alors que des obstacles se dressent sur son chemin. 
 
